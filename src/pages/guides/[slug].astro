@@ -1,17 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PostCard from '../../components/PostCard.astro';
+import PageHero from '../../components/PageHero.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import GuideTabs from '../../components/GuideTabs.astro';
+import Accordion from '../../components/Accordion.astro';
+import PhoneFrame from '../../components/PhoneFrame.astro';
+import AnnotatedFace from '../../components/AnnotatedFace.astro';
+import Icon from '../../components/Icon.astro';
 import { render } from 'astro:content';
 import { getPosts, clusterOf, related } from '../../lib/posts';
-import { CLUSTERS } from '../../lib/site';
-import { SITE, appStoreLink } from '../../lib/site';
+import { CLUSTERS, SITE, appStoreLink } from '../../lib/site';
 import { TOOLS } from '../../data/tools';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
   const clusterPaths = Object.values(CLUSTERS)
     .filter((c) => posts.some((p) => CLUSTERS[p.data.cluster].slug === c.slug))
-    .map((c) => ({ params: { slug: c.slug }, props: { kind: 'cluster' as const, cluster: c, posts: posts.filter((p) => CLUSTERS[p.data.cluster].slug === c.slug) } }));
+    .map((c) => ({ params: { slug: c.slug }, props: { kind: 'cluster' as const, cluster: c, posts: posts.filter((p) => CLUSTERS[p.data.cluster].slug === c.slug), all: posts } }));
   const postPaths = posts.map((p) => ({ params: { slug: p.data.slug }, props: { kind: 'post' as const, post: p, all: posts } }));
   const clash = clusterPaths.find((c) => postPaths.some((p) => p.params.slug === c.params.slug));
   if (clash) throw new Error(`Post slug collides with cluster hub: ${clash.params.slug}`);
@@ -19,12 +24,19 @@ export async function getStaticPaths() {
 }
 const props = Astro.props as any;
 const MODULE_CTA: Record<string, string> = { skin: 'Your skin plan', hair: 'Your hair plan', jawline: 'Your jawline plan', posture: 'Your posture plan', smile: 'Your smile plan', general: 'Your full plan' };
+const MODULE_PHONE: Record<string, [string, string]> = {
+  skin: ['/app/traits.webp', 'Axend app trait scores including skin'], hair: ['/app/traits.webp', 'Axend app trait scores including hair'],
+  jawline: ['/app/plan.webp', 'Axend app daily jawline workout'], posture: ['/app/plan.webp', 'Axend app daily workout plan'],
+  smile: ['/app/traits.webp', 'Axend app trait scores including smile'], general: ['/app/traits.webp', 'Axend app overall score and traits'],
+};
+const fmt = (x: Date) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 ---
 {props.kind === 'cluster' ? (
   <Base title={`${props.cluster.label}: Guides | Axend`} description={props.cluster.blurb} path={`/guides/${props.cluster.slug}`}>
+    <PageHero eyebrow="Guides" title={props.cluster.label} lead={props.cluster.blurb} />
     <div class="wrap">
-      <section class="hero"><p class="eyebrow"><a href="/guides" style="color:inherit">Guides</a></p><h1>{props.cluster.label}</h1><p class="lead">{props.cluster.blurb}</p></section>
-      <div class="grid">{props.posts.map((p: any) => <PostCard post={p} />)}</div>
+      <GuideTabs posts={props.all} current={props.cluster.slug} />
+      <div class="grid">{props.posts.map((p: any) => <GuideCard post={p} />)}</div>
     </div>
   </Base>
 ) : await (async () => {
@@ -32,34 +44,49 @@ const MODULE_CTA: Record<string, string> = { skin: 'Your skin plan', hair: 'Your
   const { Content } = await render(post);
   const d = post.data;
   const tool = TOOLS.find((t) => t.path === d.tool)!;
-  const rel = related(post, props.all);
+  const rel = related(post, props.all, 3);
   const url = new URL(`/guides/${d.slug}`, SITE.url).href;
+  const mins = Math.max(3, Math.round((post.body ?? '').split(/\s+/).length / 200));
+  const [phoneSrc, phoneAlt] = MODULE_PHONE[d.module];
   const jsonLd: object[] = [
     { '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.description, datePublished: d.publishDate.toISOString(), dateModified: d.updatedDate.toISOString(), mainEntityOfPage: url, author: { '@type': 'Organization', name: 'Axend' }, publisher: { '@type': 'Organization', name: 'Axend', url: SITE.url } },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Guides', item: new URL('/guides', SITE.url).href }, { '@type': 'ListItem', position: 2, name: d.title, item: url }] },
   ];
   if (d.faq?.length) jsonLd.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
-  const fmt = (x: Date) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
   return (
     <Base title={`${d.title} | Axend`} description={d.description} path={`/guides/${d.slug}`} type="article" jsonLd={jsonLd}>
-      <article class="wrap">
-        <header class="hero">
-          <p class="eyebrow"><a href={`/guides/${clusterOf(post).slug}`} style="color:inherit">{clusterOf(post).label}</a></p>
-          <h1>{d.title}</h1>
-          <p class="meta">Updated {fmt(d.updatedDate)} · For adults 18+ · Cosmetic and self-care only</p>
-        </header>
-        <div class="prose"><Content />
-          <div class="card cta-inline"><strong>Where do you stand today?</strong><p>Take the free, private {tool.nav.toLowerCase()}: it runs on your device and nothing is uploaded.</p><a class="btn" href={tool.path}>Try the {tool.nav}</a></div>
-          {d.faq?.length ? <section class="faq"><h2>FAQ</h2>{d.faq.map((f: any) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</section> : null}
-          <div class="card cta-app"><p class="eyebrow">Axend app</p><strong>{MODULE_CTA[d.module]}</strong><p>A step-by-step plan based on your own scan, in the Axend app.</p><a class="btn" href={appStoreLink(`guide-${d.slug}`)} rel="noopener">Get {MODULE_CTA[d.module].toLowerCase()} in Axend</a></div>
-          <p class="disclaimer">This guide is general self-care information, not medical advice. See a doctor or dermatologist for medical concerns.</p>
-        </div>
-        <section class="section"><h2>Keep reading</h2><div class="grid">{rel.map((p) => <PostCard post={p} />)}</div></section>
+      <PageHero eyebrow={clusterOf(post).label} title={d.title} meta={`Updated ${fmt(d.updatedDate)} · ${mins} min read · For adults 18+ · Cosmetic and self-care only`} />
+      <article class="wrap post">
+        <div class="prose"><Content /></div>
+        <aside class="mini panel">
+          <div class="mf"><AnnotatedFace /></div>
+          <div><p class="eyebrow">Free, private</p><h3>Where do you stand today?</h3><p>Take the {tool.nav.toLowerCase()}. It runs on your device and nothing is uploaded.</p><a class="btn" href={tool.path}>Try the {tool.nav}</a></div>
+        </aside>
+        {d.faq?.length ? <section class="faq"><h2>FAQ</h2><Accordion items={d.faq} /></section> : null}
+        <aside class="app panel">
+          <div><p class="eyebrow">Axend app</p><h3>{MODULE_CTA[d.module]}</h3><p>A step-by-step plan based on your own scan, in the Axend app.</p><a class="btn ghost" href={appStoreLink(`guide-${d.slug}`)} rel="noopener"><Icon name="plan" size={18} /> Get {MODULE_CTA[d.module].toLowerCase()} in Axend</a></div>
+          <PhoneFrame src={phoneSrc} alt={phoneAlt} width={170} />
+        </aside>
+        <p class="disclaimer prose">This guide is general self-care information, not medical advice. See a doctor or dermatologist for medical concerns.</p>
       </article>
+      <section class="sec"><div class="wrap">
+        <div class="sec-head"><p class="eyebrow">Keep reading</p></div>
+        <div class="grid">{rel.map((p) => <GuideCard post={p} />)}</div>
+      </div></section>
     </Base>
   );
 })()}
-<style is:global>
-  .cta-inline, .cta-app { margin: 28px 0; }
-  .cta-inline strong, .cta-app strong { color: #fff; font-size: 1.2rem; display: block; margin-bottom: 6px; }
+<style>
+  .grid { display: grid; gap: 4px 32px; grid-template-columns: 1fr; padding-bottom: 56px; }
+  .post { padding-bottom: 24px; }
+  .post > * { max-width: 680px; }
+  .post .faq h2 { margin: 56px 0 18px; }
+  .mini { display: grid; gap: 18px; padding: 20px; margin: 40px 0; grid-template-columns: 1fr; align-items: center; }
+  .mini h3, .app h3 { margin-bottom: 6px; } .mini p:not(.eyebrow), .app p:not(.eyebrow) { font-size: 1rem; }
+  .mf { width: 120px; background: #0c0906; border: 1px solid var(--hair-soft); border-radius: 14px; padding: 8px; }
+  .app { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 24px 24px 0; margin: 48px 0 28px; overflow: hidden; }
+  .app > div:first-child { padding-bottom: 24px; flex: 1; }
+  @media (min-width: 560px) { .mini { grid-template-columns: 120px 1fr; } }
+  @media (min-width: 700px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 559px) { .app { flex-direction: column; align-items: flex-start; padding-bottom: 0; } .app > div:first-child { padding-bottom: 0; } .app :global(.phone) { align-self: center; } }
 </style>

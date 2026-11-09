@@ -1,0 +1,38 @@
+---
+// Pure landmark mesh on a dark head silhouette. No photograph, no generated face: points are plotted from simple curves.
+interface Props { variant?: 'overall' | 'symmetry' | 'face' | 'men'; label?: string }
+const { variant = 'overall', label = 'Landmark mesh sample' } = Astro.props;
+const cx = 100;
+type P = [number, number];
+const oval: P[] = [];
+for (let i = 0; i < 36; i++) {
+  const t = (i / 36) * Math.PI * 2, s = Math.sin(t);
+  const jaw = variant === 'men' ? 0.26 : 0.36;
+  oval.push([cx + 62 * Math.cos(t) * (1 - jaw * Math.pow(Math.max(0, s), 3)), 118 + 98 * s]);
+}
+const arc = (x0: number, x1: number, y: number, h: number, n: number): P[] => Array.from({ length: n }, (_, i) => { const k = i / (n - 1); return [x0 + (x1 - x0) * k, y - h * Math.sin(Math.PI * k)] as P; });
+const eyeL = arc(58, 86, 100, 6, 7), eyeR = eyeL.map(([x, y]) => [2 * cx - x, y] as P);
+const browL = arc(52, 90, 84, 6, 7), browR = browL.map(([x, y]) => [2 * cx - x, y] as P);
+const nose: P[] = [[100, 96], [100, 112], [100, 128], [100, 144], [92, 156], [100, 160], [108, 156]];
+const mouth = arc(76, 124, 186, -5, 9);
+const poly = (pts: P[], close = false) => pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)} ${y.toFixed(1)}`).join('') + (close ? 'Z' : '');
+const dots: P[] = [...oval, ...eyeL, ...eyeR, ...browL, ...browR, ...nose, ...mouth];
+// mirrored pair connectors, drawn faint; symmetry variant highlights them
+const pairs = oval.slice(1, 18).map((p, i) => [p, oval[35 - i]] as [P, P]).filter((_, i) => i % 2 === 0);
+const thirds = [20, 84, 160, 216];
+---
+<svg viewBox="0 0 200 240" role="img" aria-label={label} class="face">
+  <defs>
+    <radialGradient id={`g-${variant}`} cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#3a2214" /><stop offset="1" stop-color="#15100b" /></radialGradient>
+  </defs>
+  <path d={poly(oval, true)} fill={`url(#g-${variant})`} stroke="rgba(194,154,110,.55)" stroke-width=".8" />
+  {pairs.map(([a, b]) => <path d={`M${a[0].toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}`} stroke="rgba(194,154,110,.14)" stroke-width=".5" />)}
+  {[eyeL, eyeR, browL, browR, nose, mouth].map((p) => <path d={poly(p)} fill="none" stroke="rgba(243,234,219,.5)" stroke-width=".8" stroke-linecap="round" />)}
+  {thirds.map((y) => <path d={`M30 ${y}H170`} stroke="rgba(243,234,219,.22)" stroke-width=".6" stroke-dasharray="2 3" />)}
+  <path d={`M${cx} 8V232`} stroke="#e8542a" stroke-width="1.2" stroke-dasharray={variant === 'symmetry' ? '0' : '4 3'} />
+  {dots.map(([x, y]) => <circle cx={x.toFixed(1)} cy={y.toFixed(1)} r="1.5" fill="#f3eadb" />)}
+  {variant === 'symmetry' && pairs.map(([a, b], i) => { const w = ((i * 7) % 5 - 2) * 1.1; return <g><path d={`M${(2 * cx - a[0] + w).toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}`} stroke="rgba(243,234,219,.6)" stroke-width=".6" /><circle cx={(2 * cx - a[0] + w).toFixed(1)} cy={a[1].toFixed(1)} r="2.6" fill="#3d6fe6" /><circle cx={b[0].toFixed(1)} cy={b[1].toFixed(1)} r="2.6" fill="#f3eadb" /></g>; })}
+</svg>
+<style>
+  .face { display: block; width: 100%; height: auto; }
+</style>

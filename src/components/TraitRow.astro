@@ -1,0 +1,16 @@
+---
+interface Props { name: string; score?: number; band: 'strong' | 'balanced' | 'room'; note: string }
+const { name, score, band, note } = Astro.props;
+const label = { strong: 'Strong', balanced: 'Balanced', room: 'Room to improve' }[band];
+---
+<li class="row">
+  <div class="top"><strong>{name}</strong>{score !== undefined && <span class="num s">{score.toFixed(1)}</span>}<span class={`tag ${band}`}>{label}</span></div>
+  <p>{note}</p>
+</li>
+<style>
+  .row { background: rgba(15, 12, 8, .5); border: 1px solid var(--hair-soft); border-radius: 14px; padding: 12px 14px; list-style: none; }
+  .top { display: flex; align-items: center; gap: 10px; }
+  strong { color: #fff; font-weight: 700; flex: 1; }
+  .s { color: var(--pill); font-size: 1.1rem; }
+  p { margin: 4px 0 0; font-size: .92rem; line-height: 1.45; }
+</style>

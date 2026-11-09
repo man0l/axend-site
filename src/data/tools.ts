@@ -3,6 +3,7 @@ export interface Tool {
   path: string; // '/' or '/slug'
   ct: string;
   nav: string;
+  blurb: string;
   title: string;
   description: string;
   eyebrow: string;
@@ -22,7 +23,7 @@ const commonFaq = [
 
 export const TOOLS: Tool[] = [
   {
-    path: '/', ct: 'home', nav: 'AI Attractiveness Test',
+    path: '/', ct: 'home', nav: 'AI Attractiveness Test', blurb: 'The full baseline: symmetry, proportions, jaw.',
     title: 'AI Attractiveness Test: Free, Private, On-Device | Axend',
     description: 'Free AI attractiveness test that runs on your device. Your photo never leaves your phone. Get a baseline score and what to work on.',
     eyebrow: 'The honest face rating', h1: ['AI attractiveness test.', 'Private by design.'],
@@ -37,7 +38,7 @@ export const TOOLS: Tool[] = [
     faq: [{ q: 'How does an AI attractiveness test work?', a: 'A vision model finds landmarks on your face. Ratios between those points, such as left-right symmetry, facial thirds and jaw angle, are turned into scores. See How we score for the exact method.' }, ...commonFaq],
   },
   {
-    path: '/how-attractive-am-i', ct: 'how-attractive-am-i', nav: 'How Attractive Am I?',
+    path: '/how-attractive-am-i', ct: 'how-attractive-am-i', nav: 'How Attractive Am I?', blurb: 'One photo, an honest baseline.',
     title: 'How Attractive Am I? Free Photo Test, Private | Axend',
     description: 'Wondering how attractive you are? Get a free baseline score from one photo. Runs on your device, nothing is uploaded.',
     eyebrow: 'How attractive am I', h1: ['How attractive am I?', 'Get an honest baseline.'],
@@ -52,7 +53,7 @@ export const TOOLS: Tool[] = [
     faq: [{ q: 'How attractive am I based on a picture?', a: 'A picture only shows geometry and presentation under that lighting and angle. The result is a rough baseline for a few measurable traits, not an overall verdict.' }, ...commonFaq],
   },
   {
-    path: '/facial-symmetry-test', ct: 'facial-symmetry-test', nav: 'Facial Symmetry Test',
+    path: '/facial-symmetry-test', ct: 'facial-symmetry-test', nav: 'Facial Symmetry Test', blurb: 'Your midline and mirrored landmark pairs.',
     title: 'Facial Symmetry Test Online: Free and Private | Axend',
     description: 'Free facial symmetry test with a midline overlay. Measured on your device from 478 landmarks. Your photo is never uploaded.',
     eyebrow: 'Facial symmetry test', h1: ['Facial symmetry test.', 'See your midline.'],
@@ -67,7 +68,7 @@ export const TOOLS: Tool[] = [
     faq: [{ q: 'What is a good facial symmetry score?', a: 'Most faces score in a middle range. A higher number means smaller left-right differences in the measured landmarks. It is not a judgment of how good you look.' }, { q: 'Why does my symmetry change between photos?', a: 'Head rotation, tilt, expression and lens distortion all change the measured landmarks. Use a straight-on neutral photo each time.' }, ...commonFaq],
   },
   {
-    path: '/face-attractiveness-test', ct: 'face-attractiveness-test', nav: 'Face Attractiveness Test',
+    path: '/face-attractiveness-test', ct: 'face-attractiveness-test', nav: 'Face Attractiveness Test', blurb: 'Face geometry only. No hair or skin.',
     title: 'Face Attractiveness Test: Free, On-Device Photo Scan | Axend',
     description: 'Free face attractiveness test from a photo. Symmetry, proportions and jawline measured on your device. No upload.',
     eyebrow: 'Face attractiveness test', h1: ['Face attractiveness test.', 'Your face, measured.'],
@@ -82,7 +83,7 @@ export const TOOLS: Tool[] = [
     faq: [{ q: 'What does a face attractiveness test measure?', a: 'Here it measures three geometric traits from facial landmarks: symmetry, proportions and jawline definition. It cannot measure appeal, skin, hair or personality.' }, ...commonFaq],
   },
   {
-    path: '/male-attractiveness-test', ct: 'male-attractiveness-test', nav: 'Male Attractiveness Test',
+    path: '/male-attractiveness-test', ct: 'male-attractiveness-test', nav: 'Male Attractiveness Test', blurb: 'Jawline-led read with what men can change.',
     title: 'Male Attractiveness Test: Private AI Face Scan | Axend',
     description: 'Attractiveness test built for men. Get a baseline and what to improve, with the scan running privately on your device.',
     eyebrow: 'Male attractiveness test', h1: ['Male attractiveness test.', 'Know your baseline.'],
@@ -97,7 +98,7 @@ export const TOOLS: Tool[] = [
     faq: [{ q: 'Is this test different for men?', a: 'The measurements are the same landmark ratios. The framing emphasizes jawline and the grooming levers men commonly work on.' }, ...commonFaq],
   },
   {
-    path: '/face-rating', ct: 'face-rating', nav: 'Face Rating',
+    path: '/face-rating', ct: 'face-rating', nav: 'Face Rating', blurb: 'A score out of 10 and the traits behind it.',
     title: 'Face Rating: Free AI Face Rating on Your Device | Axend',
     description: 'Free AI face rating from one photo. Real measurements, no flattery, and your photo never leaves your device.',
     eyebrow: 'The honest face rating', h1: ['AI face rating.', 'No flattery.'],

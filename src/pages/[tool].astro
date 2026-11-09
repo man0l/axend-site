@@ -1,6 +1,7 @@
 ---
 import ToolPage from '../components/ToolPage.astro';
 import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
 import { TOOLS } from '../data/tools';
 import { getCollection, render } from 'astro:content';
 
@@ -14,9 +15,7 @@ const rendered = page ? await render(page) : null;
 ---
 {tool ? <ToolPage tool={tool} /> : (
   <Base title={`${page.data.title} | Axend`} description={page.data.description} path={`/${page.id}`}>
-    <div class="wrap">
-      <section class="hero"><h1>{page.data.title}</h1><p class="meta">Last updated {page.data.updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}</p></section>
-      <div class="prose section">{rendered && <rendered.Content />}</div>
-    </div>
+    <PageHero eyebrow="Axend" title={page.data.title} meta={`Last updated ${page.data.updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}`} />
+    <div class="wrap"><div class="prose sec">{rendered && <rendered.Content />}</div></div>
   </Base>
 )}

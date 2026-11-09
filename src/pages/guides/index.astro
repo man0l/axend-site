@@ -1,17 +1,23 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PostCard from '../../components/PostCard.astro';
+import PageHero from '../../components/PageHero.astro';
+import GuideTabs from '../../components/GuideTabs.astro';
+import GuideCard from '../../components/GuideCard.astro';
 import { getPosts } from '../../lib/posts';
-import { CLUSTERS } from '../../lib/site';
 const posts = await getPosts();
+const [featured, ...rest] = posts;
 ---
 <Base title="Guides: Looks, Grooming and Face Scans | Axend" description="Practical guides on skin, hair, jawline, posture and how face rating tools work. Cosmetic and self-care only." path="/guides">
+  <PageHero eyebrow="Guides" title="Practical, no-hype guides." lead="Self-care and grooming advice, plus honest explainers on how face scans work." />
   <div class="wrap">
-    <section class="hero"><p class="eyebrow">Guides</p><h1>Practical, no-hype guides.</h1><p class="lead">Self-care and grooming advice, plus honest explainers on how face scans work.</p></section>
-    <div class="chips">
-      <a class="chip" href="/guides" aria-current="true">All</a>
-      {Object.values(CLUSTERS).filter((c) => posts.some((p) => CLUSTERS[p.data.cluster].slug === c.slug)).map((c) => <a class="chip" href={`/guides/${c.slug}`}>{c.label}</a>)}
-    </div>
-    <div class="grid">{posts.map((p) => <PostCard post={p} />)}</div>
+    <GuideTabs posts={posts} />
+    <div class="feat"><GuideCard post={featured} featured /></div>
+    <div class="grid">{rest.map((p) => <GuideCard post={p} />)}</div>
   </div>
 </Base>
+<style>
+  .feat { margin-bottom: 28px; }
+  .grid { display: grid; gap: 4px 32px; grid-template-columns: 1fr; padding-bottom: 72px; }
+  @media (min-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+</style>

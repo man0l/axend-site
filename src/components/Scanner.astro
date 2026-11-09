@@ -1,74 +1,132 @@
 ---
+import Icon from './Icon.astro';
+import ScoreRing from './ScoreRing.astro';
+import TraitRow from './TraitRow.astro';
+import LockedRows from './LockedRows.astro';
+import SampleResult from './SampleResult.astro';
+import { SAMPLES } from '../data/samples';
 import { appStoreLink } from '../lib/site';
 interface Props { ct: string; focus: 'overall' | 'symmetry' | 'face' | 'men' | 'rating' }
 const { ct, focus } = Astro.props;
+const sample = SAMPLES[focus];
+const good = [['front', 'Front-on'], ['light', 'Even light'], ['neutral', 'Neutral face']];
+const bad = [['tilt', 'Tilted'], ['filter', 'Filtered'], ['group', 'Group shot']];
 ---
-<section class="scanner card" id="scan" data-focus={focus} data-cta={appStoreLink(ct)} aria-label="Face scan">
-  <div class="step gate">
-    <label class="age">
-      <input type="checkbox" id="age-ok" />
-      <span>I confirm I am 18 or older.</span>
-    </label>
-    <div class="actions">
-      <label class="btn" id="pick-label" aria-disabled="true">Upload a photo
-        <input type="file" id="file" accept="image/*" hidden disabled />
-      </label>
-      <label class="btn ghost" id="cam-label" aria-disabled="true">Take a photo
-        <input type="file" id="cam" accept="image/*" capture="user" hidden disabled />
-      </label>
+<section class="scanner panel" id="scan" data-focus={focus} data-cta={appStoreLink(ct)} aria-label="Face scan">
+  <div class="gate">
+    <div class="stage">
+      <div class="dz-wrap">
+        <div class="dz" id="dz">
+          <span class="dz-ic"><Icon name="scan" size={26} /></span>
+          <p class="dz-t">Drop a front-facing photo</p>
+          <p class="dz-s">JPG, PNG or HEIC. Stays in this tab.</p>
+          <div class="actions">
+            <label class="btn" id="pick-label" aria-disabled="true"><Icon name="upload" size={18} /> Scan a photo
+              <input type="file" id="file" accept="image/*" hidden disabled />
+            </label>
+            <label class="btn ghost" id="cam-label" aria-disabled="true"><Icon name="camera" size={18} /> Use camera
+              <input type="file" id="cam" accept="image/*" capture="user" hidden disabled />
+            </label>
+          </div>
+        </div>
+        <label class="age">
+          <input type="checkbox" id="age-ok" />
+          <span>I am 18 or older. <em>The scan runs in this browser tab: no upload, no account.</em></span>
+        </label>
+      </div>
+      <div class="ex" aria-hidden="true">
+        <span class="ex-l">Example result</span>
+        <div class="ex-in"><SampleResult focus={focus} ct={ct} /></div>
+      </div>
     </div>
-    <p class="disclaimer">Private by design: the scan runs in this browser tab. Your photo is not uploaded, stored or shared, and there is no account.</p>
+    <div class="guide" aria-label="Photo guidance">
+      <ul class="g good">{good.map(([i, t]) => <li><Icon name={i} size={20} /><span>{t}</span></li>)}</ul>
+      <ul class="g avoid">{bad.map(([i, t]) => <li><Icon name={i} size={20} /><span>{t}</span></li>)}</ul>
+    </div>
   </div>
 
   <p class="status" id="status" role="status" aria-live="polite" hidden></p>
 
-  <div class="step result" id="result" hidden>
-    <div class="preview">
-      <canvas id="canvas" aria-label="Your photo with scan overlay"></canvas>
-    </div>
+  <div class="view" id="result" hidden data-state="scanning">
+    <div class="frame"><canvas id="canvas" aria-label="Your photo with scan overlay"></canvas><i class="sweep" aria-hidden="true"></i></div>
     <div class="out">
-      <div class="ring" id="ring" role="img"></div>
-      <p class="meta" id="ring-caption"></p>
-      <ul class="traits" id="traits"></ul>
-      <p class="warn" id="warn" hidden></p>
-      <div class="locked" aria-label="Full plan, available in the Axend app">
-        <div class="blur" aria-hidden="true">
-          <div class="bar" style="width:82%"></div><div class="bar" style="width:64%"></div><div class="bar" style="width:73%"></div><div class="bar" style="width:48%"></div>
-          <p>Skin · Hair · Jawline · Posture · Smile</p>
+      <p class="scan-note" id="scan-note">Scanning on your device...</p>
+      <div class="res">
+        <div class="rr">
+          <ScoreRing id="ring" score={0} size={132} label={sample.ringLabel} />
+          <div><p class="cap" id="ring-caption">{sample.caption}</p><span class="tag" id="band-tag">Balanced</span></div>
         </div>
-        <div class="lock-cta">
-          <strong>Your full breakdown and plan</strong>
-          <span class="meta">Every trait, the 5 modules and a step-by-step plan.</span>
-          <a class="btn" id="cta" href={appStoreLink(ct)} rel="noopener">Get your full plan in Axend</a>
-        </div>
+        <ul class="traits" id="traits"><TraitRow name="" score={0} band="balanced" note="" /></ul>
+        <p class="warn" id="warn" hidden></p>
+        <LockedRows ct={ct} rows={sample.locked} />
+        <button class="btn ghost" id="again" type="button">Scan another photo</button>
+        <p class="disclaimer">Cosmetic and approximate. Not medical advice and not a judgment of worth.</p>
       </div>
-      <button class="btn ghost" id="again" type="button">Scan another photo</button>
-      <p class="disclaimer">Cosmetic and approximate. Not medical advice and not a judgment of worth.</p>
     </div>
   </div>
 </section>
 
 <style>
-  .scanner { padding: 26px; }
-  .age { display: flex; gap: 10px; align-items: center; color: var(--text); margin-bottom: 16px; cursor: pointer; }
-  .age input { width: 20px; height: 20px; accent-color: var(--cta); }
-  .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
-  .status { color: var(--eyebrow); font-weight: 600; margin: 12px 0 0; }
-  .result { display: grid; gap: 24px; grid-template-columns: 1fr 1fr; align-items: start; }
-  .preview canvas { width: 100%; height: auto; border-radius: 14px; background: #000; display: block; }
-  .ring { width: 150px; height: 150px; margin: 0 auto 6px; }
-  #ring-caption { text-align: center; margin-bottom: 14px; }
-  .traits { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 10px; }
-  .traits li { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; }
-  .traits strong { color: var(--text); }
-  .traits .tag { float: right; font-size: .8rem; color: var(--eyebrow); text-transform: uppercase; letter-spacing: .08em; }
-  .traits p { margin: 4px 0 0; font-size: .92rem; }
-  .warn { background: #3a2415; border: 1px solid #5a3a22; border-radius: 12px; padding: 10px 14px; color: #f3d9b8; }
-  .locked { position: relative; border-radius: 16px; overflow: hidden; margin-bottom: 14px; border: 1px solid var(--border); min-height: 190px; }
-  .blur { filter: blur(7px); padding: 18px; background: var(--surface); height: 100%; }
-  .bar { height: 14px; border-radius: 8px; background: var(--muted); margin-bottom: 12px; }
-  .lock-cta { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center; text-align: center; padding: 16px; background: rgba(15, 12, 8, .55); color: var(--text); }
-  @media (max-width: 760px) { .result { grid-template-columns: 1fr; } }
+  .scanner { padding: 14px; position: relative; overflow: hidden; }
+  .scanner::before { content: ''; position: absolute; inset: -40% -20% auto; height: 80%; background: radial-gradient(closest-side, rgba(58, 34, 20, .9), transparent); pointer-events: none; }
+  .gate, .view { position: relative; }
+  .stage { display: grid; }
+  .dz-wrap { grid-area: 1 / 1; position: relative; z-index: 2; padding: 6px; }
+  .dz { text-align: center; padding: 14px 12px 12px; border: 1.5px dashed rgba(194, 154, 110, .55); border-radius: 16px; background: rgba(20, 14, 9, .72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: border-color .15s, background .15s; }
+  .dz.over { border-color: var(--pill); background: rgba(40, 28, 18, .85); }
+  .dz-ic { display: none; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(243, 234, 219, .08); color: var(--pill); margin-bottom: 8px; }
+  .dz-t { color: #fff; font-weight: 700; font-size: 1.05rem; margin: 0; letter-spacing: -0.01em; }
+  .dz-s { margin: 0 0 10px; font-size: .9rem; color: var(--muted); }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .actions { flex-wrap: nowrap; } .actions .btn { flex: 1 1 0; max-width: 220px; padding: 12px 8px; font-size: .92rem; white-space: nowrap; gap: 6px; }
+  @media (max-width: 420px) { .actions .btn :global(svg) { display: none; } }
+  .age { display: flex; gap: 10px; align-items: flex-start; margin: 8px 4px 0; line-height: 1.35; cursor: pointer; font-size: .9rem; color: var(--text); background: rgba(15, 12, 8, .6); border-radius: 12px; padding: 8px 12px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .age input { width: 20px; height: 20px; margin-top: 1px; accent-color: var(--pill); flex: none; }
+  .age em { display: block; font-style: normal; color: var(--body); margin-top: 1px; font-size: .82rem; }
+  .ex { grid-area: 1 / 1; position: relative; align-self: end; margin-top: 20px; }
+  .ex-in { opacity: .5; filter: saturate(.75); pointer-events: none; user-select: none; max-height: 250px; overflow: hidden; padding: 0 6px; -webkit-mask-image: linear-gradient(180deg, #000 40%, transparent 98%); mask-image: linear-gradient(180deg, #000 40%, transparent 98%); }
+  .ex-l { position: absolute; z-index: 3; right: 8px; top: -4px; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--eyebrow); background: rgba(15, 12, 8, .85); border: 1px solid var(--hair); border-radius: 999px; padding: 2px 10px; }
+  /* mobile: dropzone on top, example result peeks beneath it */
+  .stage { grid-template-rows: auto 1fr; }
+  .dz-wrap { grid-row: 1; } .ex { grid-row: 2; margin-top: 8px; align-self: start; }
+  .ex-l { top: 0; }
+  .ex-in { max-height: 200px; padding-top: 26px; }
+  .ex-in :global(.mesh) { display: none; }
+  .guide { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .g { list-style: none; margin: 0; padding: 8px 10px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .8rem; font-weight: 600; border: 1px solid var(--hair-soft); }
+  .g li { display: inline-flex; align-items: center; gap: 5px; }
+  .good { color: var(--pill); } .avoid { color: var(--muted); }
+  .good :global(svg) { color: #9fd4a4; } .avoid :global(svg) { color: #e08a6a; }
+
+  .status { position: relative; color: var(--eyebrow); font-weight: 600; margin: 12px 4px 0; font-size: .95rem; }
+  .view { display: grid; gap: 18px; grid-template-columns: 1fr; padding: 6px; align-items: start; }
+  .frame { position: relative; aspect-ratio: 4 / 5; border-radius: 14px; overflow: hidden; background: #0c0906; border: 1px solid var(--hair); max-width: 340px; width: 100%; margin: 0 auto; }
+  .frame canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  .sweep { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--accent); box-shadow: 0 0 18px 4px rgba(232, 84, 42, .55); display: none; }
+  .view[data-state='scanning'] .sweep { display: block; animation: sweep 1.2s ease-in-out infinite alternate; }
+  @keyframes sweep { to { top: calc(100% - 2px); } }
+  @media (prefers-reduced-motion: reduce) { .view[data-state='scanning'] .sweep { animation: none; top: 50%; } }
+  .view[data-state='scanning'] .res { display: none; }
+  .view[data-state='result'] .scan-note { display: none; }
+  .scan-note { color: var(--eyebrow); font-weight: 600; margin: 0; }
+  .res { display: grid; gap: 12px; min-width: 0; }
+  .rr { display: flex; align-items: center; gap: 16px; }
+  .cap { margin: 0 0 6px; color: var(--lead); font-weight: 600; }
+  .traits { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .warn { background: #3a2415; border: 1px solid #5a3a22; border-radius: 12px; padding: 10px 14px; color: #f3d9b8; margin: 0; font-size: .92rem; }
+  #again { justify-self: start; }
+
+  .view > * { min-width: 0; }
+  @media (min-width: 640px) { .scanner { padding: 20px; } }
+  @media (min-width: 640px) and (max-width: 959px) {
+    .view { grid-template-columns: 260px minmax(0, 1fr); }
+    .frame { margin: 0; max-width: none; }
+  }
+  @media (min-width: 640px) {
+    .dz-ic { display: inline-flex; } .dz { padding: 22px 16px 18px; } .dz-s { margin-bottom: 14px; }
+    .ex-in { max-height: 300px; } .ex-in :global(.mesh) { display: block; }
+    .ex-in :global(.sample) { grid-template-columns: 150px 1fr; }
+  }
 </style>
 
 <script>
@@ -77,19 +135,25 @@ const { ct, focus } = Astro.props;
   const root = document.getElementById('scan') as HTMLElement;
   const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
   const age = $<HTMLInputElement>('age-ok'), file = $<HTMLInputElement>('file'), cam = $<HTMLInputElement>('cam');
-  const status = $('status'), result = $('result'), canvas = $<HTMLCanvasElement>('canvas');
+  const status = $('status'), view = $('result'), canvas = $<HTMLCanvasElement>('canvas'), gate = root.querySelector('.gate') as HTMLElement;
   const focus = root.dataset.focus!;
   const labels = [$('pick-label'), $('cam-label')];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   let landmarkerP: Promise<any> | null = null;
   const getLandmarker = () =>
     (landmarkerP ??= import('@mediapipe/tasks-vision').then(async ({ FaceLandmarker, FilesetResolver }) => {
       const fileset = await FilesetResolver.forVisionTasks('/mediapipe');
-      return FaceLandmarker.createFromOptions(fileset, {
-        baseOptions: { modelAssetPath: '/models/face_landmarker.task', delegate: 'CPU' },
-        runningMode: 'IMAGE',
-        numFaces: 2,
-      });
+      // MediaPipe reports its TFLite "INFO:" startup line through console.error; drop only that line.
+      const err = console.error;
+      console.error = (...a: unknown[]) => { if (!String(a[0]).startsWith('INFO:')) err.apply(console, a); };
+      try {
+        return await FaceLandmarker.createFromOptions(fileset, {
+          baseOptions: { modelAssetPath: '/models/face_landmarker.task', delegate: 'CPU' },
+          runningMode: 'IMAGE',
+          numFaces: 2,
+        });
+      } finally { setTimeout(() => { console.error = err; }, 0); }
     }).catch((e) => { landmarkerP = null; throw e; }));
 
   const say = (msg: string, bad = false) => { status.hidden = !msg; status.textContent = msg; status.style.color = bad ? '#f3a58a' : ''; };
@@ -100,6 +164,12 @@ const { ct, focus } = Astro.props;
     if (age.checked) void getLandmarker().catch(() => {}); // warm the model while the user picks a photo
   });
   for (const l of labels) l.addEventListener('click', (e) => { if (!age.checked) { e.preventDefault(); say('Please confirm you are 18 or older first.', true); } });
+
+  // drag and drop, only once the 18+ box is ticked
+  const dz = $('dz');
+  for (const ev of ['dragenter', 'dragover']) dz.addEventListener(ev, (e) => { e.preventDefault(); dz.classList.add('over'); });
+  for (const ev of ['dragleave', 'drop']) dz.addEventListener(ev, () => dz.classList.remove('over'));
+  dz.addEventListener('drop', (e) => { e.preventDefault(); void run((e as DragEvent).dataTransfer?.files?.[0]); });
 
   async function load(f: File): Promise<HTMLCanvasElement> {
     const url = URL.createObjectURL(f);
@@ -116,12 +186,20 @@ const { ct, focus } = Astro.props;
   }
 
   function ring(score: number) {
-    const r = 62, c = 2 * Math.PI * r, off = c * (1 - score / 10);
-    $('ring').innerHTML = `<svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="${r}" fill="none" stroke="rgba(255,240,220,.1)" stroke-width="10"/><circle cx="75" cy="75" r="${r}" fill="none" stroke="#f3eadb" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 75 75)"/><text x="75" y="84" text-anchor="middle" font-size="38" font-weight="700" fill="#fff" font-family="inherit">${score.toFixed(1)}</text></svg>`;
-    $('ring').setAttribute('aria-label', `Score ${score.toFixed(1)} out of 10`);
+    const el = $('ring'), arc = el.querySelector('.arc') as SVGCircleElement, dot = el.querySelector('.dot') as SVGCircleElement, n = el.querySelector('.n') as HTMLElement;
+    const r = 62, c = 2 * Math.PI * r, tick = (score / 10) * 2 * Math.PI - Math.PI / 2;
+    arc.style.setProperty('--c', String(c)); arc.setAttribute('stroke-dasharray', String(c)); arc.setAttribute('stroke-dashoffset', String(c * (1 - score / 10)));
+    dot.setAttribute('cx', String(75 + r * Math.cos(tick))); dot.setAttribute('cy', String(75 + r * Math.sin(tick)));
+    el.setAttribute('aria-label', `Score ${score.toFixed(1)} out of 10`);
+    el.dataset.animate = '1';
+    for (const t of [arc, dot]) { t.style.animation = 'none'; void t.getBoundingClientRect(); t.style.animation = ''; }
+    if (reduce) { n.textContent = score.toFixed(1); return; }
+    const t0 = performance.now();
+    const step = (t: number) => { const k = Math.min(1, (t - t0) / 600); n.textContent = (score * (1 - Math.pow(1 - k, 3))).toFixed(1); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
   }
 
-  function overlay(a: Analysis, lm: { x: number; y: number }[], c: HTMLCanvasElement) {
+  function overlay(a: Analysis, c: HTMLCanvasElement) {
     const g = c.getContext('2d')!;
     const { mid, u } = a.symmetry, L = Math.max(c.width, c.height);
     g.lineWidth = Math.max(2, c.width / 400);
@@ -137,54 +215,65 @@ const { ct, focus } = Astro.props;
     }
   }
 
+  const tagText = { strong: 'Strong', balanced: 'Balanced', room: 'Room to improve' } as const;
+  const rowTpl = $('traits').firstElementChild as HTMLElement;
+  const setTag = (el: HTMLElement, band: keyof typeof tagText) => { el.className = el.className.replace(/\b(strong|balanced|room)\b/g, '').trim() + ` ${band}`; el.textContent = tagText[band]; };
+
+  function showResult(a: Analysis) {
+    const lead = focus === 'symmetry' ? a.traits.find((t) => t.key === 'symmetry')! : focus === 'men' ? a.traits.find((t) => t.key === 'jawline')! : null;
+    const shown = lead ? lead.score : a.overall;
+    ring(shown);
+    $('ring-caption').textContent = focus === 'symmetry' ? 'Symmetry score, out of 10' : 'Baseline score, out of 10';
+    const bandOf = (s: number) => (s >= 7.5 ? 'strong' : s >= 5.5 ? 'balanced' : 'room') as keyof typeof tagText;
+    setTag($('band-tag'), bandOf(shown));
+    const ordered = lead ? [lead, ...a.traits.filter((t) => t !== lead)] : a.traits;
+    $('traits').replaceChildren(...ordered.map((t) => {
+      const li = rowTpl.cloneNode(true) as HTMLElement;
+      li.querySelector('strong')!.textContent = t.label;
+      li.querySelector('.s')!.textContent = t.score.toFixed(1);
+      setTag(li.querySelector('.tag') as HTMLElement, t.band);
+      li.querySelector('p')!.textContent = t.note;
+      return li;
+    }));
+    const warn = $('warn');
+    warn.hidden = !a.pose.tooTurned;
+    if (a.pose.tooTurned) warn.textContent = 'Your head looks turned in this photo, which skews the numbers. Retake it facing the camera straight on.';
+  }
+
+  function reset() {
+    view.hidden = true; gate.hidden = false; file.value = ''; cam.value = '';
+    canvas.getContext('2d')!.clearRect(0, 0, canvas.width, canvas.height); canvas.width = canvas.height = 0;
+  }
+
   async function run(f: File | undefined) {
     if (!f) return;
-    result.hidden = true;
     if (!age.checked) return say('Please confirm you are 18 or older first.', true);
     if (!f.type.startsWith('image/')) return say('Please choose an image file.', true);
     try {
       say('Loading the on-device model...');
       const [src, lmk] = await Promise.all([load(f), getLandmarker()]);
-      say('Scanning on your device...');
-      const out = lmk.detect(src);
-      if (!out.faceLandmarks?.length) return say('No face found. Try a clear, front-facing photo with good light.', true);
-      if (out.faceLandmarks.length > 1) return say('More than one face found. Use a photo with only you in it.', true);
-      const lm = out.faceLandmarks[0];
-      const a = analyze(lm, src.width, src.height);
+      // scanning state: show the photo with the sweep while the detector runs
       canvas.width = src.width; canvas.height = src.height;
       canvas.getContext('2d')!.drawImage(src, 0, 0);
-      overlay(a, lm, canvas);
-
-      const lead = focus === 'symmetry' ? a.traits.find((t) => t.key === 'symmetry')! : null;
-      ring(lead ? lead.score : a.overall);
-      $('ring-caption').textContent = lead ? 'Symmetry score, out of 10' : 'Baseline score, out of 10';
-      const ordered = lead ? [lead, ...a.traits.filter((t) => t !== lead)] : a.traits;
-      const tag = { strong: 'Strong', balanced: 'Balanced', room: 'Room to improve' } as const;
-      $('traits').replaceChildren(...ordered.map((t) => {
-        const li = document.createElement('li');
-        const s = document.createElement('strong'); s.textContent = `${t.label} ${t.score.toFixed(1)}`;
-        const sp = document.createElement('span'); sp.className = 'tag'; sp.textContent = tag[t.band];
-        const p = document.createElement('p'); p.textContent = t.note;
-        li.append(s, sp, p); return li;
-      }));
-      const warn = $('warn');
-      warn.hidden = !a.pose.tooTurned;
-      if (a.pose.tooTurned) warn.textContent = 'Your head looks turned in this photo, which skews the numbers. Retake it facing the camera straight on.';
-      say('');
-      $('scan').querySelector('.gate')!.setAttribute('hidden', '');
-      result.hidden = false;
-      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      view.dataset.state = 'scanning'; $('scan-note').textContent = 'Scanning on your device...';
+      gate.hidden = true; view.hidden = false; say('');
+      await new Promise((r) => setTimeout(r, reduce ? 0 : 900)); // let the sweep read as a scan, not a flash
+      const out = lmk.detect(src);
+      if (!out.faceLandmarks?.length) { reset(); return say('No face found. Try a clear, front-facing photo with good light.', true); }
+      if (out.faceLandmarks.length > 1) { reset(); return say('More than one face found. Use a photo with only you in it.', true); }
+      const a = analyze(out.faceLandmarks[0], src.width, src.height);
+      overlay(a, canvas);
+      showResult(a);
+      view.dataset.state = 'result';
+      view.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
     } catch (e) {
       console.error(e);
+      reset();
       say('The scan could not run in this browser. Try a recent Chrome, Safari or Firefox.', true);
     }
   }
 
   file.addEventListener('change', () => run(file.files?.[0]));
   cam.addEventListener('change', () => run(cam.files?.[0]));
-  $('again').addEventListener('click', () => {
-    result.hidden = true; file.value = ''; cam.value = '';
-    canvas.getContext('2d')!.clearRect(0, 0, canvas.width, canvas.height); canvas.width = canvas.height = 0;
-    $('scan').querySelector('.gate')!.removeAttribute('hidden');
-  });
+  $('again').addEventListener('click', () => { reset(); say(''); });
 </script>

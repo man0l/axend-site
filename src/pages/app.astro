@@ -1,26 +1,90 @@
 ---
 import Base from '../layouts/Base.astro';
-import { appStoreLink } from '../lib/site';
+import Icon from '../components/Icon.astro';
+import PhoneFrame from '../components/PhoneFrame.astro';
+import StepCard from '../components/StepCard.astro';
+import Accordion from '../components/Accordion.astro';
+import AppBadge from '../components/AppBadge.astro';
 const modules = [
-  ['Skin', 'A simple routine built around your skin, not a shelf of products.'],
-  ['Hair', 'Cuts and styling that suit your face shape and hair type.'],
-  ['Jawline', 'Realistic guidance on the things that change how your jaw reads.'],
-  ['Posture', 'Short daily exercises for head and shoulder position.'],
-  ['Smile', 'Care and presentation habits for a confident smile.'],
+  ['skin', 'Skin', 'A simple routine built around your skin, not a shelf of products.', 'wide'],
+  ['hair', 'Hair', 'Cuts and styling that suit your face shape and hair type.', 'wide'],
+  ['jaw', 'Jawline', 'Realistic guidance on the things that change how your jaw reads.', ''],
+  ['posture', 'Posture', 'Short daily exercises for head and shoulder position.', ''],
+  ['smile', 'Smile', 'Care and presentation habits for a confident smile.', ''],
 ];
-const jsonLd = [{ '@context': 'https://schema.org', '@type': 'MobileApplication', name: 'Axend', operatingSystem: 'iOS', applicationCategory: 'LifestyleApplication', url: 'https://axendai.com/app' }];
+const week = [['01', 'Scan', 'Two guided photos give you a baseline across the areas you choose.', 'scan'], ['02', 'Plan', 'Axend builds step-by-step routines and tutorials from your scan.', 'plan'], ['03', 'Daily session', 'A short session each day, with streaks and check-ins to keep you going.', 'streak'], ['04', '14-day snapshot', 'Every 14 days a new snapshot shows what actually moved.', 'snap']];
+const faq = [
+  { q: 'How much does Axend cost?', a: 'Axend is free to download. A subscription is $4.99 per week or $49.99 per year, billed through the App Store. Prices and the current offer are shown on the App Store listing.' },
+  { q: 'Is it only for men?', a: 'No. The modules (skin, hair, jawline, posture and smile) apply to anyone 18 or over. Some copy on the web tests is written for men because that is who searches for them.' },
+  { q: 'Are the scores medical advice?', a: 'No. Scores are cosmetic and approximate. They are not medical advice and not a judgment of your worth. See a doctor or dermatologist for medical concerns.' },
+  { q: 'Is the web scan the same as the app?', a: 'The web scan is a free baseline that runs entirely on your device. The app has the full trait breakdown, your plan and progress tracking.' },
+];
+const jsonLd = [{ '@context': 'https://schema.org', '@type': 'MobileApplication', name: 'Axend', operatingSystem: 'iOS', applicationCategory: 'LifestyleApplication', url: 'https://axendai.com/app', offers: [{ '@type': 'Offer', price: '4.99', priceCurrency: 'USD', description: 'Weekly' }, { '@type': 'Offer', price: '49.99', priceCurrency: 'USD', description: 'Yearly' }] }];
 ---
 <Base title="Axend App: Your Grooming and Self-Care Plan | Axend" description="Axend turns your face scan into a plan across skin, hair, jawline, posture and smile. Private by design. iOS." path="/app" jsonLd={jsonLd}>
-  <div class="wrap">
-    <section class="hero">
-      <p class="eyebrow">The Axend app</p>
-      <h1>Do the work.<br />Track the change.</h1>
-      <p class="lead">Axend turns a baseline scan into a plan across five modules, then tracks your progress. Scores are cosmetic and approximate, for adults 18+.</p>
-      <a class="btn" href={appStoreLink('app-page')} rel="noopener">Download on the App Store</a>
-    </section>
-    <section class="section"><h2>Five modules</h2>
-      <div class="grid">{modules.map(([n, d]) => <div class="card"><strong style="color:#fff">{n}</strong><p>{d}</p></div>)}</div></section>
-    <section class="section prose"><h2>Try it free first</h2><p>The web scan gives you a baseline and a few insights with nothing uploaded. The app has the full breakdown and plan.</p><a class="btn ghost" href="/">Take the free test</a></section>
-    <section class="section"><p class="disclaimer">Pricing and plans are shown on the App Store listing.</p></section>
-  </div>
+  <section class="hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap hg">
+      <div class="tx">
+        <p class="eyebrow">The Axend app</p>
+        <h1>Do the work. <span>Track the change.</span></h1>
+        <p class="lead">Axend turns a baseline scan into a plan across five modules, then tracks your progress every 14 days. Scores are cosmetic and approximate, for adults 18+.</p>
+        <div class="acts"><AppBadge ct="app-page" primary /><a class="btn ghost" href="/">Take the free test first</a></div>
+        <p class="price"><strong class="num">$4.99</strong>/week or <strong class="num">$49.99</strong>/year · Free to download · 18+</p>
+      </div>
+      <div class="ph"><PhoneFrame src="/app/hero.webp" alt="Axend app overall score card" width={300} eager /></div>
+    </div>
+  </section>
+
+  <section class="sec"><div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Five modules</p><h2>One plan, five places to work.</h2></div>
+    <div class="bento">{modules.map(([i, n, d, w]) => <div class={`card cell ${w}`}><span class="ic"><Icon name={i} size={22} /></span><h3>{n}</h3><p>{d}</p></div>)}</div>
+  </div></section>
+
+  <section class="sec"><div class="wrap">
+    <div class="sec-head"><p class="eyebrow">A week in Axend</p><h2>From scan to proof.</h2></div>
+    <ol class="steps">{week.map(([n, t, d, i]) => <StepCard n={n} title={t} text={d} icon={i} />)}</ol>
+    <div class="shots"><PhoneFrame src="/app/traits.webp" alt="Axend trait scores" width={230} /><PhoneFrame src="/app/plan.webp" alt="Axend daily jawline workout" width={230} /><PhoneFrame src="/app/streak.webp" alt="Axend streak calendar" width={230} /></div>
+  </div></section>
+
+  <section class="sec"><div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Pricing</p><h2>Free to try. Two ways to subscribe.</h2></div>
+    <div class="plans">
+      <div class="card"><p class="eyebrow">Weekly</p><p class="amt"><span class="num">$4.99</span> / week</p><p>Try it for a week and stop whenever you like.</p></div>
+      <div class="card best"><p class="eyebrow">Yearly</p><p class="amt"><span class="num">$49.99</span> / year</p><p>About $0.96 a week. Best for a full 14-day snapshot cycle, and beyond.</p></div>
+    </div>
+    <p class="disclaimer">Billed by Apple through your App Store account. Cancel anytime in Settings.</p>
+  </div></section>
+
+  <section class="sec"><div class="wrap narrow"><div class="sec-head"><p class="eyebrow">FAQ</p><h2>Before you download.</h2></div><Accordion items={faq} /></div></section>
+
+  <section class="sec"><div class="wrap"><div class="cta panel"><h2>Start with a free, private scan.</h2><p>Then take the plan with you.</p><AppBadge ct="app-page-final" primary /></div></div></section>
 </Base>
+<style>
+  .hero { position: relative; padding: 28px 0 24px; overflow: hidden; }
+  .glow { position: absolute; inset: -120px 0 auto; height: 780px; background: radial-gradient(40% 55% at 72% 42%, #3a2214, transparent); pointer-events: none; }
+  .hg { position: relative; display: grid; gap: 8px; grid-template-columns: minmax(0, 1fr); align-items: center; }
+  h1 span { display: block; color: var(--pill); }
+  .acts { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 22px 0 14px; }
+  .price { color: var(--lead); font-size: .95rem; } .price strong { color: #fff; }
+  .ph { display: flex; justify-content: center; max-height: 360px; overflow: hidden; }
+  .bento { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .cell p { margin: 0; font-size: 1rem; }
+  .ic { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 12px; background: rgba(243, 234, 219, .08); color: var(--pill); margin-bottom: 14px; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .shots { display: flex; justify-content: center; gap: 20px; margin-top: 40px; max-height: 420px; overflow: hidden; }
+  .shots > :global(figure:nth-child(n+2)) { display: none; }
+  .plans { display: grid; gap: 14px; grid-template-columns: 1fr; margin-bottom: 14px; }
+  .amt { color: #fff; font-size: 1.1rem; margin: 0 0 6px; } .amt .num { font-size: 2.6rem; }
+  .best { border-color: var(--eyebrow); background: linear-gradient(180deg, #2d2217, #1b140e); }
+  .plans p:last-child { margin: 0; }
+  .narrow { max-width: 780px; }
+  .cta { text-align: center; padding: 44px 20px; background: radial-gradient(60% 120% at 50% 0%, #3a2214, #1b140e); }
+  .cta p { color: var(--lead); }
+  @media (min-width: 640px) { .steps { grid-template-columns: repeat(2, 1fr); } .plans { grid-template-columns: repeat(2, 1fr); } .shots > :global(figure:nth-child(n+2)) { display: block; } }
+  @media (min-width: 900px) {
+    .hero { padding: 56px 0 40px; } .hg { grid-template-columns: 1.2fr 1fr; gap: 56px; } .ph { max-height: none; overflow: visible; }
+    .bento { grid-template-columns: repeat(6, 1fr); } .cell { grid-column: span 2; } .cell.wide { grid-column: span 3; }
+    .steps { grid-template-columns: repeat(4, 1fr); }
+  }
+</style>

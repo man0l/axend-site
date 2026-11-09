@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+interface Props { n: string; title: string; text: string; icon?: string }
+const { n, title, text, icon } = Astro.props;
+---
+<li class="step panel">
+  <div class="head"><span class="n num">{n}</span>{icon && <Icon name={icon} size={24} />}</div>
+  <h3>{title}</h3><p>{text}</p>
+</li>
+<style>
+  .step { padding: 22px; list-style: none; }
+  .head { display: flex; justify-content: space-between; align-items: center; color: var(--eyebrow); margin-bottom: 18px; }
+  .n { font-size: 2rem; color: var(--eyebrow); line-height: 1; }
+  p { margin: 0; font-size: 1rem; }
+</style>

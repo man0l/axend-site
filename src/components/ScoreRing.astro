@@ -1,0 +1,29 @@
+---
+// Cream ring, orange tick, tabular numeral. Draws on over 600ms (CSS), count-up handled by ring.ts when animate is set.
+interface Props { score: number; size?: number; label?: string; animate?: boolean; id?: string }
+const { score, size = 150, label = 'Baseline', animate = false, id } = Astro.props;
+const r = 62, c = 2 * Math.PI * r, off = c * (1 - score / 10);
+const tick = (score / 10) * 2 * Math.PI - Math.PI / 2;
+const tx = 75 + r * Math.cos(tick), ty = 75 + r * Math.sin(tick);
+---
+<div class="ring" id={id} data-animate={animate ? '1' : undefined} style={`--size:${size}px`} role="img" aria-label={`Score ${score.toFixed(1)} out of 10`}>
+  <svg viewBox="0 0 150 150" aria-hidden="true">
+    <circle cx="75" cy="75" r={r} fill="none" stroke="rgba(255,240,220,.1)" stroke-width="10" />
+    <circle class="arc" cx="75" cy="75" r={r} fill="none" stroke="#f3eadb" stroke-width="10" stroke-linecap="round" stroke-dasharray={c} stroke-dashoffset={off} style={`--c:${c}`} transform="rotate(-90 75 75)" />
+    <circle class="dot" cx={tx} cy={ty} r="4.5" fill="#e8542a" stroke="#0f0c08" stroke-width="2" />
+  </svg>
+  <div class="in"><span class="num n">{score.toFixed(1)}</span><span class="l">{label}</span></div>
+</div>
+<style>
+  .ring { position: relative; width: var(--size); height: var(--size); flex: none; }
+  .ring svg { width: 100%; height: 100%; display: block; }
+  .in { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; }
+  .n { color: #fff; font-size: calc(var(--size) * .3); }
+  .l { margin-top: 6px; color: var(--muted); font-size: calc(var(--size) * .085); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  @media (prefers-reduced-motion: no-preference) {
+    .ring[data-animate] .arc { animation: draw .6s cubic-bezier(.2,.7,.2,1) both; }
+    .ring[data-animate] .dot { animation: fade .3s .5s both; }
+    @keyframes draw { from { stroke-dashoffset: var(--c); } }
+    @keyframes fade { from { opacity: 0; } }
+  }
+</style>
