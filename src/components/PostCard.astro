@@ -1,0 +1,9 @@
+---
+import { clusterOf, type Post } from '../lib/posts';
+const { post } = Astro.props as { post: Post };
+---
+<a class="card" href={`/guides/${post.data.slug}`}>
+  <span class="eyebrow">{clusterOf(post).label}</span>
+  <strong>{post.data.title}</strong>
+  <span>{post.data.description}</span>
+</a>

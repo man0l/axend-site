@@ -1,0 +1,22 @@
+{
+  "name": "axend-site",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "node scripts/copy-mediapipe.mjs && astro dev",
+    "build": "node scripts/copy-mediapipe.mjs && astro build",
+    "preview": "astro preview",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.0",
+    "@astrojs/sitemap": "^3.0.0",
+    "@fontsource-variable/figtree": "^5.3.0",
+    "@mediapipe/tasks-vision": "^0.10.0",
+    "astro": "^5.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

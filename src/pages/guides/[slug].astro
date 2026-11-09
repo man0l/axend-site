@@ -1,0 +1,65 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { render } from 'astro:content';
+import { getPosts, clusterOf, related } from '../../lib/posts';
+import { CLUSTERS } from '../../lib/site';
+import { SITE, appStoreLink } from '../../lib/site';
+import { TOOLS } from '../../data/tools';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const clusterPaths = Object.values(CLUSTERS)
+    .filter((c) => posts.some((p) => CLUSTERS[p.data.cluster].slug === c.slug))
+    .map((c) => ({ params: { slug: c.slug }, props: { kind: 'cluster' as const, cluster: c, posts: posts.filter((p) => CLUSTERS[p.data.cluster].slug === c.slug) } }));
+  const postPaths = posts.map((p) => ({ params: { slug: p.data.slug }, props: { kind: 'post' as const, post: p, all: posts } }));
+  const clash = clusterPaths.find((c) => postPaths.some((p) => p.params.slug === c.params.slug));
+  if (clash) throw new Error(`Post slug collides with cluster hub: ${clash.params.slug}`);
+  return [...clusterPaths, ...postPaths];
+}
+const props = Astro.props as any;
+const MODULE_CTA: Record<string, string> = { skin: 'Your skin plan', hair: 'Your hair plan', jawline: 'Your jawline plan', posture: 'Your posture plan', smile: 'Your smile plan', general: 'Your full plan' };
+---
+{props.kind === 'cluster' ? (
+  <Base title={`${props.cluster.label}: Guides | Axend`} description={props.cluster.blurb} path={`/guides/${props.cluster.slug}`}>
+    <div class="wrap">
+      <section class="hero"><p class="eyebrow"><a href="/guides" style="color:inherit">Guides</a></p><h1>{props.cluster.label}</h1><p class="lead">{props.cluster.blurb}</p></section>
+      <div class="grid">{props.posts.map((p: any) => <PostCard post={p} />)}</div>
+    </div>
+  </Base>
+) : await (async () => {
+  const post = props.post;
+  const { Content } = await render(post);
+  const d = post.data;
+  const tool = TOOLS.find((t) => t.path === d.tool)!;
+  const rel = related(post, props.all);
+  const url = new URL(`/guides/${d.slug}`, SITE.url).href;
+  const jsonLd: object[] = [
+    { '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.description, datePublished: d.publishDate.toISOString(), dateModified: d.updatedDate.toISOString(), mainEntityOfPage: url, author: { '@type': 'Organization', name: 'Axend' }, publisher: { '@type': 'Organization', name: 'Axend', url: SITE.url } },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Guides', item: new URL('/guides', SITE.url).href }, { '@type': 'ListItem', position: 2, name: d.title, item: url }] },
+  ];
+  if (d.faq?.length) jsonLd.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
+  const fmt = (x: Date) => x.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+  return (
+    <Base title={`${d.title} | Axend`} description={d.description} path={`/guides/${d.slug}`} type="article" jsonLd={jsonLd}>
+      <article class="wrap">
+        <header class="hero">
+          <p class="eyebrow"><a href={`/guides/${clusterOf(post).slug}`} style="color:inherit">{clusterOf(post).label}</a></p>
+          <h1>{d.title}</h1>
+          <p class="meta">Updated {fmt(d.updatedDate)} · For adults 18+ · Cosmetic and self-care only</p>
+        </header>
+        <div class="prose"><Content />
+          <div class="card cta-inline"><strong>Where do you stand today?</strong><p>Take the free, private {tool.nav.toLowerCase()}: it runs on your device and nothing is uploaded.</p><a class="btn" href={tool.path}>Try the {tool.nav}</a></div>
+          {d.faq?.length ? <section class="faq"><h2>FAQ</h2>{d.faq.map((f: any) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</section> : null}
+          <div class="card cta-app"><p class="eyebrow">Axend app</p><strong>{MODULE_CTA[d.module]}</strong><p>A step-by-step plan based on your own scan, in the Axend app.</p><a class="btn" href={appStoreLink(`guide-${d.slug}`)} rel="noopener">Get {MODULE_CTA[d.module].toLowerCase()} in Axend</a></div>
+          <p class="disclaimer">This guide is general self-care information, not medical advice. See a doctor or dermatologist for medical concerns.</p>
+        </div>
+        <section class="section"><h2>Keep reading</h2><div class="grid">{rel.map((p) => <PostCard post={p} />)}</div></section>
+      </article>
+    </Base>
+  );
+})()}
+<style is:global>
+  .cta-inline, .cta-app { margin: 28px 0; }
+  .cta-inline strong, .cta-app strong { color: #fff; font-size: 1.2rem; display: block; margin-bottom: 6px; }
+</style>

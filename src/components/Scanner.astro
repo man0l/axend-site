@@ -1,0 +1,190 @@
+---
+import { appStoreLink } from '../lib/site';
+interface Props { ct: string; focus: 'overall' | 'symmetry' | 'face' | 'men' | 'rating' }
+const { ct, focus } = Astro.props;
+---
+<section class="scanner card" id="scan" data-focus={focus} data-cta={appStoreLink(ct)} aria-label="Face scan">
+  <div class="step gate">
+    <label class="age">
+      <input type="checkbox" id="age-ok" />
+      <span>I confirm I am 18 or older.</span>
+    </label>
+    <div class="actions">
+      <label class="btn" id="pick-label" aria-disabled="true">Upload a photo
+        <input type="file" id="file" accept="image/*" hidden disabled />
+      </label>
+      <label class="btn ghost" id="cam-label" aria-disabled="true">Take a photo
+        <input type="file" id="cam" accept="image/*" capture="user" hidden disabled />
+      </label>
+    </div>
+    <p class="disclaimer">Private by design: the scan runs in this browser tab. Your photo is not uploaded, stored or shared, and there is no account.</p>
+  </div>
+
+  <p class="status" id="status" role="status" aria-live="polite" hidden></p>
+
+  <div class="step result" id="result" hidden>
+    <div class="preview">
+      <canvas id="canvas" aria-label="Your photo with scan overlay"></canvas>
+    </div>
+    <div class="out">
+      <div class="ring" id="ring" role="img"></div>
+      <p class="meta" id="ring-caption"></p>
+      <ul class="traits" id="traits"></ul>
+      <p class="warn" id="warn" hidden></p>
+      <div class="locked" aria-label="Full plan, available in the Axend app">
+        <div class="blur" aria-hidden="true">
+          <div class="bar" style="width:82%"></div><div class="bar" style="width:64%"></div><div class="bar" style="width:73%"></div><div class="bar" style="width:48%"></div>
+          <p>Skin · Hair · Jawline · Posture · Smile</p>
+        </div>
+        <div class="lock-cta">
+          <strong>Your full breakdown and plan</strong>
+          <span class="meta">Every trait, the 5 modules and a step-by-step plan.</span>
+          <a class="btn" id="cta" href={appStoreLink(ct)} rel="noopener">Get your full plan in Axend</a>
+        </div>
+      </div>
+      <button class="btn ghost" id="again" type="button">Scan another photo</button>
+      <p class="disclaimer">Cosmetic and approximate. Not medical advice and not a judgment of worth.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scanner { padding: 26px; }
+  .age { display: flex; gap: 10px; align-items: center; color: var(--text); margin-bottom: 16px; cursor: pointer; }
+  .age input { width: 20px; height: 20px; accent-color: var(--cta); }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+  .status { color: var(--eyebrow); font-weight: 600; margin: 12px 0 0; }
+  .result { display: grid; gap: 24px; grid-template-columns: 1fr 1fr; align-items: start; }
+  .preview canvas { width: 100%; height: auto; border-radius: 14px; background: #000; display: block; }
+  .ring { width: 150px; height: 150px; margin: 0 auto 6px; }
+  #ring-caption { text-align: center; margin-bottom: 14px; }
+  .traits { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 10px; }
+  .traits li { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; }
+  .traits strong { color: var(--text); }
+  .traits .tag { float: right; font-size: .8rem; color: var(--eyebrow); text-transform: uppercase; letter-spacing: .08em; }
+  .traits p { margin: 4px 0 0; font-size: .92rem; }
+  .warn { background: #3a2415; border: 1px solid #5a3a22; border-radius: 12px; padding: 10px 14px; color: #f3d9b8; }
+  .locked { position: relative; border-radius: 16px; overflow: hidden; margin-bottom: 14px; border: 1px solid var(--border); min-height: 190px; }
+  .blur { filter: blur(7px); padding: 18px; background: var(--surface); height: 100%; }
+  .bar { height: 14px; border-radius: 8px; background: var(--muted); margin-bottom: 12px; }
+  .lock-cta { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 8px; align-items: center; justify-content: center; text-align: center; padding: 16px; background: rgba(15, 12, 8, .55); color: var(--text); }
+  @media (max-width: 760px) { .result { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  import { analyze, type Analysis } from '../lib/metrics';
+
+  const root = document.getElementById('scan') as HTMLElement;
+  const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+  const age = $<HTMLInputElement>('age-ok'), file = $<HTMLInputElement>('file'), cam = $<HTMLInputElement>('cam');
+  const status = $('status'), result = $('result'), canvas = $<HTMLCanvasElement>('canvas');
+  const focus = root.dataset.focus!;
+  const labels = [$('pick-label'), $('cam-label')];
+
+  let landmarkerP: Promise<any> | null = null;
+  const getLandmarker = () =>
+    (landmarkerP ??= import('@mediapipe/tasks-vision').then(async ({ FaceLandmarker, FilesetResolver }) => {
+      const fileset = await FilesetResolver.forVisionTasks('/mediapipe');
+      return FaceLandmarker.createFromOptions(fileset, {
+        baseOptions: { modelAssetPath: '/models/face_landmarker.task', delegate: 'CPU' },
+        runningMode: 'IMAGE',
+        numFaces: 2,
+      });
+    }).catch((e) => { landmarkerP = null; throw e; }));
+
+  const say = (msg: string, bad = false) => { status.hidden = !msg; status.textContent = msg; status.style.color = bad ? '#f3a58a' : ''; };
+
+  age.addEventListener('change', () => {
+    for (const el of [file, cam]) el.disabled = !age.checked;
+    for (const l of labels) l.setAttribute('aria-disabled', String(!age.checked));
+    if (age.checked) void getLandmarker().catch(() => {}); // warm the model while the user picks a photo
+  });
+  for (const l of labels) l.addEventListener('click', (e) => { if (!age.checked) { e.preventDefault(); say('Please confirm you are 18 or older first.', true); } });
+
+  async function load(f: File): Promise<HTMLCanvasElement> {
+    const url = URL.createObjectURL(f);
+    try {
+      const img = new Image();
+      img.src = url;
+      await img.decode();
+      const scale = Math.min(1, 1280 / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * scale); c.height = Math.round(img.naturalHeight * scale);
+      c.getContext('2d')!.drawImage(img, 0, 0, c.width, c.height);
+      return c;
+    } finally { URL.revokeObjectURL(url); }
+  }
+
+  function ring(score: number) {
+    const r = 62, c = 2 * Math.PI * r, off = c * (1 - score / 10);
+    $('ring').innerHTML = `<svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="${r}" fill="none" stroke="rgba(255,240,220,.1)" stroke-width="10"/><circle cx="75" cy="75" r="${r}" fill="none" stroke="#f3eadb" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 75 75)"/><text x="75" y="84" text-anchor="middle" font-size="38" font-weight="700" fill="#fff" font-family="inherit">${score.toFixed(1)}</text></svg>`;
+    $('ring').setAttribute('aria-label', `Score ${score.toFixed(1)} out of 10`);
+  }
+
+  function overlay(a: Analysis, lm: { x: number; y: number }[], c: HTMLCanvasElement) {
+    const g = c.getContext('2d')!;
+    const { mid, u } = a.symmetry, L = Math.max(c.width, c.height);
+    g.lineWidth = Math.max(2, c.width / 400);
+    g.strokeStyle = '#e8542a';
+    g.beginPath(); g.moveTo(mid.x - u.x * L, mid.y - u.y * L); g.lineTo(mid.x + u.x * L, mid.y + u.y * L); g.stroke();
+    if (focus === 'symmetry') {
+      const r = Math.max(3, c.width / 180);
+      for (const [m, real] of a.symmetry.pairs) {
+        g.fillStyle = '#3d6fe6'; g.beginPath(); g.arc(m.x, m.y, r, 0, 7); g.fill();
+        g.fillStyle = '#f3eadb'; g.beginPath(); g.arc(real.x, real.y, r, 0, 7); g.fill();
+        g.strokeStyle = 'rgba(243,234,219,.6)'; g.beginPath(); g.moveTo(m.x, m.y); g.lineTo(real.x, real.y); g.stroke();
+      }
+    }
+  }
+
+  async function run(f: File | undefined) {
+    if (!f) return;
+    result.hidden = true;
+    if (!age.checked) return say('Please confirm you are 18 or older first.', true);
+    if (!f.type.startsWith('image/')) return say('Please choose an image file.', true);
+    try {
+      say('Loading the on-device model...');
+      const [src, lmk] = await Promise.all([load(f), getLandmarker()]);
+      say('Scanning on your device...');
+      const out = lmk.detect(src);
+      if (!out.faceLandmarks?.length) return say('No face found. Try a clear, front-facing photo with good light.', true);
+      if (out.faceLandmarks.length > 1) return say('More than one face found. Use a photo with only you in it.', true);
+      const lm = out.faceLandmarks[0];
+      const a = analyze(lm, src.width, src.height);
+      canvas.width = src.width; canvas.height = src.height;
+      canvas.getContext('2d')!.drawImage(src, 0, 0);
+      overlay(a, lm, canvas);
+
+      const lead = focus === 'symmetry' ? a.traits.find((t) => t.key === 'symmetry')! : null;
+      ring(lead ? lead.score : a.overall);
+      $('ring-caption').textContent = lead ? 'Symmetry score, out of 10' : 'Baseline score, out of 10';
+      const ordered = lead ? [lead, ...a.traits.filter((t) => t !== lead)] : a.traits;
+      const tag = { strong: 'Strong', balanced: 'Balanced', room: 'Room to improve' } as const;
+      $('traits').replaceChildren(...ordered.map((t) => {
+        const li = document.createElement('li');
+        const s = document.createElement('strong'); s.textContent = `${t.label} ${t.score.toFixed(1)}`;
+        const sp = document.createElement('span'); sp.className = 'tag'; sp.textContent = tag[t.band];
+        const p = document.createElement('p'); p.textContent = t.note;
+        li.append(s, sp, p); return li;
+      }));
+      const warn = $('warn');
+      warn.hidden = !a.pose.tooTurned;
+      if (a.pose.tooTurned) warn.textContent = 'Your head looks turned in this photo, which skews the numbers. Retake it facing the camera straight on.';
+      say('');
+      $('scan').querySelector('.gate')!.setAttribute('hidden', '');
+      result.hidden = false;
+      result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (e) {
+      console.error(e);
+      say('The scan could not run in this browser. Try a recent Chrome, Safari or Firefox.', true);
+    }
+  }
+
+  file.addEventListener('change', () => run(file.files?.[0]));
+  cam.addEventListener('change', () => run(cam.files?.[0]));
+  $('again').addEventListener('click', () => {
+    result.hidden = true; file.value = ''; cam.value = '';
+    canvas.getContext('2d')!.clearRect(0, 0, canvas.width, canvas.height); canvas.width = canvas.height = 0;
+    $('scan').querySelector('.gate')!.removeAttribute('hidden');
+  });
+</script>

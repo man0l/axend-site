@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getPosts } from '../../lib/posts';
+import { CLUSTERS } from '../../lib/site';
+const posts = await getPosts();
+---
+<Base title="Guides: Looks, Grooming and Face Scans | Axend" description="Practical guides on skin, hair, jawline, posture and how face rating tools work. Cosmetic and self-care only." path="/guides">
+  <div class="wrap">
+    <section class="hero"><p class="eyebrow">Guides</p><h1>Practical, no-hype guides.</h1><p class="lead">Self-care and grooming advice, plus honest explainers on how face scans work.</p></section>
+    <div class="chips">
+      <a class="chip" href="/guides" aria-current="true">All</a>
+      {Object.values(CLUSTERS).filter((c) => posts.some((p) => CLUSTERS[p.data.cluster].slug === c.slug)).map((c) => <a class="chip" href={`/guides/${c.slug}`}>{c.label}</a>)}
+    </div>
+    <div class="grid">{posts.map((p) => <PostCard post={p} />)}</div>
+  </div>
+</Base>

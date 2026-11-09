@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import { TOOLS } from '../data/tools';
+---
+<Base title="Page not found | Axend" description="This page does not exist." noindex>
+  <div class="wrap hero"><p class="eyebrow">404</p><h1>Page not found.</h1><p class="lead">Try one of the tests instead.</p>
+    <div class="chips">{TOOLS.map((t) => <a class="chip" href={t.path}>{t.nav}</a>)}</div></div>
+</Base>

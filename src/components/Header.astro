@@ -1,0 +1,36 @@
+---
+import { TOOLS } from '../data/tools';
+import { SITE, appStoreLink } from '../lib/site';
+---
+<header class="site-header">
+  <div class="wrap bar">
+    <a href="/" class="wordmark" aria-label="axend home">axend<span>.</span></a>
+    <nav aria-label="Main">
+      <details class="menu">
+        <summary>Tests</summary>
+        <div class="drop">
+          {TOOLS.map((t) => <a href={t.path}>{t.nav}</a>)}
+        </div>
+      </details>
+      <a href="/guides">Guides</a>
+      <a href="/app">The App</a>
+      <a class="btn small" href={appStoreLink('header')} rel="noopener">Get Axend</a>
+    </nav>
+  </div>
+</header>
+<style>
+  .site-header { border-bottom: 1px solid var(--border); }
+  .bar { display: flex; justify-content: space-between; align-items: center; min-height: 64px; flex-wrap: wrap; gap: 8px; }
+  .wordmark { font-size: 1.6rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.03em; }
+  .wordmark span { color: var(--accent); }
+  nav { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  nav > a:not(.btn) { color: var(--body); text-decoration: none; font-weight: 600; }
+  nav > a:not(.btn):hover { color: #fff; }
+  .btn.small { padding: 8px 18px; font-size: .9rem; }
+  .menu { position: relative; }
+  .menu summary { cursor: pointer; font-weight: 600; list-style: none; }
+  .menu summary::after { content: ' ▾'; font-size: .8em; }
+  .drop { position: absolute; z-index: 10; top: 34px; left: 0; min-width: 240px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 8px; display: flex; flex-direction: column; }
+  .drop a { padding: 8px 12px; text-decoration: none; color: var(--body); border-radius: 8px; }
+  .drop a:hover { background: var(--surface); color: #fff; }
+</style>

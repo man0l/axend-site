@@ -1,0 +1,27 @@
+---
+import { TOOLS } from '../data/tools';
+import { CLUSTERS } from '../lib/site';
+const clusters = Object.values(CLUSTERS);
+---
+<footer class="site-footer">
+  <div class="wrap cols">
+    <div>
+      <a href="/" class="wordmark">axend<span>.</span></a>
+      <p class="disclaimer">For adults 18+. Scores are cosmetic and approximate. Not medical advice and not a judgment of worth.</p>
+    </div>
+    <div><h3>Tests</h3>{TOOLS.map((t) => <a href={t.path}>{t.nav}</a>)}</div>
+    <div><h3>Guides</h3>{clusters.map((c) => <a href={`/guides/${c.slug}`}>{c.label}</a>)}<a href="/guides">All guides</a></div>
+    <div><h3>Axend</h3><a href="/app">The app</a><a href="/about">About</a><a href="/how-we-score">How we score</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/contact">Contact</a></div>
+  </div>
+</footer>
+<style>
+  .site-footer { border-top: 1px solid var(--border); margin-top: 56px; padding: 36px 0; }
+  .cols { display: grid; gap: 28px; grid-template-columns: 1.4fr 1fr 1fr 1fr; }
+  .cols div { display: flex; flex-direction: column; gap: 6px; }
+  .cols a { color: var(--body); text-decoration: none; }
+  .cols a:hover { color: #fff; }
+  .cols h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .12em; color: var(--eyebrow); margin: 0 0 6px; }
+  .wordmark { font-size: 1.6rem; font-weight: 800; color: #fff !important; letter-spacing: -0.03em; }
+  .wordmark span { color: var(--accent); }
+  @media (max-width: 760px) { .cols { grid-template-columns: 1fr 1fr; } }
+</style>

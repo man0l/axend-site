@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { appStoreLink } from '../lib/site';
+const modules = [
+  ['Skin', 'A simple routine built around your skin, not a shelf of products.'],
+  ['Hair', 'Cuts and styling that suit your face shape and hair type.'],
+  ['Jawline', 'Realistic guidance on the things that change how your jaw reads.'],
+  ['Posture', 'Short daily exercises for head and shoulder position.'],
+  ['Smile', 'Care and presentation habits for a confident smile.'],
+];
+const jsonLd = [{ '@context': 'https://schema.org', '@type': 'MobileApplication', name: 'Axend', operatingSystem: 'iOS', applicationCategory: 'LifestyleApplication', url: 'https://axendai.com/app' }];
+---
+<Base title="Axend App: Your Grooming and Self-Care Plan | Axend" description="Axend turns your face scan into a plan across skin, hair, jawline, posture and smile. Private by design. iOS." path="/app" jsonLd={jsonLd}>
+  <div class="wrap">
+    <section class="hero">
+      <p class="eyebrow">The Axend app</p>
+      <h1>Do the work.<br />Track the change.</h1>
+      <p class="lead">Axend turns a baseline scan into a plan across five modules, then tracks your progress. Scores are cosmetic and approximate, for adults 18+.</p>
+      <a class="btn" href={appStoreLink('app-page')} rel="noopener">Download on the App Store</a>
+    </section>
+    <section class="section"><h2>Five modules</h2>
+      <div class="grid">{modules.map(([n, d]) => <div class="card"><strong style="color:#fff">{n}</strong><p>{d}</p></div>)}</div></section>
+    <section class="section prose"><h2>Try it free first</h2><p>The web scan gives you a baseline and a few insights with nothing uploaded. The app has the full breakdown and plan.</p><a class="btn ghost" href="/">Take the free test</a></section>
+    <section class="section"><p class="disclaimer">Pricing and plans are shown on the App Store listing.</p></section>
+  </div>
+</Base>
