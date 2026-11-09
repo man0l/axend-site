@@ -5,7 +5,8 @@ import GuideCard from '../../components/GuideCard.astro';
 import GuideTabs from '../../components/GuideTabs.astro';
 import Accordion from '../../components/Accordion.astro';
 import PhoneFrame from '../../components/PhoneFrame.astro';
-import AnnotatedFace from '../../components/AnnotatedFace.astro';
+import Portrait from '../../components/Portrait.astro';
+import { faceFor } from '../../data/faces';
 import Icon from '../../components/Icon.astro';
 import { render } from 'astro:content';
 import { getPosts, clusterOf, related } from '../../lib/posts';
@@ -33,7 +34,7 @@ const fmt = (x: Date) => x.toLocaleDateString('en-US', { year: 'numeric', month:
 ---
 {props.kind === 'cluster' ? (
   <Base title={`${props.cluster.label}: Guides | Axend`} description={props.cluster.blurb} path={`/guides/${props.cluster.slug}`}>
-    <PageHero eyebrow="Guides" title={props.cluster.label} lead={props.cluster.blurb} />
+    <PageHero eyebrow="Guides" title={props.cluster.label} lead={props.cluster.blurb} portrait={faceFor(props.cluster.slug)} />
     <div class="wrap">
       <GuideTabs posts={props.all} current={props.cluster.slug} />
       <div class="grid">{props.posts.map((p: any) => <GuideCard post={p} />)}</div>
@@ -55,11 +56,11 @@ const fmt = (x: Date) => x.toLocaleDateString('en-US', { year: 'numeric', month:
   if (d.faq?.length) jsonLd.push({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: d.faq.map((f: any) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
   return (
     <Base title={`${d.title} | Axend`} description={d.description} path={`/guides/${d.slug}`} type="article" jsonLd={jsonLd}>
-      <PageHero eyebrow={clusterOf(post).label} title={d.title} meta={`Updated ${fmt(d.updatedDate)} · ${mins} min read · For adults 18+ · Cosmetic and self-care only`} />
+      <PageHero eyebrow={clusterOf(post).label} title={d.title} meta={`Updated ${fmt(d.updatedDate)} · ${mins} min read · For adults 18+ · Cosmetic and self-care only`} portrait={faceFor(d.slug)} />
       <article class="wrap post">
         <div class="prose"><Content /></div>
         <aside class="mini panel">
-          <div class="mf"><AnnotatedFace /></div>
+          <div class="mf"><Portrait face={faceFor(d.slug, 1)} mode="guides" /></div>
           <div><p class="eyebrow">Free, private</p><h3>Where do you stand today?</h3><p>Take the {tool.nav.toLowerCase()}. It runs on your device and nothing is uploaded.</p><a class="btn" href={tool.path}>Try the {tool.nav}</a></div>
         </aside>
         {d.faq?.length ? <section class="faq"><h2>FAQ</h2><Accordion items={d.faq} /></section> : null}
@@ -83,7 +84,7 @@ const fmt = (x: Date) => x.toLocaleDateString('en-US', { year: 'numeric', month:
   .post .faq h2 { margin: 56px 0 18px; }
   .mini { display: grid; gap: 18px; padding: 20px; margin: 40px 0; grid-template-columns: 1fr; align-items: center; }
   .mini h3, .app h3 { margin-bottom: 6px; } .mini p:not(.eyebrow), .app p:not(.eyebrow) { font-size: 1rem; }
-  .mf { width: 120px; background: #0c0906; border: 1px solid var(--hair-soft); border-radius: 14px; padding: 8px; }
+  .mf { width: 120px; background: #0c0906; border: 1px solid var(--hair-soft); border-radius: 14px; overflow: hidden; }
   .app { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 24px 24px 0; margin: 48px 0 28px; overflow: hidden; }
   .app > div:first-child { padding-bottom: 24px; flex: 1; }
   @media (min-width: 560px) { .mini { grid-template-columns: 120px 1fr; } }
