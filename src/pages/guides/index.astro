@@ -8,7 +8,7 @@ const posts = await getPosts();
 const [featured, ...rest] = posts;
 ---
 <Base title="Guides: Looks, Grooming and Face Scans | Axend" description="Practical guides on skin, hair, jawline, posture and how face rating tools work. Cosmetic and self-care only." path="/guides">
-  <PageHero eyebrow="Guides" title="Practical, no-hype guides." lead="Self-care and grooming advice, plus honest explainers on how face scans work." />
+  <PageHero eyebrow="Guides" title="Practical, no-hype guides." lead="Self-care and grooming advice, plus honest explainers on how face scans work." portrait="f3" />
   <div class="wrap">
     <GuideTabs posts={posts} />
     <div class="feat"><GuideCard post={featured} featured /></div>

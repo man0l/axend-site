@@ -2,15 +2,19 @@
 import ScoreRing from './ScoreRing.astro';
 import TraitRow from './TraitRow.astro';
 import LockedRows from './LockedRows.astro';
-import AnnotatedFace from './AnnotatedFace.astro';
+import Portrait from './Portrait.astro';
 import { SAMPLES } from '../data/samples';
 import type { Focus } from '../data/tools';
-interface Props { focus: Focus; ct: string; cta?: boolean; callouts?: boolean }
-const { focus, ct, cta = false, callouts = false } = Astro.props;
+import type { FaceId } from '../data/faces';
+interface Props { focus: Focus; ct: string; cta?: boolean }
+const { focus, ct, cta = false } = Astro.props;
 const s = SAMPLES[focus];
+// symmetry must stay f3: Portrait's mirrored pairs are measured on that image.
+const FACE: Record<Focus, FaceId> = { overall: 'f2', symmetry: 'f3', face: 'f1', men: 'm1', rating: 'm3' };
+const pick = (n: string) => s.traits.find((t) => t.name === n)?.score ?? 0;
 ---
 <div class="sample" aria-hidden={cta ? undefined : 'true'}>
-  <div class="mesh"><AnnotatedFace variant={s.mesh} />{callouts && <span class="badge">Example</span>}</div>
+  <div class="mesh"><Portrait face={FACE[focus]} mode="full" alt="AI-generated example portrait with a measurement overlay" score={s.score} readouts={[['SYM', pick('Symmetry')], ['JAW', pick('Jawline')]]} mirror={s.mesh === 'symmetry'} /></div>
   <div class="out">
     <div class="rr"><ScoreRing score={s.score} size={112} label={s.ringLabel} /><div><p class="cap">{s.caption}</p><span class="tag balanced">Balanced band</span></div></div>
     <ul class="traits">{s.traits.map((t) => <TraitRow {...t} />)}</ul>
@@ -19,11 +23,10 @@ const s = SAMPLES[focus];
 </div>
 <style>
   .sample { display: grid; gap: 18px; grid-template-columns: 1fr; }
-  .mesh { position: relative; border-radius: 14px; background: #0c0906; border: 1px solid var(--hair-soft); padding: 10px; max-width: 260px; margin: 0 auto; width: 100%; }
-  .badge { position: absolute; left: 10px; top: 10px; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--eyebrow); }
+  .mesh { position: relative; border-radius: 14px; background: #0c0906; border: 1px solid var(--hair-soft); overflow: hidden; max-width: 300px; margin: 0 auto; width: 100%; }
   .out { display: grid; gap: 12px; min-width: 0; }
   .rr { display: flex; align-items: center; gap: 16px; }
   .cap { margin: 0 0 6px; color: var(--lead); font-weight: 600; font-size: .95rem; text-wrap: balance; }
   .traits { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-  @media (min-width: 640px) { .sample { grid-template-columns: 220px 1fr; align-items: start; } .mesh { margin: 0; } }
+  @media (min-width: 640px) { .sample { grid-template-columns: 280px 1fr; align-items: start; } .mesh { margin: 0; } }
 </style>

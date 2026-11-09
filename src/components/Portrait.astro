@@ -1,0 +1,51 @@
+---
+// Design system 06, Imagery. full: hero or example result, one per page. guides: midline and thirds, no numbers. plain: covers.
+import type { FaceId } from '../data/faces';
+interface Props {
+  face: FaceId; mode?: 'full' | 'guides' | 'plain'; alt?: string;
+  score?: number; readouts?: [string, number][]; mirror?: boolean;
+}
+const { face, mode = 'plain', alt = '', score, readouts = [], mirror = false } = Astro.props;
+// Overlay units: x is % of width, y is % of width too (100 x 125 frame). Thirds are hairline, brow, nose base, chin.
+const thirds = [25.6, 40.6, 60, 78.1];
+const MID = 49.9;
+// Feature positions measured on portrait-f3 only, as [left, right] in % of width and height of the image.
+const F3_PAIRS = [[32.6, 32.8, 65.3, 32.4], [34.7, 36.4, 64.6, 36.4], [44.7, 47.2, 54.9, 47.2], [42.1, 52.8, 57.4, 52.8], [32.2, 52.2, 67.6, 52.2]];
+const pairs = mirror && face === 'f3' ? F3_PAIRS.map(([lx, ly, rx, ry]) => ({ lx, ly: ly * 1.25, rx, ry: ry * 1.25, mx: 2 * MID - lx })) : [];
+const corners = ['M5 15V5H15', 'M85 5H95V15', 'M95 110V120H85', 'M15 120H5V110'];
+---
+<figure class:list={['pt', mode]}>
+  <img src={`/faces/portrait-${face}.webp`} alt={alt} width="720" height="900" loading="lazy" decoding="async" />
+  {mode !== 'plain' && (
+    <svg class="ov" viewBox="0 0 100 125" aria-hidden="true">
+      {thirds.map((y) => <path d={`M18 ${y}H82`} class="third" />)}
+      <path d={`M${MID} 3V122`} class:list={['mid', { solid: pairs.length > 0 }]} />
+      {pairs.map((p) => <g><path d={`M${p.mx} ${p.ly}L${p.rx} ${p.ry}`} class="gap" /><circle cx={p.lx} cy={p.ly} r="1.1" class="real" /><circle cx={p.rx} cy={p.ry} r="1.1" class="real" /><circle cx={p.mx} cy={p.ly} r="1.1" class="mirrored" /></g>)}
+      {mode === 'full' && corners.map((d) => <path d={d} class="corner" />)}
+    </svg>
+  )}
+  <figcaption class="tag">AI example</figcaption>
+  {mode === 'full' && readouts.length > 0 && <div class="reads" aria-hidden="true">{readouts.map(([k, v]) => <span>{k} {v.toFixed(1)}</span>)}</div>}
+  {mode === 'full' && score !== undefined && <div class="foot" aria-hidden="true"><span class="big num">{score.toFixed(1)}</span><span class="pts">478 POINTS · ON DEVICE</span></div>}
+</figure>
+<style>
+  .pt { position: relative; margin: 0; container-type: inline-size; background: #0b0906; overflow: hidden; line-height: 1; }
+  img { display: block; width: 100%; height: auto; }
+  .ov { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .ov path { fill: none; vector-effect: non-scaling-stroke; }
+  .third { stroke: rgba(243, 234, 219, .4); stroke-width: 1; stroke-dasharray: 2 4; }
+  .mid { stroke: #e8542a; stroke-width: 1.25; stroke-dasharray: 5 4; }
+  .mid.solid { stroke-dasharray: none; }
+  .corner { stroke: #fff; stroke-width: 1.5; }
+  .gap { stroke: rgba(243, 234, 219, .7); stroke-width: 1; }
+  .real { fill: #f3eadb; } .mirrored { fill: #3d6fe6; }
+  .tag, .reads span, .pts { font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-weight: 500; }
+  .tag, .reads span { font-size: clamp(9px, 3.6cqw, 12px); color: var(--pill); background: rgba(11, 9, 6, .78); border: 1px solid var(--hair); border-radius: 6px; padding: .4em .6em; letter-spacing: .04em; white-space: nowrap; }
+  .tag { position: absolute; left: 10%; top: 8%; text-transform: uppercase; }
+  .plain .tag, .guides .tag { left: 6px; top: 6px; }
+  .reads { position: absolute; right: 10%; top: 8%; display: grid; gap: 4px; justify-items: end; }
+  .foot { position: absolute; left: 10%; right: 10%; bottom: 8%; display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; }
+  .big { color: #fff; font-size: clamp(30px, 17cqw, 56px); line-height: .9; }
+  .pts { color: var(--pill); font-size: clamp(9px, 3.4cqw, 12px); letter-spacing: .06em; text-align: right; }
+  @container (max-width: 210px) { .pts { display: none; } }
+</style>

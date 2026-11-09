@@ -70,7 +70,7 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
   <section class="sec">
     <div class="wrap what">
       <div class="sec-head"><p class="eyebrow">What you get</p><h2>A readable result, not a black box.</h2><p>This is an example. Your scan shows your own photo with the same overlay, and the same three traits.</p></div>
-      <div class="big panel"><SampleResult focus={tool.focus} ct={tool.ct} cta callouts /></div>
+      <div class="big panel"><SampleResult focus={tool.focus} ct={tool.ct} cta /></div>
       <ul class="callouts">{callouts.map((c, i) => <li><span class="num k">{String(i + 1).padStart(2, '0')}</span><strong>{c.k}</strong><span>{c.v}</span></li>)}</ul>
     </div>
   </section>
