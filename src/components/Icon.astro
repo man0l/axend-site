@@ -1,0 +1,34 @@
+---
+// Small line-icon set, 24px grid, stroke follows currentColor.
+const P: Record<string, string> = {
+  device: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+  upload: '<path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/>',
+  zero: '<circle cx="12" cy="12" r="8.5"/><path d="M8 16l8-8"/>',
+  adult: '<circle cx="12" cy="12" r="9"/><path d="M8.2 15.5v-4l-1.2.8M12.3 11.3h2.6M12.3 15.5h2.6M12.3 11.3v4.2"/>',
+  camera: '<path d="M4 8.5A1.5 1.5 0 0 1 5.5 7H8l1.2-2h5.6L16 7h2.5A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z"/><circle cx="12" cy="13" r="3.2"/>',
+  lock: '<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/>',
+  front: '<circle cx="12" cy="12" r="8.5"/><path d="M12 6v12M9 10h.01M15 10h.01M9.5 15c1.2 1 3.8 1 5 0"/>',
+  light: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/>',
+  neutral: '<circle cx="12" cy="12" r="8.5"/><path d="M9 10h.01M15 10h.01M9 15h6"/>',
+  tilt: '<g transform="rotate(25 12 12)"><circle cx="12" cy="12" r="7.5"/><path d="M9.5 10h.01M14.5 10h.01M9.5 14.5c1.2 1 3.8 1 5 0"/></g>',
+  filter: '<path d="M4 6h16M7 12h10M10 18h4"/>',
+  group: '<circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 19c.5-3 2.6-4.5 5.5-4.5s5 1.5 5.5 4.5M15.5 14.8c2.4-.3 4.3.9 5 3.7"/>',
+  mesh: '<path d="M12 3c-4 0-6.5 3-6.5 7.2 0 3.6 2 7.6 6.5 10.8 4.5-3.2 6.5-7.2 6.5-10.8C18.5 6 16 3 12 3z"/><path d="M12 3v18M7 10h10M8 14.5h8"/>',
+  skin: '<path d="M12 3c3 3.6 5.5 6.5 5.5 9.6A5.5 5.5 0 0 1 12 18a5.5 5.5 0 0 1-5.5-5.4C6.5 9.500 9 6.600 12 3z"/>',
+  hair: '<path d="M5 14c0-5 3-9 7-9s7 4 7 9M5 14c2-.5 4-2 5-4 1 2 3.500 3.500 9 4"/>',
+  jaw: '<path d="M4 8c0 6 3 11 8 12 5-1 8-6 8-12"/><path d="M8 17.500l4 2.500 4-2.500"/>',
+  posture: '<circle cx="12" cy="5" r="2.200"/><path d="M12 8v6m0 0-3 6m3-6 3 6M8 10.500h8"/>',
+  smile: '<circle cx="12" cy="12" r="8.500"/><path d="M9 10h.01M15 10h.01M8.500 14c1 2.200 6 2.200 7 0"/>',
+  check: '<path d="M5 12.500 10 17.500 19 7.500"/>',
+  x: '<path d="M6 6l12 12M18 6 6 18"/>',
+  arrow: '<path d="M5 12h14m0 0-5-5m5 5-5 5"/>',
+  chevron: '<path d="M6 9l6 6 6-6"/>',
+  scan: '<path d="M4 8V5.500A1.500 1.500 0 0 1 5.500 4H8M16 4h2.500A1.500 1.500 0 0 1 20 5.500V8M20 16v2.500a1.500 1.500 0 0 1-1.500 1.500H16M8 20H5.500A1.500 1.500 0 0 1 4 18.500V16M4 12h16"/>',
+  plan: '<rect x="5" y="3.500" width="14" height="17" rx="2.500"/><path d="M9 9h6M9 13h6M9 17h3"/>',
+  streak: '<path d="M12 3c1 3.500 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 1.500.800 2 1.500 2C10.500 8 11 5.500 12 3z"/>',
+  snap: '<rect x="4" y="5" width="16" height="15" rx="2.500"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+  book: '<path d="M5 4.500A1.500 1.500 0 0 1 6.500 3H19v15H6.500A1.500 1.500 0 0 0 5 19.500zM5 19.500A1.500 1.500 0 0 0 6.500 21H19v-3"/>',
+};
+const { name, size = 22 } = Astro.props as { name: string; size?: number };
+---
+<svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" set:html={P[name] ?? ''} />

@@ -1,0 +1,21 @@
+---
+import ToolPage from '../components/ToolPage.astro';
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { TOOLS } from '../data/tools';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages');
+  const tools = TOOLS.filter((t) => t.path !== '/').map((t) => ({ params: { tool: t.path.slice(1) }, props: { tool: t, page: undefined } }));
+  return [...tools, ...pages.map((p) => ({ params: { tool: p.id }, props: { tool: undefined, page: p } }))];
+}
+const { tool, page } = Astro.props as any;
+const rendered = page ? await render(page) : null;
+---
+{tool ? <ToolPage tool={tool} /> : (
+  <Base title={`${page.data.title} | Axend`} description={page.data.description} path={`/${page.id}`}>
+    <PageHero eyebrow="Axend" title={page.data.title} meta={`Last updated ${page.data.updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}`} />
+    <div class="wrap"><div class="prose sec">{rendered && <rendered.Content />}</div></div>
+  </Base>
+)}

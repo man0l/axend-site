@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { TOOLS } from '../data/tools';
+---
+<Base title="Page not found | Axend" description="This page does not exist." noindex>
+  <PageHero eyebrow="404" title="Page not found." lead="That link does not lead anywhere. Try one of the tests instead.">
+    <div class="tiles">{TOOLS.map((t) => <a class="btn ghost small" href={t.path}>{t.nav}</a>)}</div>
+  </PageHero>
+</Base>
+<style>.tiles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }</style>

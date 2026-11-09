@@ -1,0 +1,17 @@
+---
+import { CLUSTERS } from '../lib/site';
+import type { Post } from '../lib/posts';
+interface Props { posts: Post[]; current?: string }
+const { posts, current = '' } = Astro.props;
+const tabs = Object.values(CLUSTERS).filter((c) => posts.some((p) => CLUSTERS[p.data.cluster].slug === c.slug));
+---
+<nav class="tabs" aria-label="Guide topics">
+  <a href="/guides" aria-current={current === '' ? 'page' : undefined}>All</a>
+  {tabs.map((c) => <a href={`/guides/${c.slug}`} aria-current={current === c.slug ? 'page' : undefined}>{c.label}</a>)}
+</nav>
+<style>
+  .tabs { display: flex; gap: 6px; overflow-x: auto; padding: 4px 0 16px; border-bottom: 1px solid var(--hair-soft); margin-bottom: 24px; scrollbar-width: none; }
+  .tabs a { white-space: nowrap; padding: 8px 16px; border-radius: 999px; color: var(--body); text-decoration: none; font-weight: 600; font-size: .92rem; border: 1px solid transparent; }
+  .tabs a:hover { color: #fff; border-color: var(--hair); }
+  .tabs a[aria-current] { background: var(--pill); color: #1b140e; }
+</style>

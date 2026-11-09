@@ -1,0 +1,15 @@
+---
+import { appStoreLink } from '../lib/site';
+interface Props { ct: string; primary?: boolean }
+const { ct, primary = false } = Astro.props;
+---
+<a class:list={['badge', { primary }]} href={appStoreLink(ct)} rel="noopener" aria-label="Download Axend on the App Store">
+  <span class="sm">Download on the</span><span class="lg">App Store</span>
+</a>
+<style>
+  .badge { display: inline-flex; flex-direction: column; justify-content: center; min-height: 52px; padding: 6px 22px; border-radius: 12px; background: #000; border: 1px solid #5a5a5a; color: #fff; text-decoration: none; line-height: 1.1; }
+  .badge:hover { color: #fff; border-color: #fff; }
+  .badge.primary { background: var(--cta); border-color: transparent; box-shadow: 0 8px 24px -8px rgba(61, 111, 230, .6); }
+  .sm { font-size: .68rem; letter-spacing: .02em; }
+  .lg { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; }
+</style>

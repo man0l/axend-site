@@ -1,0 +1,28 @@
+---
+import Icon from './Icon.astro';
+import { appStoreLink } from '../lib/site';
+interface Props { ct: string; rows?: string[]; cta?: boolean }
+const { ct, rows = ['Skin', 'Hair', 'Jaw angle', 'Posture'], cta = true } = Astro.props;
+const w = [82, 64, 73, 48, 58];
+---
+<div class="locked">
+  <div class="rows" aria-hidden="true">
+    {rows.map((r, i) => <div class="lr"><span>{r}</span><i style={`width:${w[i % w.length]}%`} /></div>)}
+  </div>
+  <div class="veil">
+    <span class="lockpill"><Icon name="lock" size={15} /> In the Axend app</span>
+    <strong>Every trait, plus the plan</strong>
+    <span class="sub">The five modules and a step-by-step plan from your own scan.</span>
+    {cta && <a class="btn" data-cta href={appStoreLink(ct)} rel="noopener">Get your full plan in Axend</a>}
+  </div>
+</div>
+<style>
+  .locked { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--hair); background: var(--surface); }
+  .rows { filter: blur(6px); padding: 18px; display: grid; gap: 14px; opacity: .85; }
+  .lr { display: grid; gap: 6px; font-size: .85rem; color: var(--body); }
+  .lr i { height: 10px; border-radius: 6px; background: linear-gradient(90deg, #856848, #c29a6e); display: block; }
+  .veil { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 6px; align-items: center; justify-content: center; text-align: center; padding: 16px; background: linear-gradient(180deg, rgba(15,12,8,.35), rgba(15,12,8,.78)); color: var(--text); }
+  .veil strong { font-size: 1.05rem; }
+  .sub { font-size: .85rem; color: var(--lead); max-width: 26em; margin-bottom: 6px; }
+  .lockpill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--hair); font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--eyebrow); background: rgba(15,12,8,.6); }
+</style>

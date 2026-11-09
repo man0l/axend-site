@@ -1,0 +1,203 @@
+---
+import Base from '../layouts/Base.astro';
+import Scanner from './Scanner.astro';
+import Icon from './Icon.astro';
+import StepCard from './StepCard.astro';
+import SampleResult from './SampleResult.astro';
+import BandStrip from './BandStrip.astro';
+import PhoneFrame from './PhoneFrame.astro';
+import Accordion from './Accordion.astro';
+import GuideCard from './GuideCard.astro';
+import AppBadge from './AppBadge.astro';
+import { TOOLS, type Tool } from '../data/tools';
+import { SAMPLES } from '../data/samples';
+import { getPosts } from '../lib/posts';
+import { SITE } from '../lib/site';
+interface Props { tool: Tool }
+const { tool } = Astro.props;
+const others = TOOLS.filter((t) => t.path !== tool.path);
+const all = await getPosts();
+const posts = all.filter((p) => p.data.tool === tool.path).slice(0, 3);
+const related = posts.length >= 3 ? posts : [...posts, ...all.filter((p) => !posts.includes(p))].slice(0, 3);
+const url = new URL(tool.path, SITE.url).href;
+const sample = SAMPLES[tool.focus];
+const faq = [...tool.faq,
+  { q: 'Is it biased?', a: 'Any scoring of faces carries the assumptions of whoever built it. Ours only measures geometry (symmetry, proportions, jaw angle) and does not use skin tone, age, gender or ethnicity as inputs. It still reflects a narrow idea of balance, which is why we call it a baseline and not a verdict. See How we score for the limits.' },
+  { q: 'Why does my score change between photos?', a: 'Head angle, lens distance, lighting and expression all move the measured landmarks. Use the same kind of straight-on, neutral photo each time if you want to compare scores.' },
+];
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'WebApplication', name: tool.nav, url, applicationCategory: 'LifestyleApplication', operatingSystem: 'Any', offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, description: tool.description },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+];
+const trust = [['device', 'Runs on your device'], ['zero', '0 bytes uploaded'], ['adult', '18+ only']];
+const steps = [
+  ['01', 'Choose a front-facing photo', 'Straight on, neutral face, even light. Upload one or use your camera.', 'camera'],
+  ['02', '478 landmarks, found in your browser', 'A vision model maps your face locally. The photo never leaves this tab.', 'mesh'],
+  ['03', 'A baseline and what moves it', 'One score out of 10, plus the two or three traits that matter most.', 'scan'],
+];
+const callouts = sample.callouts;
+const privacy = [
+  ['device', 'The photo stays in this tab\'s memory', 'It is decoded to a canvas, measured, and discarded when you close or reset the page.'],
+  ['lock', 'Nothing else is allowed to load', 'The model and WASM are served from axendai.com. The page\'s content security policy blocks every other host.'],
+  ['zero', 'No account, no scan cookies', 'You do not sign in, and the scan sets no cookies and writes nothing to storage.'],
+];
+const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['posture', 'Posture'], ['smile', 'Smile']];
+---
+<Base title={tool.title} description={tool.description} path={tool.path} jsonLd={jsonLd}>
+  <section class="hero">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="head">
+        <p class="eyebrow">{tool.eyebrow}</p>
+        <h1>{tool.h1[0]} <span>{tool.h1[1]}</span></h1>
+      </div>
+      <div class="scan-col"><Scanner ct={tool.ct} focus={tool.focus} /></div>
+      <div class="tail">
+        <p class="lead">{tool.intro}</p>
+        <dl class="stats"><div><dt class="num">478</dt><dd>landmarks found in your browser</dd></div><div><dt class="num">10</dt><dd>point scale, in plain bands</dd></div><div><dt class="num">3</dt><dd>traits behind the score</dd></div></dl>
+        <ul class="trust">{trust.map(([i, t]) => <li><Icon name={i} size={18} />{t}</li>)}</ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec how">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">How it works</p><h2>Three steps. Nothing leaves your device.</h2></div>
+      <ol class="steps">{steps.map(([n, t, d, i]) => <StepCard n={n} title={t} text={d} icon={i} />)}</ol>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap what">
+      <div class="sec-head"><p class="eyebrow">What you get</p><h2>A readable result, not a black box.</h2><p>This is an example. Your scan shows your own photo with the same overlay, and the same three traits.</p></div>
+      <div class="big panel"><SampleResult focus={tool.focus} ct={tool.ct} cta callouts /></div>
+      <ul class="callouts">{callouts.map((c, i) => <li><span class="num k">{String(i + 1).padStart(2, '0')}</span><strong>{c.k}</strong><span>{c.v}</span></li>)}</ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">What the score means</p><h2>Five plain bands, out of 10.</h2><p>Scores come from version-one geometry measurements, not from a population sample. Until the app's norms are in, we show bands and make no percentile claims.</p></div>
+      <BandStrip />
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Private by design</p><h2>Specific, not a slogan.</h2></div>
+      <div class="three">{privacy.map(([i, t, d]) => <div class="card"><span class="ic"><Icon name={i} size={22} /></span><h3>{t}</h3><p>{d}</p></div>)}</div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Method</p><h2>What this test measures, and what it does not.</h2></div>
+      <div class="notes">{tool.body.map((b) => <div><h3>{b.h}</h3><p>{b.p}</p></div>)}</div>
+      <p class="attr">Face landmark detection is provided by Google MediaPipe. Google supplies the landmarks only; Axend creates and owns the scores. <a href="/how-we-score">Read the full method</a>.</p>
+    </div>
+  </section>
+
+  <section class="sec bridge">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">From baseline to plan</p><h2>The scan is the start. The app does the work.</h2><p>Axend turns your baseline into a plan across five modules, then tracks the change every 14 days.</p></div>
+      <div class="phones">
+        <PhoneFrame src="/app/traits.webp" alt="Axend app showing the overall score and trait list" width={250} />
+        <PhoneFrame src="/app/plan.webp" alt="Axend app showing a daily jawline workout" width={250} />
+        <PhoneFrame src="/app/progress.webp" alt="Axend app showing before and after scores" width={250} />
+      </div>
+      <ul class="mods">{modules.map(([i, n]) => <li><Icon name={i} size={18} />{n}</li>)}</ul>
+      <p class="price"><strong class="num">$4.99</strong>/week or <strong class="num">$49.99</strong>/year. Free to download. 18+.</p>
+      <AppBadge ct={`${tool.ct}-bridge`} />
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap narrow">
+      <div class="sec-head"><p class="eyebrow">FAQ</p><h2>Questions people ask first.</h2></div>
+      <Accordion items={faq} />
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Related guides</p><h2>Read next.</h2></div>
+      <div class="gcs">{related.map((p) => <GuideCard post={p} />)}</div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Try another test</p><h2>Same private scan, different read.</h2></div>
+      <div class="tiles">{others.map((t) => <a class="tile" href={t.path}><strong>{t.nav}</strong><span>{t.blurb}</span><i aria-hidden="true">→</i></a>)}</div>
+    </div>
+  </section>
+
+  <section class="sec final">
+    <div class="wrap">
+      <div class="cta panel">
+        <h2>Know your baseline in under a minute.</h2>
+        <p>No upload, no account. Your photo never leaves this device.</p>
+        <a class="btn" href="#scan">Scan a photo</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { position: relative; padding: 20px 0 8px; }
+  .glow { position: absolute; inset: -120px 0 auto; height: 760px; background: radial-gradient(40% 55% at 70% 38%, #3a2214 0%, transparent 100%); pointer-events: none; z-index: 0; }
+  .hero-grid { position: relative; z-index: 1; display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'head' 'scan' 'tail'; }
+  .head { grid-area: head; } .scan-col { grid-area: scan; min-width: 0; } .tail { grid-area: tail; }
+  h1 { margin-bottom: 6px; font-size: clamp(2.4rem, 8.4vw, 4rem); }
+  h1 span { display: block; color: var(--pill); }
+  .head .eyebrow { margin-bottom: 8px; }
+  .tail .lead { margin-top: 12px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0 18px; padding: 18px 0 0; border-top: 1px solid var(--hair); }
+  .stats dt { color: #fff; font-size: 2.2rem; line-height: 1; } .stats dd { margin: 6px 0 0; font-size: .85rem; line-height: 1.35; color: var(--body); }
+  .trust { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .trust li { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border: 1px solid var(--hair); border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--pill); background: rgba(36, 27, 18, .6); }
+  @media (min-width: 960px) {
+    .hero { padding: 56px 0 32px; }
+    .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); grid-template-areas: 'head scan' 'tail scan'; grid-template-rows: 1fr 1fr; column-gap: 56px; row-gap: 0; align-items: start; }
+    h1 { font-size: 4rem; margin-bottom: .35em; } .head .eyebrow { margin-bottom: 14px; } .head { align-self: end; }
+    .tail { align-self: start; } .tail .lead { margin-top: 0; }
+    .trust { margin-top: 24px; }
+  }
+  .how { padding-bottom: 0; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .what .big { padding: 20px; }
+  .callouts { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+  .callouts li { display: grid; gap: 2px; border-top: 1px solid var(--hair); padding-top: 12px; font-size: .92rem; }
+  .callouts .k { color: var(--eyebrow); font-size: 1.1rem; } .callouts strong { color: #fff; }
+  .three { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .three .card p { margin: 0; font-size: 1rem; }
+  .ic { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 12px; background: rgba(243, 234, 219, .08); color: var(--pill); margin-bottom: 14px; }
+  .notes { display: grid; gap: 24px; grid-template-columns: 1fr; }
+  .notes > div { border-top: 1px solid var(--hair); padding-top: 14px; } .notes p { margin: 0; }
+  .attr { margin: 28px 0 0; padding: 14px 18px; border-left: 2px solid var(--accent); color: var(--lead); font-size: .97rem; max-width: 46em; }
+  .bridge { background: linear-gradient(180deg, transparent, rgba(58, 34, 20, .35) 40%, transparent); overflow: hidden; }
+  .phones { display: flex; gap: 10px; justify-content: center; align-items: flex-start; margin: 8px 0 -4px; }
+  .phones > :global(figure:nth-child(1)), .phones > :global(figure:nth-child(3)) { display: none; }
+  .mods { list-style: none; padding: 0; margin: 0 0 14px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; position: relative; }
+  .mods li { display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px; border: 1px solid var(--hair); border-radius: 999px; color: var(--pill); font-weight: 600; font-size: .9rem; background: var(--surface); }
+  .price { text-align: center; color: var(--lead); margin: 0 0 16px; } .price strong { color: #fff; }
+  .bridge :global(.badge) { display: flex; width: max-content; margin: 0 auto; position: relative; }
+  .narrow { max-width: 780px; }
+  .gcs { display: grid; gap: 4px 28px; grid-template-columns: 1fr; }
+  .tiles { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  .tile { display: grid; gap: 2px; padding: 16px 18px; border: 1px solid var(--hair); border-radius: 14px; text-decoration: none; position: relative; background: rgba(27, 20, 14, .6); transition: border-color .2s, background .2s; }
+  .tile:hover { border-color: var(--eyebrow); background: var(--card); }
+  .tile strong { color: #fff; } .tile span { font-size: .9rem; color: var(--body); padding-right: 24px; } .tile i { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-style: normal; color: var(--eyebrow); }
+  .cta { text-align: center; padding: 44px 20px; background: radial-gradient(60% 120% at 50% 0%, #3a2214, #1b140e); }
+  .cta p { color: var(--lead); } .cta h2 { max-width: 14em; margin: 0 auto .4em; }
+  @media (min-width: 640px) {
+    .steps, .three, .notes { grid-template-columns: repeat(3, 1fr); }
+    .callouts { grid-template-columns: repeat(4, 1fr); }
+    .gcs { grid-template-columns: repeat(3, 1fr); }
+    .tiles { grid-template-columns: repeat(3, 1fr); }
+    .phones > :global(figure:nth-child(1)), .phones > :global(figure:nth-child(3)) { display: block; }
+    .phones { gap: 24px; } .phones > :global(figure:nth-child(2)) { margin-top: -28px; }
+    .what .big { padding: 28px; }
+  }
+  @media (min-width: 640px) and (max-width: 959px) { .phones { gap: 14px; } }
+</style>

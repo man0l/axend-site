@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import GuideTabs from '../../components/GuideTabs.astro';
+import GuideCard from '../../components/GuideCard.astro';
+import { getPosts } from '../../lib/posts';
+const posts = await getPosts();
+const [featured, ...rest] = posts;
+---
+<Base title="Guides: Looks, Grooming and Face Scans | Axend" description="Practical guides on skin, hair, jawline, posture and how face rating tools work. Cosmetic and self-care only." path="/guides">
+  <PageHero eyebrow="Guides" title="Practical, no-hype guides." lead="Self-care and grooming advice, plus honest explainers on how face scans work." />
+  <div class="wrap">
+    <GuideTabs posts={posts} />
+    <div class="feat"><GuideCard post={featured} featured /></div>
+    <div class="grid">{rest.map((p) => <GuideCard post={p} />)}</div>
+  </div>
+</Base>
+<style>
+  .feat { margin-bottom: 28px; }
+  .grid { display: grid; gap: 4px 32px; grid-template-columns: 1fr; padding-bottom: 72px; }
+  @media (min-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+</style>
