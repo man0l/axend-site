@@ -84,14 +84,15 @@ const bad = [['tilt', 'Tilted'], ['filter', 'Filtered'], ['group', 'Group shot']
   .age input { width: 20px; height: 20px; margin-top: 1px; accent-color: var(--pill); flex: none; }
   .age em { display: block; font-style: normal; color: var(--body); margin-top: 1px; font-size: .82rem; }
   .ex { grid-area: 1 / 1; position: relative; align-self: end; margin-top: 20px; }
-  .ex-in { opacity: .5; filter: saturate(.75); pointer-events: none; user-select: none; max-height: 250px; overflow: hidden; padding: 0 6px; -webkit-mask-image: linear-gradient(180deg, #000 40%, transparent 98%); mask-image: linear-gradient(180deg, #000 40%, transparent 98%); }
+  /* example result: full contrast, ring + one trait row only, so nothing is clipped or faded */
+  .ex-in { pointer-events: none; user-select: none; padding: 30px 16px 16px; border: 1px solid var(--hair-soft); border-radius: 16px; background: rgba(15, 12, 8, .55); }
+  .ex-in :global(.sample) { grid-template-columns: 1fr; }
+  .ex-in :global(.mesh), .ex-in :global(.locked), .ex-in :global(.traits .row:nth-child(n+2)) { display: none; }
   .ex-l { position: absolute; z-index: 3; right: 8px; top: -4px; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--eyebrow); background: rgba(15, 12, 8, .85); border: 1px solid var(--hair); border-radius: 999px; padding: 2px 10px; }
   /* mobile: dropzone on top, example result peeks beneath it */
   .stage { grid-template-rows: auto 1fr; }
   .dz-wrap { grid-row: 1; } .ex { grid-row: 2; margin-top: 8px; align-self: start; }
   .ex-l { top: 0; }
-  .ex-in { max-height: 200px; padding-top: 26px; }
-  .ex-in :global(.mesh) { display: none; }
   .guide { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .g { list-style: none; margin: 0; padding: 8px 10px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .8rem; font-weight: 600; border: 1px solid var(--hair-soft); }
   .g li { display: inline-flex; align-items: center; gap: 5px; }
@@ -111,7 +112,7 @@ const bad = [['tilt', 'Tilted'], ['filter', 'Filtered'], ['group', 'Group shot']
   .scan-note { color: var(--eyebrow); font-weight: 600; margin: 0; }
   .res { display: grid; gap: 12px; min-width: 0; }
   .rr { display: flex; align-items: center; gap: 16px; }
-  .cap { margin: 0 0 6px; color: var(--lead); font-weight: 600; }
+  .cap { margin: 0 0 6px; color: var(--lead); font-weight: 600; text-wrap: balance; }
   .traits { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
   .warn { background: #3a2415; border: 1px solid #5a3a22; border-radius: 12px; padding: 10px 14px; color: #f3d9b8; margin: 0; font-size: .92rem; }
   #again { justify-self: start; }
@@ -124,8 +125,6 @@ const bad = [['tilt', 'Tilted'], ['filter', 'Filtered'], ['group', 'Group shot']
   }
   @media (min-width: 640px) {
     .dz-ic { display: inline-flex; } .dz { padding: 22px 16px 18px; } .dz-s { margin-bottom: 14px; }
-    .ex-in { max-height: 300px; } .ex-in :global(.mesh) { display: block; }
-    .ex-in :global(.sample) { grid-template-columns: 150px 1fr; }
   }
 </style>
 
@@ -223,7 +222,7 @@ const bad = [['tilt', 'Tilted'], ['filter', 'Filtered'], ['group', 'Group shot']
     const lead = focus === 'symmetry' ? a.traits.find((t) => t.key === 'symmetry')! : focus === 'men' ? a.traits.find((t) => t.key === 'jawline')! : null;
     const shown = lead ? lead.score : a.overall;
     ring(shown);
-    $('ring-caption').textContent = focus === 'symmetry' ? 'Symmetry score, out of 10' : 'Baseline score, out of 10';
+    $('ring-caption').textContent = focus === 'symmetry' ? 'Symmetry score, out of\u00a010' : 'Baseline score, out of\u00a010';
     const bandOf = (s: number) => (s >= 7.5 ? 'strong' : s >= 5.5 ? 'balanced' : 'room') as keyof typeof tagText;
     setTag($('band-tag'), bandOf(shown));
     const ordered = lead ? [lead, ...a.traits.filter((t) => t !== lead)] : a.traits;

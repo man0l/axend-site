@@ -158,11 +158,12 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
   .trust li { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border: 1px solid var(--hair); border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--pill); background: rgba(36, 27, 18, .6); }
   @media (min-width: 960px) {
     .hero { padding: 56px 0 32px; }
-    .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); grid-template-areas: 'head scan' 'tail scan'; grid-template-rows: auto 1fr; column-gap: 56px; row-gap: 0; align-items: start; }
+    .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); grid-template-areas: 'head scan' 'tail scan'; grid-template-rows: 1fr 1fr; column-gap: 56px; row-gap: 0; align-items: start; }
     h1 { font-size: 4rem; margin-bottom: .35em; } .head .eyebrow { margin-bottom: 14px; } .head { align-self: end; }
     .tail { align-self: start; } .tail .lead { margin-top: 0; }
     .trust { margin-top: 24px; }
   }
+  .how { padding-bottom: 0; }
   .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
   .what .big { padding: 20px; }
   .callouts { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
