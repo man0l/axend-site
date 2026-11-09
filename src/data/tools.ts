@@ -41,7 +41,7 @@ export const TOOLS: Tool[] = [
     path: '/how-attractive-am-i', ct: 'how-attractive-am-i', nav: 'How Attractive Am I?', blurb: 'One photo, an honest baseline.',
     title: 'How Attractive Am I? Free Photo Test, Private | Axend',
     description: 'Wondering how attractive you are? Get a free baseline score from one photo. Runs on your device, nothing is uploaded.',
-    eyebrow: 'How attractive am I', h1: ['How attractive am I?', 'Get an honest baseline.'],
+    eyebrow: 'How attractive am I', h1: ['How attractive am\u00a0I?', 'Get an honest baseline.'],
     pill: 'Real measurements. No flattery.',
     intro: 'One front-facing photo gives you a baseline score and the 2 or 3 traits that matter most. Nothing is uploaded, because the scan runs on your device.',
     focus: 'overall',
