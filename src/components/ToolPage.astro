@@ -167,7 +167,7 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
   .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
   .what .big { padding: 20px; }
   .callouts { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
-  .callouts li { display: grid; gap: 2px; border-top: 1px solid var(--hair); padding-top: 12px; font-size: .92rem; }
+  .callouts li { display: grid; align-content: start; gap: 2px; border-top: 1px solid var(--hair); padding-top: 12px; font-size: .92rem; }
   .callouts .k { color: var(--eyebrow); font-size: 1.1rem; } .callouts strong { color: #fff; }
   .three { display: grid; gap: 14px; grid-template-columns: 1fr; }
   .three .card p { margin: 0; font-size: 1rem; }
@@ -176,7 +176,7 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
   .notes > div { border-top: 1px solid var(--hair); padding-top: 14px; } .notes p { margin: 0; }
   .attr { margin: 28px 0 0; padding: 14px 18px; border-left: 2px solid var(--accent); color: var(--lead); font-size: .97rem; max-width: 46em; }
   .bridge { background: linear-gradient(180deg, transparent, rgba(58, 34, 20, .35) 40%, transparent); overflow: hidden; }
-  .phones { display: flex; gap: 10px; justify-content: center; align-items: flex-start; margin: 8px 0 -4px; }
+  .phones { display: flex; gap: 10px; justify-content: center; align-items: flex-start; margin: 8px 0 24px; }
   .phones > :global(figure:nth-child(1)), .phones > :global(figure:nth-child(3)) { display: none; }
   .mods { list-style: none; padding: 0; margin: 0 0 14px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; position: relative; }
   .mods li { display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px; border: 1px solid var(--hair); border-radius: 999px; color: var(--pill); font-weight: 600; font-size: .9rem; background: var(--surface); }

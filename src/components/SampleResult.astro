@@ -28,5 +28,13 @@ const pick = (n: string) => s.traits.find((t) => t.name === n)?.score ?? 0;
   .rr { display: flex; align-items: center; gap: 16px; }
   .cap { margin: 0 0 6px; color: var(--lead); font-weight: 600; font-size: .95rem; text-wrap: balance; }
   .traits { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-  @media (min-width: 640px) { .sample { grid-template-columns: 280px 1fr; align-items: start; } .mesh { margin: 0; } }
+  @media (min-width: 640px) {
+    .sample { grid-template-columns: 280px 1fr; align-items: start; column-gap: 18px; }
+    .out { display: contents; }
+    .mesh { margin: 0; grid-column: 1; grid-row: 1 / span 2; }
+    .rr { grid-column: 2; grid-row: 1; }
+    .traits { grid-column: 2; grid-row: 2; }
+    .out > :global(.locked) { grid-column: 1 / -1; grid-row: 3; }
+    .sample { row-gap: 12px; }
+  }
 </style>
