@@ -6,8 +6,8 @@ cluster: "improve"
 module: "general"
 targetKeyword: "how to look better in photos"
 tool: "/how-attractive-am-i"
-publishDate: 2026-11-23
-updatedDate: 2026-11-23
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
 faq:
   - q: "Why do I look worse in photos than in the mirror?"
     a: "A mirror shows a reversed image you are used to, while photos can distort with close lenses, odd angles and harsh light. Moving the camera back and improving light helps."

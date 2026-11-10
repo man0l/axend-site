@@ -6,8 +6,8 @@ cluster: "improve"
 module: "hair"
 targetKeyword: "face shape men hairstyles"
 tool: "/face-attractiveness-test"
-publishDate: 2026-11-20
-updatedDate: 2026-11-20
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
 faq:
   - q: "How do I find my face shape?"
     a: "Pull your hair back, look straight at a mirror or photo, and compare the width of forehead, cheekbones and jaw plus the overall length. The widest point and jaw shape point to oval, round, square, oblong or heart."

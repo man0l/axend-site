@@ -6,8 +6,27 @@ cluster: "improve"
 module: "skin"
 targetKeyword: "simple skincare routine for men"
 tool: "/face-rating"
-publishDate: 2026-11-23
-updatedDate: 2026-11-23
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
+sources:
+  - title: "Skin care basics"
+    url: "https://www.aad.org/public/everyday-care/skin-care-basics"
+    publisher: "American Academy of Dermatology"
+  - title: "How to select a sunscreen"
+    url: "https://www.aad.org/public/everyday-care/sun-protection/shade-clothing-sunscreen/how-to-select-sunscreen"
+    publisher: "American Academy of Dermatology"
+  - title: "Sunscreen and sun safety"
+    url: "https://www.nhs.uk/live-well/seasonal-health/sunscreen-and-sun-safety/"
+    publisher: "NHS"
+  - title: "Dermatologists' top tips for relieving dry skin"
+    url: "https://www.aad.org/public/everyday-care/skin-care-basics/dry/dermatologists-tips-relieve-dry-skin"
+    publisher: "American Academy of Dermatology"
+  - title: "Acne resource center"
+    url: "https://www.aad.org/public/diseases/acne"
+    publisher: "American Academy of Dermatology"
+  - title: "Acne"
+    url: "https://www.nhs.uk/conditions/acne/"
+    publisher: "NHS"
 faq:
   - q: "What is the minimum skincare routine for men?"
     a: "A gentle cleanser, a moisturiser suited to your skin type, and a daily broad-spectrum sunscreen. Everything else is optional."

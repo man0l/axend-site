@@ -6,8 +6,24 @@ cluster: "improve"
 module: "general"
 targetKeyword: "how to look better as a man"
 tool: "/how-attractive-am-i"
-publishDate: 2026-11-20
-updatedDate: 2026-11-20
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
+sources:
+  - title: "Skin care basics"
+    url: "https://www.aad.org/public/everyday-care/skin-care-basics"
+    publisher: "American Academy of Dermatology"
+  - title: "Sunscreen and sun safety"
+    url: "https://www.nhs.uk/live-well/seasonal-health/sunscreen-and-sun-safety/"
+    publisher: "NHS"
+  - title: "Insomnia"
+    url: "https://www.nhs.uk/conditions/insomnia/"
+    publisher: "NHS"
+  - title: "Physical activity guidelines for adults aged 19 to 64"
+    url: "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/"
+    publisher: "NHS"
+  - title: "Eating a balanced diet"
+    url: "https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/eating-a-balanced-diet/"
+    publisher: "NHS"
 faq:
   - q: "What is the fastest way to look better as a man?"
     a: "A haircut that suits your head shape, clean and shaped facial hair or a clean shave, clothes that fit, and better posture. These are visible within days and cost little."
