@@ -24,12 +24,6 @@ sources:
   - title: "AttractivenessTest.com Pro Face Report"
     url: "https://attractivenesstest.com/pro-face-report"
     publisher: "AttractivenessTest.com"
-  - title: "AI Attractiveness Test privacy policy"
-    url: "https://aiattractivenesstest.ai/privacy-policy"
-    publisher: "aiattractivenesstest.ai"
-  - title: "AI Attractiveness Test pricing"
-    url: "https://aiattractivenesstest.ai/pricing"
-    publisher: "aiattractivenesstest.ai"
   - title: "Face Landmarker guide"
     url: "https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker"
     publisher: "Google AI Edge, MediaPipe"
@@ -42,13 +36,11 @@ itemList:
     url: "https://pfpmaker.com/attractiveness-test"
   - name: "AttractivenessTest.com"
     url: "https://attractivenesstest.com/"
-  - name: "AI Attractiveness Test (aiattractivenesstest.ai)"
-    url: "https://aiattractivenesstest.ai/"
 faq:
   - q: "What is the best AI attractiveness test?"
     a: "In our test on November 10, 2026, The Face Report scored highest on our checklist (9 of 10), ahead of Axend (8 of 10). Both run the free scan on your device. No tool is best for everyone: pick by where your photo goes, how clearly the method is explained, and whether the advice is useful."
   - q: "Are free AI attractiveness tests safe?"
-    a: "It depends on the tool. Of the four we could run, three (Axend, The Face Report and PFPMaker) did not send the photo to a server during the free scan, while AttractivenessTest.com uploads it and says it is processed in memory and not stored. Read each privacy policy, since paid reports and some extra tools do send photos to servers."
+    a: "It depends on the tool. Of the four we tested, three (Axend, The Face Report and PFPMaker) did not send the photo to a server during the free scan, while AttractivenessTest.com uploads it and says it is processed in memory and not stored. Read each privacy policy, since paid reports and some extra tools do send photos to servers."
   - q: "Do paid apps give better results?"
     a: "Not in what we saw. The free scores moved a lot between tools for the same photos, from 7.2 to 9.9 out of 10 on the tools that use a 10-point scale, so price did not predict accuracy. Judge a paid report by its transparency, its advice and its privacy practices."
   - q: "Why did the same photo get different scores?"
@@ -64,7 +56,6 @@ All of these are cosmetic tools for adults 18 and over, and none can say anythin
 - **Highest checklist score: The Face Report (9 of 10).** The formula is shown, the free scan runs in your browser, and pricing is clear. The useful part, what to fix, is behind a $17.49 report.
 - **Axend scored 8 of 10, second.** Strong on privacy and method, weaker on cost and on what the free web scan tells you. The full plan needs the iOS app and a subscription.
 - **PFPMaker scored 5 of 10 and AttractivenessTest.com 4 of 10.** Both give a flattering number with little explanation.
-- **We could not finish two tools.** aiattractivenesstest.ai and Fotor put a human-verification check in front of the scan, and we did not try to get around it. See [what we could not test](#what-we-could-not-test).
 - **The numbers do not agree.** For one AI-generated man, AttractivenessTest.com said 9.9 out of 10 ("one in a million") and Axend said 7.6.
 
 ## How we tested
@@ -87,21 +78,21 @@ All of these are cosmetic tools for adults 18 and over, and none can say anythin
 
 ## Comparison table
 
-| | Axend | The Face Report | PFPMaker | AttractivenessTest.com | aiattractivenesstest.ai |
-| --- | --- | --- | --- | --- | --- |
-| URL | axendai.com | thefacereport.com/tools/attractiveness | pfpmaker.com/attractiveness-test | attractivenesstest.com | aiattractivenesstest.ai |
-| Tested on | Nov 10, 2026 | Nov 10, 2026 | Nov 10, 2026 | Nov 10, 2026 | Nov 10, 2026 (blocked) |
-| Price | Web scan free. App: $4.99/week or $49.99/year | Free scan. Full report $17.49 once, 7-day refund | Free preview. Full report price not shown before sign-in step | Free score. Pro report US$9.97 once | Free "Fast Test". Paid plans $6.99 to $9.99 per week, auto-renewing |
-| Photo processed | On device (nothing uploaded) | On device for the free scan | In the browser, only a small result message sent | Uploaded to its server | Uploaded (per its policy) |
-| Score, Photo A | 7.8 / 10 | 83 / 100 | 8.2 / 10 | 8.8 / 10 | Not tested |
-| Score, Photo B | 7.6 / 10 | 84 / 100 | 7.9 / 10 | 9.9 / 10 | Not tested |
-| Score, Photo C | 7.2 / 10 | 78 / 100 | 7.9 / 10 | 8.2 / 10 | Not tested |
-| Privacy (0 to 2) | 2 | 2 | 1 | 1 | 0 |
-| Method transparency | 2 | 2 | 1 | 0 | 1 |
-| Honesty about limits | 2 | 2 | 1 | 1 | 0 |
-| Cost | 1 | 2 | 1 | 2 | 1 |
-| Actionable advice | 1 | 1 | 1 | 0 | Not tested |
-| **Checklist total** | **8 / 10** | **9 / 10** | **5 / 10** | **4 / 10** | **2 / 8 (partial)** |
+| | Axend | The Face Report | PFPMaker | AttractivenessTest.com |
+| --- | --- | --- | --- | --- |
+| URL | axendai.com | thefacereport.com/tools/attractiveness | pfpmaker.com/attractiveness-test | attractivenesstest.com |
+| Tested on | Nov 10, 2026 | Nov 10, 2026 | Nov 10, 2026 | Nov 10, 2026 |
+| Price | Web scan free. App: $4.99/week or $49.99/year | Free scan. Full report $17.49 once, 7-day refund | Free preview. Full report price not shown before sign-in step | Free score. Pro report US$9.97 once |
+| Photo processed | On device (nothing uploaded) | On device for the free scan | In the browser, only a small result message sent | Uploaded to its server |
+| Score, Photo A | 7.8 / 10 | 83 / 100 | 8.2 / 10 | 8.8 / 10 |
+| Score, Photo B | 7.6 / 10 | 84 / 100 | 7.9 / 10 | 9.9 / 10 |
+| Score, Photo C | 7.2 / 10 | 78 / 100 | 7.9 / 10 | 8.2 / 10 |
+| Privacy (0 to 2) | 2 | 2 | 1 | 1 |
+| Method transparency | 2 | 2 | 1 | 0 |
+| Honesty about limits | 2 | 2 | 1 | 1 |
+| Cost | 1 | 2 | 1 | 2 |
+| Actionable advice | 1 | 1 | 1 | 0 |
+| **Checklist total** | **8 / 10** | **9 / 10** | **5 / 10** | **4 / 10** |
 
 Scores in the three photo rows are not comparable across columns, because each tool uses its own scale. Compare the ordering and the spread instead.
 
@@ -151,24 +142,6 @@ Scores in the three photo rows are not comparable across columns, because each t
 - **Price:** the score is free. The Pro Face Report is US$9.97 once (shown as reduced from US$50).
 - **Honest about limits:** weakly. "For entertainment purposes only" is in small print under a result that told us Photo B was "one in a million".
 - **Note:** this tool gave the highest numbers by a wide margin: 8.8, 9.9 and 8.2.
-
-### 5. aiattractivenesstest.ai
-
-![aiattractivenesstest.ai after a photo was selected: a reCAPTCHA check appears before the scan starts](/guides-tests/aiattractivenesstest.webp)
-
-We could not get a score from this one. After we selected a photo, the page asked us to pass a reCAPTCHA before it would run, and we do not bypass human-verification checks. The rest of this entry comes from the public pages, not from a scan.
-
-- **Price:** the "Fast Test" is described as free to start. Paid plans on its pricing page are auto-renewing weekly subscriptions ($6.99 per week for 25 credits, $9.99 per week for 40 credits, at the time of testing).
-- **Photo handling:** its policy says photos are uploaded, handled as biometric-related data, and sent to third-party AI providers for processing. It states that it does not use photos to train models. The page copy says photos are "never saved".
-- **Honest about limits:** this is where we marked it down. The page calls itself "100% unbiased" and says it reads "confidence, intelligence, and approachability" from micro-expressions, which a single photo cannot measure.
-- Its checklist total is partial (2 of 8) because we did not see its result page.
-
-## What we could not test
-
-- **aiattractivenesstest.ai** and **Fotor's AI Attractiveness Test** put a human-verification check (reCAPTCHA and Cloudflare Turnstile respectively) before the scan. We stopped there.
-- **Overchat's** attractiveness page did not accept the photo in our automated session, and **NoteGPT's** tool would not start a rating without more steps than we could complete without an account. We are not scoring tools we could not run.
-
-If you run any of these by hand and get different results, [tell us](/contact) and we will update the table.
 
 ## What the results show
 
