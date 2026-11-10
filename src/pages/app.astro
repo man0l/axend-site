@@ -29,7 +29,7 @@ const jsonLd = [{ '@context': 'https://schema.org', '@type': 'MobileApplication'
         <p class="eyebrow">The Axend app</p>
         <h1>Do the work. <span>Track the change.</span></h1>
         <p class="lead">Axend turns a baseline scan into a plan across five modules, then tracks your progress every 14 days. Scores are cosmetic and approximate, for adults 18+.</p>
-        <div class="acts"><AppBadge ct="app-page" primary /><a class="btn ghost" href="/">Take the free test first</a></div>
+        <div class="acts"><AppBadge ct="app-page" /><a class="btn ghost" href="/">Take the free test first</a></div>
         <p class="price"><strong class="num">$4.99</strong>/week or <strong class="num">$49.99</strong>/year · Free to download · 18+</p>
       </div>
       <div class="ph"><PhoneFrame src="/app/hero.webp" alt="Axend app overall score card" width={300} eager /></div>
@@ -58,7 +58,17 @@ const jsonLd = [{ '@context': 'https://schema.org', '@type': 'MobileApplication'
 
   <section class="sec"><div class="wrap narrow"><div class="sec-head"><p class="eyebrow">FAQ</p><h2>Before you download.</h2></div><Accordion items={faq} /></div></section>
 
-  <section class="sec"><div class="wrap"><div class="cta panel"><h2>Start with a free, private scan.</h2><p>Then take the plan with you.</p><AppBadge ct="app-page-final" primary /></div></div></section>
+  <section class="sec"><div class="wrap">
+    <div class="cta panel">
+      <div class="cta-tx">
+        <p class="eyebrow">Get Axend</p>
+        <h2>Start with a free, private scan. <span>Then take the plan with you.</span></h2>
+        <AppBadge ct="app-page-final" />
+        <a class="cta-alt" href="/">Or take the free web test first →</a>
+      </div>
+      <div class="cta-ph" aria-hidden="true"><PhoneFrame src="/app/progress.webp" alt="" width={260} /></div>
+    </div>
+  </div></section>
 </Base>
 <style>
   .hero { position: relative; padding: 36px 0 32px; overflow: hidden; }
@@ -79,13 +89,15 @@ const jsonLd = [{ '@context': 'https://schema.org', '@type': 'MobileApplication'
   .best { border-color: var(--eyebrow); background: linear-gradient(180deg, #2d2217, #1b140e); }
   .plans p:last-child { margin: 0; }
   .narrow { max-width: 780px; }
-  .cta { text-align: center; padding: 64px 24px; background: var(--pill); border-color: transparent; box-shadow: 0 32px 64px -32px rgba(0, 0, 0, .8); }
-  .cta :global(h2) { color: var(--ink); }
-  .cta p { color: var(--ink-soft); font-size: 1.0625rem; }
-  .cta :global(:focus-visible) { outline-color: var(--ink); }
+  /* closing ask: same dark surface as the page, lifted by a warm glow and the phone instead of a light slab */
+  .cta { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr); padding: 48px 24px 0; border-color: var(--eyebrow); background: radial-gradient(70% 90% at 85% 100%, #4a2a16, transparent 70%), linear-gradient(180deg, #2d2217, #1b140e); box-shadow: inset 0 1px 0 var(--hi), 0 32px 64px -32px rgba(0, 0, 0, .8); }
+  .cta h2 { max-width: 13em; margin: 0 0 28px; } .cta h2 span { display: block; color: var(--pill); }
+  .cta-alt { display: inline-block; margin-top: 20px; color: var(--lead); font-weight: 600; text-decoration: none; } .cta-alt:hover { color: #fff; }
+  .cta-ph { display: flex; justify-content: center; margin-top: 40px; max-height: 260px; }
   @media (min-width: 640px) { .steps { grid-template-columns: repeat(2, 1fr); } .plans { grid-template-columns: repeat(2, 1fr); } .shots > :global(figure:nth-child(n+2)) { display: block; } }
   @media (min-width: 900px) {
-    .hero { padding: 80px 0 56px; } .hg { grid-template-columns: 1.2fr 1fr; gap: 80px; } .cta { padding: 96px 40px; } .ph { max-height: none; overflow: visible; }
+    .hero { padding: 80px 0 56px; } .hg { grid-template-columns: 1.2fr 1fr; gap: 80px; }
+    .cta { grid-template-columns: 1.3fr 1fr; align-items: center; column-gap: 40px; padding: 0 0 0 64px; } .cta-tx { padding: 80px 0; } .cta-ph { align-self: end; margin-top: 56px; max-height: 360px; } .ph { max-height: none; overflow: visible; }
     .bento { grid-template-columns: repeat(6, 1fr); } .cell { grid-column: span 2; } .cell.wide { grid-column: span 3; }
     .steps { grid-template-columns: repeat(4, 1fr); }
   }
