@@ -1,0 +1,24 @@
+---
+import Avatar from './Avatar.astro';
+import { FOUNDER } from '../data/authors';
+const label = (u: string) => (u.includes('x.com') || u.includes('twitter.com') ? 'X' : u.includes('linkedin.com') ? 'LinkedIn' : new URL(u).hostname);
+---
+<section id="founder" class="founder">
+  <h2>Founder</h2>
+  <div class="card">
+    <Avatar name={FOUNDER.name} photo={FOUNDER.photo} size={96} />
+    <div>
+      <h3>{FOUNDER.name}</h3>
+      <p class="role">{FOUNDER.role}, {FOUNDER.org}</p>
+      <p>{FOUNDER.bio}</p>
+      <p class="links">{FOUNDER.sameAs.map((u) => <a href={u} rel="me noopener" target="_blank">{label(u)}</a>)}</p>
+    </div>
+  </div>
+</section>
+<style>
+  .founder { margin-top: 48px; scroll-margin-top: 80px; }
+  .card { display: flex; gap: 20px; align-items: flex-start; padding: 20px; border: 1px solid var(--hair-soft); border-radius: 14px; }
+  .card h3 { margin: 0; } .role { opacity: .7; margin: 2px 0 10px; }
+  .links { display: flex; gap: 16px; } .links a { text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 559px) { .card { flex-direction: column; } }
+</style>

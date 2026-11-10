@@ -1,0 +1,16 @@
+---
+import Avatar from './Avatar.astro';
+import { FOUNDER } from '../data/authors';
+interface Props { updated: string }
+const { updated } = Astro.props;
+---
+<div class="byline">
+  <Avatar name={FOUNDER.name} photo={FOUNDER.photo} size={44} />
+  <p><span class="who">By <a href="/about#founder" rel="author">{FOUNDER.name}</a></span><span class="role">{FOUNDER.role}, {FOUNDER.org} · Updated {updated}</span></p>
+</div>
+<style>
+  .byline { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; }
+  .byline p { display: grid; gap: 2px; margin: 0; }
+  .who { font-weight: 600; } .who a { text-decoration: underline; text-underline-offset: 3px; }
+  .role { font-size: .88rem; opacity: .7; }
+</style>
