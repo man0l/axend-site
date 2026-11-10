@@ -16,6 +16,7 @@ export const FOUNDER: Author = {
   role: 'Founder',
   org: 'Axend',
   bio: 'Manol Trendafilov is the founder of Axend, the grooming and self-care app behind this site. Manol builds the on-device face scan and writes and reviews the guides to the editorial standards on this page. Axend is cosmetic and self-care only, and nothing here is medical advice.',
+  photo: '/founder.jpg',
   sameAs: ['https://x.com/manol_ai'],
 };
 
