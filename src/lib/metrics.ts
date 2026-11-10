@@ -48,6 +48,11 @@ const NOTES: Record<Trait['key'], Record<Band, string>> = {
   },
 };
 
+/** Mean gonial-style jaw angle in degrees (landmarks 172/132/152 left, 397/361/152 right). Exported so experiments report the same number the score uses. */
+export function jawAngle(p: Pt[]): number {
+  return (angleAt(p[172], p[132], p[152]) + angleAt(p[397], p[361], p[152])) / 2;
+}
+
 /** lm: normalized landmarks; w/h: image pixel size (needed so x and y distances are comparable). */
 export function analyze(lm: Pt[], w: number, h: number): Analysis {
   if (lm.length < 455) throw new Error('not enough landmarks');
@@ -68,7 +73,7 @@ export function analyze(lm: Pt[], w: number, h: number): Analysis {
   const middle = d(p[9], p[2]), lower = d(p[2], p[152]);
   const proportions = clamp(10 - Math.abs(middle / lower - 1) * 14);
 
-  const angle = (angleAt(p[172], p[132], p[152]) + angleAt(p[397], p[361], p[152])) / 2;
+  const angle = jawAngle(p);
   const angleScore = clamp(10 - (angle - 100) * 0.18);
   const widthScore = clamp(((d(p[172], p[397]) / width - 0.65) / 0.3) * 10);
   const jawline = 0.6 * angleScore + 0.4 * widthScore;

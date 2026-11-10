@@ -8,6 +8,7 @@ targetKeyword: "does facial symmetry matter"
 tool: "/facial-symmetry-test"
 publishDate: 2026-11-09
 updatedDate: 2026-11-10
+experiment: "symmetry"
 sources:
   - title: "The Evolutionary Psychology of Facial Beauty (Rhodes, 2006)"
     url: "https://doi.org/10.1146/annurev.psych.57.102904.190208"
@@ -105,3 +106,9 @@ Even skin tone across both sides, helped by daily sunscreen and basic skin care,
 Not much. Symmetry is a minor feature in how people perceive you, and one you largely cannot control. Being relaxed, well-groomed and expressive does far more. Treat any symmetry reading as approximate and use it to guide what you can change, not to judge your face.
 
 Axend's free scan includes a symmetry reading as one of several proportion measures, and provides a baseline and plan across skin, hair, jawline, posture and smile. The scan runs on-device in the browser. It is for adults 18 and over, and the figures are approximate. To see how different tools compare, read [best AI attractiveness tests](/guides/best-ai-attractiveness-tests).
+
+## What did our test on a synthetic face show?
+
+We scanned an AI-generated face, then two mirrored composites of it (left side doubled, right side doubled), then the same face tilted 5° and 10°. The mirrored composites are perfectly symmetric by construction, yet the scanner's symmetry score only moved from 9.6 to 9.7 and 9.8, because this face already scored near the top of the scale. Tilting the head 5° or 10° produced no measurable change, since the scanner measures symmetry along the face's own midline rather than the edge of the photo.
+
+Because the base face was already near the ceiling, this test cannot say how the scanner treats a clearly asymmetric face, and it says nothing about how real faces compare.

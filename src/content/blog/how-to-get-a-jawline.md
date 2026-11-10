@@ -8,6 +8,7 @@ targetKeyword: "how to get a jawline"
 tool: "/face-attractiveness-test"
 publishDate: 2026-11-09
 updatedDate: 2026-11-10
+experiment: "jawline"
 sources:
   - title: "Managing your weight"
     url: "https://www.nhs.uk/live-well/healthy-weight/managing-your-weight/"
@@ -105,3 +106,9 @@ Start with the fast changes: a haircut and beard shaped to suit your face, then 
 5. Recheck in six to eight weeks using the same photo setup.
 
 If you want a measured starting point, Axend's free AI scan estimates jaw angle and proportions from a photo and gives a baseline and a plan for the jawline module. You can also try a [face attractiveness test](/face-attractiveness-test) for a general reading. Treat any number as approximate and cosmetic.
+
+## What did our test on a synthetic face show?
+
+We ran the [scanner](/how-we-score) on one AI-generated face, changing one thing at a time, and compared every change with the scanner's own noise (the "drift" in the box below). Pushing the chin forward changed the measured jaw angle by about 12°, far more than the drift, and moved the overall score by 0.3. Tucking the chin changed the angle by about 5°, but the overall score stayed within drift. Adding stubble produced no measurable effect on the jaw angle or overall score.
+
+What this supports: head position changes the measured jaw more than grooming does, so use the same straight-on pose every time you compare. It does not show how any real jaw will look or score, and it does not change the point above that bone structure is set.
