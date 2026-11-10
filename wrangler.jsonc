@@ -1,10 +1,18 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "axend-site",
+  "main": "src/worker/index.ts",
   "compatibility_date": "2026-11-01",
-  "workers_dev": true,
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    { "pattern": "axendai.com", "custom_domain": true },
+    { "pattern": "www.axendai.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
     "not_found_handling": "404-page"
   }
 }
