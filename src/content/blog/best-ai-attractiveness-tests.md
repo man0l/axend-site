@@ -36,6 +36,12 @@ itemList:
     url: "https://pfpmaker.com/attractiveness-test"
   - name: "AttractivenessTest.com"
     url: "https://attractivenesstest.com/"
+takeaways:
+  - "In our test on November 10, 2026, The Face Report scored 9 of 10 on our checklist and Axend scored 8 of 10."
+  - "Axend is our product. We scored it with the same checklist and counted its weak spots against it."
+  - "Scores do not agree across tools: one photo got 7.6 on Axend and 9.9 on AttractivenessTest.com."
+  - "Check where your photo goes before you upload it, and compare changes inside one tool."
+  - "All of these are cosmetic tools for adults 18 and over."
 faq:
   - q: "What is the best AI attractiveness test?"
     a: "In our test on November 10, 2026, The Face Report scored highest on our checklist (9 of 10), ahead of Axend (8 of 10). Both run the free scan on your device. No tool is best for everyone: pick by where your photo goes, how clearly the method is explained, and whether the advice is useful."
@@ -51,14 +57,18 @@ faq:
 
 All of these are cosmetic tools for adults 18 and over, and none can say anything definitive about how attractive you are.
 
-## The short version
+## Which AI attractiveness test is best?
+
+In our test on November 10, 2026, The Face Report scored highest on our checklist, 9 of 10. Axend scored 8 of 10, PFPMaker 5 and AttractivenessTest.com 4. No tool is best for everyone. Pick by where your photo goes, how clear the method is and whether the advice helps.
 
 - **Highest checklist score: The Face Report (9 of 10).** The formula is shown, the free scan runs in your browser, and pricing is clear. The useful part, what to fix, is behind a $17.49 report.
 - **Axend scored 8 of 10, second.** Strong on privacy and method, weaker on cost and on what the free web scan tells you. The full plan needs the iOS app and a subscription.
 - **PFPMaker scored 5 of 10 and AttractivenessTest.com 4 of 10.** Both give a flattering number with little explanation.
 - **The numbers do not agree.** For one AI-generated man, AttractivenessTest.com said 9.9 out of 10 ("one in a million") and Axend said 7.6.
 
-## How we tested
+## How did we test them?
+
+We ran each tool ourselves on November 10, 2026, with the same three AI-generated photos, a clean browser and one written five-part checklist. We logged network requests to see whether the photo was uploaded. The details of the photos and scoring follow.
 
 **Date:** November 10, 2026. **Browser:** a clean desktop Chromium session with no account and no saved cookies, driven by a script so each tool received the same files in the same way.
 
@@ -76,7 +86,9 @@ All of these are cosmetic tools for adults 18 and over, and none can say anythin
 | Cost | Hidden or recurring charge | Free preview, but the price is unclear or recurring | Free scan and a clear one-time or free price |
 | Actionable advice | Score and a one-liner | Names a weak area, details paid | Specific, changeable steps in the free result |
 
-## Comparison table
+## How do the four tools compare?
+
+The table sets the four tools side by side on price, where the photo is processed, the score for each photo and the five checklist criteria. The photo rows use different scales, so compare the ordering and spread, not the raw numbers.
 
 | | Axend | The Face Report | PFPMaker | AttractivenessTest.com |
 | --- | --- | --- | --- | --- |
@@ -96,7 +108,9 @@ All of these are cosmetic tools for adults 18 and over, and none can say anythin
 
 Scores in the three photo rows are not comparable across columns, because each tool uses its own scale. Compare the ordering and the spread instead.
 
-## The tools, one by one
+## What did each tool show?
+
+Each tool is covered below: what it shows, how it handles your photo, what it costs, how honest it is about limits and where it is weak. We counted Axend's weaknesses against it in the same way as the others, and the table above shows the result.
 
 ### 1. The Face Report
 
@@ -143,13 +157,17 @@ Scores in the three photo rows are not comparable across columns, because each t
 - **Honest about limits:** weakly. "For entertainment purposes only" is in small print under a result that told us Photo B was "one in a million".
 - **Note:** this tool gave the highest numbers by a wide margin: 8.8, 9.9 and 8.2.
 
-## What the results show
+## What do the results tell us?
+
+The tools use different scales, and the same photo scored 7.6 out of 10 on Axend and 9.9 out of 10 on AttractivenessTest.com. The ordering of our three photos also changed between tools. Tools that explained their numbers were more useful, even when the scores were lower.
 
 - **Different tools, different scales.** For Photo B the scores were 7.6 out of 10, 7.9 out of 10, 84 out of 100 and 9.9 out of 10. The ordering of our three photos also changed from tool to tool.
 - **Flattering numbers sell reports.** The two tools with the highest scores and the biggest labels ("Flawless", "one in a million") were also the two with the least explanation. We cannot prove cause, and we note the pattern only.
 - **Explained numbers are more useful even when they are lower.** A tool that shows its formula lets you see which input moved the score.
 
-## A checklist before you use any tool
+## How do I choose an AI attractiveness test?
+
+Check where your photo goes, whether the tool explains what it measures and states its limits, and whether the price is clear. Retake the photo to see whether the score stays similar. If a tool fails several checks, treat its score as entertainment. The full checklist follows.
 
 1. Can I find out where my photo goes? If not, skip it.
 2. Does it explain what it measures?
@@ -162,10 +180,12 @@ Scores in the three photo rows are not comparable across columns, because each t
 
 If a tool fails several of these, treat its score as entertainment.
 
-## Where Axend fits
+## Where does Axend fit?
 
-If you want a private first look at proportions with a published method, the web scan is a reasonable start. If you want a full plan, it needs the iOS app and a subscription, and we think The Face Report's one-time report is the better value if all you want is a detailed read of one photo. You can try the scan from the [Axend home page](/) and judge it against the checklist above. For background, see [how AI attractiveness tests work](/guides/how-ai-attractiveness-tests-work) and [whether they are accurate](/guides/are-ai-attractiveness-tests-accurate).
+Axend suits you if you want a private first look at proportions with a published method. The full plan needs the iOS app and a subscription. If all you want is a detailed read of one photo, we think The Face Report's one-time report is the better value.
 
-## Final advice
+You can try the scan from the [Axend home page](/) and judge it against the checklist above. For background, see [how AI attractiveness tests work](/guides/how-ai-attractiveness-tests-work), [whether they are accurate](/guides/are-ai-attractiveness-tests-accurate) and [whether facial symmetry matters](/guides/does-facial-symmetry-matter).
 
-Use the same photo setup every time, and compare changes over weeks, not minutes. Pay more attention to which habits help than to any one number. If a result affects your mood, put it down and talk to someone you trust.
+## What is the best way to use these tools?
+
+Use the same photo setup every time and compare changes over weeks, not minutes. Pay more attention to which habits help than to any one number. If a result affects your mood, put it down and talk to someone you trust.

@@ -22,6 +22,8 @@ const blog = defineCollection({
       heroImage: z.string().optional(),
       sources: z.array(z.object({ title: z.string().min(3), url: z.string().url(), publisher: z.string().min(2) })).optional(),
       itemList: z.array(z.object({ name: z.string().min(2), url: z.string().url() })).optional(),
+      takeaways: z.array(z.string().min(10)).min(3).max(5),
+      howTo: z.object({ name: z.string().min(5), description: z.string().min(20), steps: z.array(z.object({ name: z.string().min(2), text: z.string().min(10) })).min(2) }).optional(),
       faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
       draft: z.boolean().default(false),
     })

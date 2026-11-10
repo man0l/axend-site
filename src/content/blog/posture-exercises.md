@@ -7,7 +7,7 @@ module: "posture"
 targetKeyword: "better posture exercises"
 tool: "/how-attractive-am-i"
 publishDate: 2026-11-09
-updatedDate: 2026-11-09
+updatedDate: 2026-11-10
 sources:
   - title: "Back pain"
     url: "https://www.nhs.uk/conditions/back-pain/"
@@ -18,6 +18,30 @@ sources:
   - title: "Physical activity guidelines for adults aged 19 to 64"
     url: "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/"
     publisher: "NHS"
+takeaways:
+  - "Good posture is a loose, stacked position. Standing at attention is not good posture."
+  - "A ten-minute routine most days is enough: chin tucks, wall angels, rows and hip work."
+  - "Daily habits, such as moving every 30 to 45 minutes and raising your screen, matter more than the routine."
+  - "Expect to feel less tense within weeks and to see a difference in photos over a few months."
+  - "Persistent pain, numbness or a known spine condition needs a doctor or physiotherapist first."
+howTo:
+  name: "A ten-minute posture routine"
+  description: "Seven short moves for desk workers that target forward head, rounded upper back and tight hip flexors."
+  steps:
+    - name: "Chin tucks"
+      text: "Draw your chin straight back without tilting the head. Hold for three seconds. Do 10 reps."
+    - name: "Wall angels"
+      text: "Stand with your back against a wall, arms bent at 90 degrees. Slide the arms up and down without arching the lower back. Do 8 to 10 reps."
+    - name: "Rows"
+      text: "Use a band, cable or dumbbell. Pull the shoulder blades back and down. Do 3 sets of 10 to 12."
+    - name: "Band pull-aparts"
+      text: "Hold a light band at chest height and pull it apart. Do 2 sets of 15."
+    - name: "Glute bridges"
+      text: "Lie on your back with knees bent and lift your hips by squeezing the glutes. Do 2 sets of 12."
+    - name: "Hip flexor stretch"
+      text: "Kneel on one knee, tuck the pelvis slightly and shift forward until you feel a stretch at the front of the hip. Hold 30 seconds each side."
+    - name: "Thoracic extension"
+      text: "Sit on a chair, hands behind your head, and gently arch the upper back over the chair back. Do 8 reps."
 faq:
   - q: "How long does it take to improve posture?"
     a: "Most people notice they hold themselves better within a few weeks, but lasting change usually takes a few months of regular practice and habit changes."
@@ -31,15 +55,27 @@ Posture affects how tall, open and confident you look, and how you feel at the e
 
 This is general fitness advice, not medical care. If you have persistent pain, numbness, or a known spine condition, see a doctor or physiotherapist before starting.
 
-## What "good posture" means
+## What is good posture?
+
+Good posture is a loose, stacked position. Your ears sit roughly over your shoulders, your shoulders over your hips, your ribs stay down and your hips stay neutral. You should not feel rigid. Standing at attention is not good posture, it is a different strain. The best posture is one you change often.
 
 Think of a loose, stacked position: ears roughly over shoulders, shoulders over hips, ribs not flared, hips neutral. You should not feel rigid. Standing at attention is not good posture, it is just a different strain.
 
 Common patterns from sitting and phone use include forward head, rounded upper back and shoulders, and tight hip flexors. The exercises below target these.
 
-## A ten-minute routine
+## What is a simple posture routine for desk workers?
 
-Do this most days. Move slowly and stop if anything hurts.
+Do seven short moves most days: chin tucks, wall angels, rows, band pull-aparts, glute bridges, a hip flexor stretch and a thoracic extension. The table shows sets, reps and what each one targets. Move slowly and stop if anything hurts. The whole routine takes about ten minutes.
+
+| Exercise | Sets and reps | What it targets |
+| --- | --- | --- |
+| Chin tucks | 10 reps, hold 3 seconds | Deep neck muscles that counter forward head |
+| Wall angels | 8 to 10 reps | Shoulder and upper-back control |
+| Rows | 3 sets of 10 to 12 | Muscles that hold the upper back upright |
+| Band pull-aparts | 2 sets of 15 | Rear shoulders |
+| Glute bridges | 2 sets of 12 | Glutes, which are often weak when hip flexors are tight |
+| Hip flexor stretch | 30 seconds each side | Front of the hip |
+| Thoracic extension | 8 reps | Upper-back mobility |
 
 ### 1. Chin tucks (10 reps)
 
@@ -69,7 +105,9 @@ Kneel on one knee, tuck the pelvis slightly, and shift forward gently until you 
 
 Sit on a chair, hands behind your head, and gently arch the upper back over the chair back. Keep the lower back quiet.
 
-## Daily habits that matter more than the routine
+## Which daily habits matter more than the exercises?
+
+Moving often and setting up your screen well matter most. Stand, walk or stretch every 30 to 45 minutes. Raise your screen to eye level and bring your phone up instead of dropping your head. Vary your position and strength train. Exercises help, but habits decide how many hours you spend slumped.
 
 - **Move every 30 to 45 minutes.** Stand, walk, stretch.
 - **Raise the screen to eye level.** Looking down for hours is the main cause of forward head.
@@ -77,17 +115,19 @@ Sit on a chair, hands behind your head, and gently arch the upper back over the 
 - **Vary your position.** Change chairs, stand, sit on the floor.
 - **Strength train.** Compound lifts such as squats, deadlifts and rows build the whole chain.
 
-## Why posture shows on your face
+## Does posture change how my face looks?
 
-A forward head position can soften the line between jaw and neck and shorten the apparent neck. Standing tall tends to open the chest and lift the chin. If you want to learn more, see [how to get a jawline](/guides/how-to-get-a-jawline) and note how posture plays into it.
+It can, mostly in photos. A forward head position can soften the line between your jaw and neck and make the neck look shorter. Standing tall tends to open the chest and lift the chin. The change is in how the face is held, not in bone structure.
 
-## Realistic expectations
+A forward head position can soften the line between jaw and neck and shorten the apparent neck. Standing tall tends to open the chest and lift the chin. If you want to learn more, see [how to get a jawline](/guides/how-to-get-a-jawline) and note how posture plays into it. For the full order of changes, read [how to look better as a man](/guides/how-to-improve-your-attractiveness-score).
 
-Exercises will not rewrite your skeleton. They improve strength and awareness, which makes a better position easier to hold. Expect to feel less tense within a couple of weeks and to see a difference in photos over a few months. Do not expect an instant, permanent fix, and be wary of gadgets that promise one.
+## How long does it take to improve posture?
 
-## Track it
+Expect to feel less tense within a couple of weeks and to see a difference in photos over a few months. Exercises will not rewrite your skeleton. They improve strength and awareness, which makes a better position easier to hold. Be wary of gadgets that promise an instant, permanent fix.
 
-Take a side-view photo and a front-view photo with a phone propped at chest height, standing relaxed. Repeat every month. Watch for head position over the shoulders and shoulder height.
+## How do I track my posture progress?
+
+Take a side-view and a front-view photo with your phone propped at chest height while you stand relaxed. Repeat every month. Compare head position over the shoulders and shoulder height. Use the same spot, distance and clothing each time so the photos are fair to compare.
 
 Axend's free AI scan gives a baseline and a plan for the posture module based on a photo, so you have a starting point to compare with. You can try the [free AI scan](/how-attractive-am-i), and treat the result as approximate.
 
