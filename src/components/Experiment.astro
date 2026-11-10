@@ -1,0 +1,97 @@
+---
+// "How we tested" box + results for a synthetic-face experiment (SLA-1487). All figures are read from the scan data in src/data/experiments.
+import { SPECS, experimentRows, baseTraits, DRIFT, CONTROL_RANGE, BASE, METRICS, MODEL, FACE_CAPTION, TESTED_ON, SCANNER, type ExperimentId, type MetricKey } from '../lib/experiments';
+interface Props { id: ExperimentId }
+const { id } = Astro.props;
+const spec = id === 'pipeline' ? null : SPECS[id];
+const rows = spec ? experimentRows(id as keyof typeof SPECS) : [];
+const fmt = (v: number, m: MetricKey) => v.toFixed(METRICS[m].digits);
+const sign = (v: number, m: MetricKey) => (v > 0 ? '+' : v < 0 ? '−' : '±') + Math.abs(v).toFixed(METRICS[m].digits);
+const driftMetrics: MetricKey[] = ['overall', 'symmetry', 'jawAngle'];
+const date = new Date(TESTED_ON + 'T00:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const steps = [
+  ['pipeline-1', '1. Detection', 'The face detector finds one face in the photo. More or fewer than one face stops the scan.'],
+  ['pipeline-2', '2. 478 landmarks', 'The Face Landmarker places 478 points on the eyes, brows, nose, lips and jaw outline.'],
+  ['pipeline-3', '3. Ratios', 'Red: face midline. Blue and white: mirrored left-right point pairs. Yellow: the thirds used for proportions. Green: the jaw angle.'],
+  ['pipeline-4', '4. Score', 'Screenshot of the live scanner page scoring this same image on-device.'],
+] as const;
+const traits = baseTraits();
+---
+<section class="exp" id={`experiment-${id}`} aria-labelledby={`exp-h-${id}`}>
+  <h2 id={`exp-h-${id}`}>{id === 'pipeline' ? 'The pipeline on a synthetic test face' : spec!.title}</h2>
+
+  <div class="how">
+    <h3>How we tested</h3>
+    <ul>
+      <li><strong>Test subject:</strong> one AI-generated, photoreal face that is not a real person. We used a synthetic face so every test is reproducible and no real person's face is published.</li>
+      <li><strong>Image model:</strong> <span class="mv">{MODEL}</span>. Each variation is an edit of the same base image, with one change per image.</li>
+      <li><strong>Scanner:</strong> our own scanner, the same code that runs on axendai.com (build <span class="mv">{SCANNER.version}</span>, MediaPipe Face Landmarker {SCANNER.mediapipe}).</li>
+      <li><strong>Drift (noise):</strong> we re-rendered the face 5 times with no change and scanned each one. Overall score moved by up to ±{DRIFT.overall.toFixed(1)}, symmetry by ±{DRIFT.symmetry.toFixed(1)} and jaw angle by ±{DRIFT.jawAngle.toFixed(1)}° (the 5 re-renders spread {CONTROL_RANGE.overall.toFixed(1)}, {CONTROL_RANGE.symmetry.toFixed(1)} and {CONTROL_RANGE.jawAngle.toFixed(1)}°). A change only counts if it is bigger than that. Otherwise we call it no measurable effect.</li>
+      <li><strong>Last tested:</strong> <time datetime={TESTED_ON}>{date}</time>. <a href="/guides-data/synthetic-face-scans.csv">Raw scores (CSV)</a>.</li>
+    </ul>
+    <p class="lim">Limits: one synthetic face, one render per setup. This shows how the scanner reacts to this face, not how a real person will score, and not how attractive anyone is.</p>
+  </div>
+
+  {id === 'pipeline' ? (
+    <>
+      <div class="steps">
+        {steps.map(([img, name, text]) => (
+          <figure>
+            <a href={img === 'pipeline-4' ? undefined : `/guides-exp/${img}.png`}><img src={`/guides-exp/${img === 'pipeline-4' ? img + '.png' : 'thumb/' + img + '.webp'}`} alt={`${name}: ${text}`} loading="lazy" decoding="async" width={img === 'pipeline-4' ? 518 : 560} height={img === 'pipeline-4' ? 1235 : 560} /></a>
+            <figcaption><strong>{name}.</strong> {text} {FACE_CAPTION}.</figcaption>
+          </figure>
+        ))}
+      </div>
+      <p class="note">Steps 1 to 3 draw the scanner's real output on the synthetic face. Step 4 is a screenshot of the live page.</p>
+      <div class="tw"><table>
+        <caption>Scores for the synthetic test face (the unchanged base render)</caption>
+        <thead><tr><th scope="col">Measure</th><th scope="col">Score</th></tr></thead>
+        <tbody>{traits.map((t) => <tr><th scope="row">{t.label}</th><td>{t.value.toFixed(1)} / 10</td></tr>)}</tbody>
+      </table></div>
+    </>
+  ) : (
+    <>
+      <div class={`grid g${rows.length}`}>
+        {rows.map((r) => (
+          <figure>
+            <a href={r.full}><img src={r.thumb} alt={`${r.label}. ${r.caption}`} loading="lazy" decoding="async" width="560" height="560" /></a>
+            <figcaption><strong>{r.label}.</strong> {FACE_CAPTION}.</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="tw"><table>
+        <caption>{spec!.title}: scanner results, change from the reference in brackets</caption>
+        <thead><tr><th scope="col">Setup</th>{spec!.metrics.map((m) => <th scope="col">{METRICS[m].label}{METRICS[m].unit === '°' ? ' (°)' : ''}</th>)}<th scope="col">Effect vs drift</th></tr></thead>
+        <tbody>{rows.map((r) => (
+          <tr class={r.counts.length ? 'beyond' : ''}>
+            <th scope="row">{r.label}</th>
+            {spec!.metrics.map((m) => <td>{fmt(r.values[m], m)}{r.id === 'base' ? '' : <span class="d"> ({sign(r.delta[m], m)})</span>}</td>)}
+            <td>{r.effect}</td>
+          </tr>
+        ))}</tbody>
+      </table></div>
+      <p class="note">Reference for the brackets: the unchanged base render (overall {BASE.overall.toFixed(1)}, jaw angle {BASE.jawAngle.toFixed(1)}°). Drift limits: overall ±{DRIFT.overall.toFixed(1)}, symmetry ±{DRIFT.symmetry.toFixed(1)}, proportions ±{DRIFT.proportions.toFixed(1)}, jaw angle ±{DRIFT.jawAngle.toFixed(1)}°.</p>
+    </>
+  )}
+</section>
+<style>
+  .exp { margin: 40px 0; }
+  .exp h2 { margin: 0 0 14px; }
+  .how { padding: 16px 20px; border: 1px solid var(--hair-soft); border-left: 3px solid var(--accent); border-radius: 12px; margin: 0 0 22px; }
+  .how h3 { margin: 0 0 8px; font-size: 1rem; letter-spacing: .02em; }
+  .how ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: .95rem; line-height: 1.5; }
+  .how .mv { font-weight: 600; word-break: break-word; }
+  .lim { margin: 10px 0 0; font-size: .88rem; opacity: .75; }
+  .grid, .steps { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); margin: 0 0 18px; }
+  .steps { grid-template-columns: 1fr; } .steps :global(img) { max-height: 560px; width: auto; max-width: 100%; }
+  figure { margin: 0; } figure img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--hair-soft); background: #ddd; }
+  figcaption { margin-top: 6px; font-size: .8rem; line-height: 1.35; opacity: .72; }
+  .tw { overflow-x: auto; margin: 0 0 8px; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; line-height: 1.4; }
+  caption { text-align: left; font-size: .85rem; opacity: .75; padding-bottom: 6px; }
+  th, td { padding: 8px 10px; border: 1px solid var(--hair-soft); text-align: left; vertical-align: top; }
+  tr.beyond td:last-child { font-weight: 600; }
+  .d { opacity: .65; white-space: nowrap; }
+  .note { font-size: .85rem; opacity: .75; margin: 6px 0 0; }
+  @media (min-width: 560px) { .grid.g8 { grid-template-columns: repeat(4, 1fr); } .grid.g5 { grid-template-columns: repeat(3, 1fr); } .grid.g4 { grid-template-columns: repeat(4, 1fr); } .steps { grid-template-columns: repeat(2, 1fr); } }
+</style>

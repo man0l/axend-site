@@ -8,6 +8,7 @@ targetKeyword: "how to look better in photos"
 tool: "/how-attractive-am-i"
 publishDate: 2026-11-09
 updatedDate: 2026-11-10
+experiment: "photos"
 takeaways:
   - "Light, distance, angle and expression change how a face looks more than most people expect."
   - "Face a window or stand in open shade. Avoid overhead light and direct midday sun."
@@ -149,3 +150,9 @@ Taking photos in the same conditions also helps you track real progress. Axend's
 For the jaw in particular, see [how to get a jawline](/guides/how-to-get-a-jawline).
 
 Good photos reflect good basics: light, distance, grooming and ease. Get those right and you will look more like the person people see in real life.
+
+## What did our test on a synthetic face show?
+
+We re-lit and re-framed one AI-generated face in 8 setups (4 lighting styles, each at arm's length and from 2 m) and scanned each one. The results table below marks every number that moved by more than the scanner's own drift.
+
+Two patterns held across all four lighting styles: the arm's-length photos read a wider jaw angle than the 2 m photos, and three of the four arm's-length photos also read higher face proportions, which is the camera perspective at work. The overall score barely moved: window light and ring light stayed within drift, and the largest change was 0.3. One setup (golden hour at arm's length) also turned the head slightly, which lowered its symmetry reading, so read that row with care. This is one face and one render per setup, so treat it as how the scanner reacts, not as a rule for real people.

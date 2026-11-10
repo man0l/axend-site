@@ -8,6 +8,7 @@ targetKeyword: "how ai attractiveness tests work"
 tool: "/"
 publishDate: 2026-11-09
 updatedDate: 2026-11-10
+experiment: "pipeline"
 sources:
   - title: "Face Landmarker guide"
     url: "https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker"
@@ -111,3 +112,7 @@ If you want to understand error sources in more detail, read [are AI attractiven
 Good tools explain what they measure, show their sub-scores and state their limits plainly. If a tool hides its method or promises a definitive verdict on your looks, be sceptical. Axend publishes its [scoring method](/how-we-score), and our [comparison of named tools](/guides/best-ai-attractiveness-tests) applies the same test to others.
 
 Axend's web scan finds the landmarks, computes proportions such as symmetry, thirds and jaw angle, and gives a free baseline in the browser. A fuller plan across skin, hair, jawline, posture and smile lives in the app. You can try it on the [Axend home page](/), treating the output as a reference point for tracking change, not a verdict. It is for adults aged 18 and over.
+
+## What do the steps look like on a real scan?
+
+Below we run the four steps above on an AI-generated test face with our own scanner: detection, 478 landmarks, the ratios, and the score. The first three images draw the scanner's actual output; the last is a screenshot of the live scanner.
