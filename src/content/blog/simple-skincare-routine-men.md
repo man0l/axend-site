@@ -7,7 +7,7 @@ module: "skin"
 targetKeyword: "simple skincare routine for men"
 tool: "/face-rating"
 publishDate: 2026-11-09
-updatedDate: 2026-11-09
+updatedDate: 2026-11-10
 sources:
   - title: "Skin care basics"
     url: "https://www.aad.org/public/everyday-care/skin-care-basics"
@@ -27,6 +27,24 @@ sources:
   - title: "Acne"
     url: "https://www.nhs.uk/conditions/acne/"
     publisher: "NHS"
+takeaways:
+  - "Three steps matter: a gentle cleanser, a moisturiser and a daily broad-spectrum sunscreen of SPF 30 or higher."
+  - "A short routine done every day beats a shelf of products used randomly."
+  - "Add only one active at a time and wait several weeks before judging it."
+  - "Shaving technique matters: warm water, a proper gel or cream, with the grain, fresh blades."
+  - "See a dermatologist for painful or scarring acne, a changing mole or persistent rashes."
+howTo:
+  name: "A simple skincare routine for men"
+  description: "Three daily steps, cleanse, moisturise and protect, with an optional single active ingredient."
+  steps:
+    - name: "Cleanse"
+      text: "Wash your face once or twice a day, usually morning and evening, with a gentle non-stripping cleanser."
+    - name: "Moisturise"
+      text: "Use a light gel or lotion for oily skin or a creamier formula for dry skin."
+    - name: "Apply sunscreen"
+      text: "Use a daily broad-spectrum sunscreen of SPF 30 or higher on the face, neck and ears, and reapply when outdoors for long periods."
+    - name: "Add one active, only if needed"
+      text: "Once the basics are routine, add a single targeted product and wait several weeks before judging it."
 faq:
   - q: "What is the minimum skincare routine for men?"
     a: "A gentle cleanser, a moisturiser suited to your skin type, and a daily broad-spectrum sunscreen. Everything else is optional."
@@ -38,7 +56,16 @@ faq:
 
 Skincare marketing makes it sound like you need ten products. You do not. A short routine done every day beats a shelf of products used randomly. This guide covers the basics, how to build on them, and where self-care ends and a doctor's help begins.
 
-## The three essential steps
+## What is the minimum skincare routine for men?
+
+Three steps: a gentle cleanser, a moisturiser suited to your skin type and a daily broad-spectrum sunscreen of SPF 30 or higher. Everything else is optional. A short routine done every day beats a shelf of products used randomly. The table shows what to do in the morning and the evening.
+
+| Step | Morning | Evening |
+| --- | --- | --- |
+| Cleanse | Rinse with water, or a gentle cleanser | Gentle cleanser |
+| Moisturise | Yes, light for oily skin, creamier for dry | Yes |
+| Sunscreen | Yes, broad-spectrum SPF 30 or higher on face, neck and ears | Not needed |
+| One active (optional) | Vitamin C is a common morning choice | A gentle exfoliant two or three times a week, if you need one |
 
 ### 1. Cleanse
 
@@ -52,20 +79,24 @@ Moisturiser supports the skin barrier and reduces dryness and flaking. Oily skin
 
 Daily broad-spectrum sunscreen, SPF 30 or higher, is the single most useful skin habit for long-term skin health and appearance. Apply generously to face, neck and ears, and reapply when outdoors for long periods. Pick a texture you do not mind wearing, because the best sunscreen is the one you actually use.
 
-## Adding one active
+## How do I add an active ingredient to my routine?
 
-Once the basics are routine, you can add a single targeted product. Add only one at a time and wait several weeks before judging.
+Wait until the basics are routine, then add one targeted product at a time. Give it several weeks before judging. Try it on a small area first, and stop if you get burning, swelling or a rash. The table compares common choices for common goals.
 
-- **For occasional breakouts or oiliness:** products with salicylic acid are common over-the-counter options.
-- **For texture and dullness:** a gentle exfoliant used two or three times a week, not daily.
-- **For uneven tone:** vitamin C in the morning is a common choice.
-- **For fine lines and long-term skin quality:** retinoid products exist, and introducing them slowly under guidance reduces irritation. Many strengths need a doctor's advice.
+| Goal | Common choice | How to use it |
+| --- | --- | --- |
+| Occasional breakouts or oiliness | Salicylic acid, a common over-the-counter option | Start slowly and add nothing else at the same time |
+| Texture and dullness | A gentle exfoliant | Two or three times a week, not daily |
+| Uneven tone | Vitamin C | In the morning |
+| Fine lines and long-term skin quality | A retinoid | Introduce slowly under guidance. Many strengths need a doctor's advice |
 
-Introduce new products on a small area first to check for reactions. Stop if you get burning, swelling or a rash.
+Only add one product at a time, so you know which one caused a reaction.
 
-## Shaving and skin
+## How do I shave without irritating my skin?
 
-Shaving is a major source of irritation for many men.
+Soften the hair with warm water, use a proper shaving gel or cream, shave with the grain at first and do not press hard. Change blades regularly, then rinse with cool water and moisturise. For ingrown hairs or razor bumps, shave less often. Persistent or painful cases are worth showing to a doctor.
+
+The steps in order:
 
 1. Wash with warm water first to soften the hair.
 2. Use a proper shaving gel or cream.
@@ -73,35 +104,24 @@ Shaving is a major source of irritation for many men.
 4. Change blades regularly.
 5. Rinse with cool water and moisturise afterwards.
 
-If you get ingrown hairs or razor bumps, try shaving less often, using a sharper blade and going with the grain. Persistent or painful cases are worth showing to a doctor.
+## Do sleep, water and habits affect my skin?
 
-## Lifestyle matters too
+Skin reflects habits, though not perfectly. Sleep consistently, eat reasonably and drink water. Avoid picking at spots, which causes marks and scarring. Wash anything that touches your face, and wear sunglasses and a hat in strong sun. Change pillowcases regularly. None of this replaces the three basic steps, but it supports them.
 
-Skin reflects habits, though not perfectly. These help:
+## What can skincare not do?
 
-- Sleep consistently.
-- Drink water and eat reasonably.
-- Avoid picking at spots, which causes marks and scarring.
-- Change pillowcases and wash anything that touches your face.
-- Wear sunglasses and a hat in strong sun.
+Skincare will not change bone structure or erase every pore. It improves comfort, evenness and the way skin looks in daylight. Some issues, such as acne, are partly genetic and hormonal and respond best to medical treatment. It is a habit that pays off slowly, not a quick fix.
 
-## What not to expect
+## When should I see a dermatologist?
 
-Skincare will not change bone structure or erase every pore. It improves comfort, evenness and the way skin looks in daylight. Some issues, such as acne, are partly genetic and hormonal and respond best to medical treatment.
-
-## When to see a dermatologist
-
-Book an appointment if you have:
-
-- Acne that is painful, cystic, scarring or does not respond to basic care.
-- A mole that changes in size, shape or colour, or bleeds.
-- Persistent redness, rashes or flaky patches.
-- Skin reactions that do not settle after stopping a product.
+See one for acne that is painful, cystic, scarring or does not respond to basic care. Also see one for a mole that changes in size, shape or colour, or bleeds, for persistent redness or rashes, and for reactions that do not settle after stopping a product.
 
 Do not self-diagnose skin conditions from the internet or from an app.
 
-## Where to go from here
+## What should I do after the basic routine?
 
-Pair skin habits with a good haircut and posture for the largest visible change, as discussed in [how to look better as a man](/guides/how-to-improve-your-attractiveness-score). For a baseline, Axend's free AI scan looks at your face in a photo and gives a plan for the skin module, including what it can and cannot see. You can try a [face rating](/face-rating) and use it as a reference point, noting that no photo scan can judge skin health or diagnose anything.
+Keep the routine simple for a month, then decide whether you need anything more. Skin habits work best alongside a good haircut and posture. That mix gives the largest visible change, as discussed in [how to look better as a man](/guides/how-to-improve-your-attractiveness-score). Clear skin along the jaw also helps it read well, as covered in [how to get a jawline](/guides/how-to-get-a-jawline).
 
-Keep it simple: cleanse, moisturise, protect, repeat daily for a month, and then decide whether you need anything more.
+For a baseline, Axend's free AI scan looks at your face in a photo and gives a plan for the skin module, including what it can and cannot see. You can try a [face rating](/face-rating) and use it as a reference point, noting that no photo scan can judge skin health or diagnose anything.
+
+Keep it simple: cleanse, moisturise, protect, repeat daily for a month.

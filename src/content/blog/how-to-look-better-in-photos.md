@@ -7,7 +7,29 @@ module: "general"
 targetKeyword: "how to look better in photos"
 tool: "/how-attractive-am-i"
 publishDate: 2026-11-09
-updatedDate: 2026-11-09
+updatedDate: 2026-11-10
+takeaways:
+  - "Light, distance, angle and expression change how a face looks more than most people expect."
+  - "Face a window or stand in open shade. Avoid overhead light and direct midday sun."
+  - "Hold the camera at eye level or slightly above, at arm's length or further."
+  - "Turn your body about 30 degrees, turn your head back and push the chin slightly forward and down."
+  - "Take many shots and choose later. Basic exposure and crop edits are enough."
+howTo:
+  name: "How to look better in photos"
+  description: "A short set of steps for light, camera height, angle and expression that work for any man without editing."
+  steps:
+    - name: "Find soft light"
+      text: "Face a window or stand in open shade or on an overcast day. Avoid overhead light and direct midday sun."
+    - name: "Set the camera height and distance"
+      text: "Put the camera at eye level or slightly above, at arm's length or further. Use a tripod and the 2x lens if you have one."
+    - name: "Stand tall and turn"
+      text: "Pull your shoulders back and down. Turn your body about 30 degrees from the camera, then turn your head back toward it."
+    - name: "Tilt the chin"
+      text: "Push the chin slightly forward and down to define the jaw and reduce the neck fold."
+    - name: "Relax your face"
+      text: "Exhale, relax, then smile. A slight smile with engaged eyes looks warmer than a wide grin."
+    - name: "Take many shots"
+      text: "Take twenty shots with small changes in angle, chin and expression. Pick the best three and note what they have in common."
 faq:
   - q: "Why do I look worse in photos than in the mirror?"
     a: "A mirror shows a reversed image you are used to, while photos can distort with close lenses, odd angles and harsh light. Moving the camera back and improving light helps."
@@ -19,7 +41,19 @@ faq:
 
 Most men who say they are unphotogenic have a technique problem, not a face problem. Light, distance, angle and expression change how the same face looks far more than people expect. Here is how to control them.
 
-## Light is the biggest factor
+## What is the best light for photos?
+
+Soft, natural light. Face a window, or stand in open shade or on an overcast day, with the light in front of you or slightly to the side. It evens out skin and avoids harsh shadows. Avoid overhead light and direct midday sun. The table shows how common setups change how you look.
+
+| Setup | Effect on your face | Do this instead |
+| --- | --- | --- |
+| Facing a window | Even skin, soft shadows | Keep it. Window in front or slightly to the side |
+| Overhead light | Shadows under the eyes and nose | Warm, diffuse lamps at face height |
+| Direct midday sun | Squinting and harsh contrast | Open shade or an overcast day |
+| Light only from below or behind | Unflattering unless you intend it | Move so the light is in front |
+| Camera below the chin | Double chin and a wider nose | Eye level or slightly above |
+| Phone held very close | Exaggerates the nose and the centre of the face | Arm's length or further, then crop |
+| Mixed colour lighting | Odd skin tones | One light source colour |
 
 ### Use soft, natural light
 
@@ -34,7 +68,9 @@ Stand facing a window, or be outdoors in open shade or on an overcast day. Soft 
 
 If you must use indoor lighting, use warm, diffuse lamps at face height and avoid a single bare overhead bulb.
 
-## Camera height and distance
+## Where should I hold the camera?
+
+Hold it at eye level or slightly above, at arm's length or further. A low angle adds a double chin and widens the nose. A very close phone exaggerates the nose and the centre of the face because of lens perspective. Use a tripod and the 2x lens if you have one, then crop.
 
 ### Eye level or slightly above
 
@@ -44,7 +80,9 @@ A low camera angle adds a double chin and widens the nose. A camera slightly abo
 
 Phone cameras held very close exaggerate the nose and the centre of the face because of lens perspective. Hold the camera at arm's length or further, or use a tripod and the 2x lens if your phone has one. Crop afterwards.
 
-## Posture and angle
+## How should I stand and angle my face?
+
+Stand tall with your shoulders back and down. Turn your body about 30 degrees from the camera, then turn your head back toward it. Push the chin slightly forward and down to define the jaw and reduce the neck fold. Keep your hands relaxed, in pockets or holding something.
 
 1. Stand tall, and pull shoulders back and down.
 2. Turn your body about 30 degrees from the camera, then turn your head back toward it.
@@ -53,7 +91,9 @@ Phone cameras held very close exaggerate the nose and the centre of the face bec
 
 Good posture also helps in person, and our guide to [posture exercises](/guides/posture-exercises) covers how to build it.
 
-## Expression
+## How do I smile naturally in photos?
+
+Relax your face, exhale, then smile. Think of something that amuses you, or ask the photographer to say something funny. A slight smile with engaged eyes looks warmer than a wide grin. Take many shots and choose later, since most good photos are picked from a series.
 
 Forced smiles look forced. A few ways to look natural:
 
@@ -64,7 +104,9 @@ Forced smiles look forced. A few ways to look natural:
 
 Take many shots and choose later. Most good photos are picked from a series.
 
-## Grooming for the camera
+## What grooming helps before a photo?
+
+Get a haircut in the last couple of weeks, keep a clean shave or neat beard lines, and use moisturiser and sunscreen. Blot shine with a tissue. Tidy your brows, trim nose hair and wear clothes that fit in a colour that suits your skin tone.
 
 - Haircut within the last couple of weeks.
 - Clean shave or neat beard lines.
@@ -75,21 +117,25 @@ Take many shots and choose later. Most good photos are picked from a series.
 
 Details like glasses glare and food in teeth are easy to check beforehand. If you wear glasses, tilt them slightly or lower the angle to avoid reflections.
 
-## Backgrounds and framing
+## What background is best for a photo?
 
-A plain, uncluttered background keeps focus on you. Avoid bright windows behind you, which put your face in silhouette. Leave a bit of space above the head, and keep the horizon level.
+A plain, uncluttered background keeps the focus on you. Avoid bright windows behind you, which put your face in silhouette. Leave a bit of space above your head, keep the horizon level and check for clutter near your head before you press the shutter.
 
-## Editing, within limits
+## Should I use filters or edit my photos?
 
-Brightness, contrast and crop are fine. Heavy beautifying filters change features and make photos look artificial. Over time they also distort your sense of how you actually look.
+Brightness, contrast and crop are fine. Heavy beautifying filters change your features and make photos look artificial. Over time they can also distort your sense of how you actually look. Basic exposure and crop adjustments are enough for a natural result.
 
-## Practice routine
+## How do I practise taking better photos?
+
+Twenty shots in one window setup, with small changes each time, teach you more than one perfect attempt. Pick the best three, note what they have in common, and repeat monthly to see how grooming and posture changes show up. The steps below take about ten minutes.
 
 1. Find a window and set the phone at eye level.
 2. Take twenty shots with small changes in angle, chin and expression.
 3. Pick the best three and note what they have in common.
 4. Repeat monthly to see how grooming and posture changes show up.
 
-Taking photos in the same conditions also helps you track real progress. Axend's free AI scan can give a baseline and a plan from one photo. You can try the [free AI scan](/how-attractive-am-i), and use a well-lit, straight-on shot for fairer results. Remember that a score is only a reading of one photo on one day.
+Taking photos in the same conditions also helps you track real progress. Axend's free AI scan can give a baseline and a plan from one photo. You can try the [free AI scan](/how-attractive-am-i), and use a well-lit, straight-on shot for fairer results. Remember that a score is only a reading of one photo on one day. For a quick look at how scores vary by photo, see [are AI attractiveness tests accurate](/guides/are-ai-attractiveness-tests-accurate).
+
+For the jaw in particular, see [how to get a jawline](/guides/how-to-get-a-jawline).
 
 Good photos reflect good basics: light, distance, grooming and ease. Get those right and you will look more like the person people see in real life.

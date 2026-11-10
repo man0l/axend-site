@@ -1,0 +1,13 @@
+---
+interface Props { items: string[] }
+const { items } = Astro.props;
+---
+<aside class="takeaways" aria-labelledby="key-takeaways">
+  <h2 id="key-takeaways">Key takeaways</h2>
+  <ul>{items.map((t) => <li>{t}</li>)}</ul>
+</aside>
+<style>
+  .takeaways { margin: 0 0 28px; padding: 16px 20px; border: 1px solid var(--hair-soft); border-left: 3px solid var(--accent); border-radius: 12px; }
+  .takeaways h2 { margin: 0 0 8px; font-size: 1rem; letter-spacing: .02em; }
+  .takeaways ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: 1rem; line-height: 1.5; }
+</style>
