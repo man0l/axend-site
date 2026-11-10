@@ -1,0 +1,140 @@
+---
+// Hero portrait with a live-looking measurement overlay: midline, facial thirds, and three trait readouts
+// anchored to the face with leader lines. One authored motion: a scan sweep, then the lines wipe in and the
+// readouts land. Static under prefers-reduced-motion. The portrait is an AI example and is always labelled.
+import type { FaceId } from '../data/faces';
+import type { SampleBand } from '../data/samples';
+interface Props {
+  face: FaceId;
+  score: number;
+  ringLabel: string;
+  traits: { name: string; score: number; band: SampleBand }[];
+  alt?: string;
+}
+const { face, score, ringLabel, traits, alt = 'AI-generated example portrait, front-facing, with a measurement overlay' } = Astro.props;
+
+// Image is 720 x 900. The desktop frame is 4:5, so the image fills it edge to edge: chip x is a % of frame width,
+// chip y a % of frame height. On small screens the chips sit in a strip under the frame and these values are unused.
+const W = 720, H = 900;
+const pw = (px: number) => +((px / W) * 100).toFixed(2);
+const ph = (px: number) => +((px / H) * 100).toFixed(2);
+// Facial thirds: hairline, brow, nose base, chin. The bank is framed consistently, so one set fits every face.
+const THIRDS: [number, string][] = [[184, 'hairline'], [292, 'brow'], [432, 'nose base'], [562, 'chin']];
+const MID = 359;
+// Feature anchors per face (image px, viewer's left side): outer eye corner, nose alar base, jaw angle.
+type Anchors = { eye: [number, number]; nose: [number, number]; jaw: [number, number] };
+const DEFAULT: Anchors = { eye: [262, 335], nose: [330, 432], jaw: [238, 528] };
+const ANCHORS: Partial<Record<FaceId, Anchors>> = {
+  f3: { eye: [258, 332], nose: [330, 430], jaw: [236, 525] },
+  f1: { eye: [262, 330], nose: [332, 428], jaw: [240, 522] },
+  f2: { eye: [266, 338], nose: [334, 436], jaw: [250, 528] },
+  m1: { eye: [262, 338], nose: [332, 436], jaw: [232, 540] },
+  m2: { eye: [264, 336], nose: [334, 438], jaw: [236, 538] },
+  m3: { eye: [262, 336], nose: [332, 434], jaw: [238, 542] },
+};
+const a = ANCHORS[face] ?? DEFAULT;
+const CHIP_X = 172; // leader lines start here and run horizontally to the feature; chips hang off this x on desktop
+const pick = (n: string) => traits.find((t) => t.name === n);
+const reads = [
+  { key: 'eye', t: pick('Symmetry'), at: a.eye },
+  { key: 'nose', t: pick('Proportions'), at: a.nose },
+  { key: 'jaw', t: pick('Jawline'), at: a.jaw },
+].filter((r) => r.t) as { key: string; t: { name: string; score: number; band: SampleBand }; at: [number, number] }[];
+const bandText: Record<SampleBand, string> = { strong: 'Strong', balanced: 'Balanced', room: 'Room to improve' };
+const scoreBand: SampleBand = score >= 7.5 ? 'strong' : score >= 5.5 ? 'balanced' : 'room';
+---
+<div class="hero-face" aria-label={alt} role="img">
+  <div class="hf">
+    <img class="ph" src={`/faces/portrait-${face}.webp`} alt="" width="720" height="900" loading="eager" fetchpriority="high" decoding="async" />
+    <svg class="ov" viewBox="0 0 720 900" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
+      <g class="lines">
+        {THIRDS.map(([y, label]) => <g><path d={`M150 ${y}H585`} class="third" /><text x="596" y={y + 4} class="lbl">{label}</text></g>)}
+        <path d={`M${MID} 120V640`} class="mid" />
+      </g>
+      <g class="leads">
+        {reads.map((r, i) => <g class="lead" style={`--i:${i}`}><path d={`M${CHIP_X} ${r.at[1]}H${r.at[0]}`} pathLength="1" /><circle cx={r.at[0]} cy={r.at[1]} r="5" /></g>)}
+      </g>
+    </svg>
+    <i class="sweep" aria-hidden="true"></i>
+    <span class="aitag">AI example</span>
+    <div class="score" aria-hidden="true">
+      <span class="big num">{score.toFixed(1)}</span>
+      <span class="sl">{ringLabel}, out of 10</span>
+      <span class:list={['tag', scoreBand]}>{bandText[scoreBand]} band</span>
+    </div>
+  </div>
+  <ul class="reads" aria-hidden="true">
+    {reads.map((r, i) => (
+      <li class="chip" style={`--x:${pw(CHIP_X)}%;--y:${ph(r.at[1])}%;--i:${i}`}>
+        <span class="k">{r.t.name}</span>
+        <span class="v num">{r.t.score.toFixed(1)}</span>
+        <span class:list={['tag', r.t.band]}>{bandText[r.t.band]}</span>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .hero-face { position: relative; container-type: inline-size; }
+  .hf { position: relative; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 22px; background: #0b0906; }
+  .ph {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16%, #000 86%, transparent 100%), linear-gradient(to bottom, #000 70%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent 0, #000 16%, #000 86%, transparent 100%), linear-gradient(to bottom, #000 70%, transparent 100%);
+    mask-composite: intersect;
+  }
+  .ov { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .ov path { fill: none; vector-effect: non-scaling-stroke; }
+  .third { stroke: rgba(243, 234, 219, .42); stroke-width: 1; stroke-dasharray: 3 6; }
+  .mid { stroke: #e8542a; stroke-width: 1.5; stroke-dasharray: 8 6; }
+  .lbl { font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: 13px; fill: rgba(243, 234, 219, .6); letter-spacing: .06em; text-transform: uppercase; display: none; }
+  .lead path { stroke: rgba(243, 234, 219, .75); stroke-width: 1; }
+  .lead circle { fill: #f3eadb; stroke: #0f0c08; stroke-width: 2; }
+  .leads { display: none; }
+  .sweep { display: none; }
+  .aitag, .chip .k, .sl {
+    font-family: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+  }
+  .aitag { position: absolute; right: 14px; top: 14px; font-size: 11px; color: var(--pill); background: rgba(11, 9, 6, .78); border: 1px solid var(--hair); border-radius: 6px; padding: .45em .7em; white-space: nowrap; }
+  .score { position: absolute; left: 6%; bottom: 7%; display: grid; gap: 4px; justify-items: start; line-height: 1; }
+  .big { color: #fff; font-size: clamp(44px, 14cqw, 76px); line-height: .9; text-shadow: 0 2px 24px rgba(0, 0, 0, .6); }
+  .sl { font-size: clamp(10px, 2.6cqw, 12px); color: var(--pill); margin-top: 4px; }
+  .score .tag { margin-top: 4px; background: rgba(11, 9, 6, .7); }
+
+  /* readouts: a strip under the frame on small screens, floating chips tied to the face on large ones */
+  .reads { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .chip { display: grid; grid-template-columns: 1fr auto; align-items: center; column-gap: 8px; row-gap: 2px; padding: 10px 12px; border: 1px solid var(--hair); border-radius: 12px; background: rgba(20, 14, 9, .85); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 10px 30px -14px rgba(0, 0, 0, .8); }
+  .chip .k { grid-column: 1 / -1; font-size: 10px; color: var(--eyebrow); }
+  .chip .v { color: #fff; font-size: 1.25rem; }
+  .chip .tag { font-size: .68rem; padding: 1px 8px; }
+  @media (max-width: 419px) { .chip .tag { display: none; } .chip { grid-template-columns: 1fr; } }
+
+  @media (min-width: 960px) {
+    .hf { aspect-ratio: 4 / 5; border-radius: 0; background: transparent; overflow: visible; }
+    .ph { border-radius: 0; }
+    .lbl, .leads { display: block; }
+    .aitag { right: 6%; top: 5%; }
+    .reads { position: absolute; inset: 0; margin: 0; display: block; pointer-events: none; }
+    /* chips hang off the leader start; the first sits above its line, the last below, so the stack breathes */
+    .chip { position: absolute; right: calc(100% - var(--x)); top: var(--y); --dy: -50%; transform: translateY(var(--dy)); min-width: 150px; grid-template-columns: auto auto; }
+    .chip:first-child { --dy: calc(-100% + 6px); }
+    .chip:last-child { --dy: -6px; }
+    .chip .k { grid-column: 1 / -1; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .sweep { display: block; position: absolute; left: 10%; right: 10%; top: 6%; height: 2px; border-radius: 2px; background: var(--accent); box-shadow: 0 0 22px 5px rgba(232, 84, 42, .5); opacity: 0; animation: sweep 1.5s cubic-bezier(.4, 0, .2, 1) .25s forwards; }
+    .lines { clip-path: inset(0 100% 0 0); animation: wipe .9s cubic-bezier(.2, .7, .2, 1) 1.35s forwards; }
+    .lead { opacity: 0; animation: appear .5s cubic-bezier(.2, .7, .2, 1) calc(1.85s + var(--i) * .16s) forwards; }
+    .lead path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw .5s cubic-bezier(.2, .7, .2, 1) calc(1.85s + var(--i) * .16s) forwards; }
+    .chip { opacity: 0; animation: land .55s cubic-bezier(.2, .7, .2, 1) calc(1.95s + var(--i) * .16s) forwards; }
+    .score { opacity: 0; animation: appear .6s cubic-bezier(.2, .7, .2, 1) 2.35s forwards; }
+    @keyframes sweep { 0% { top: 6%; opacity: 0; } 8% { opacity: 1; } 85% { opacity: 1; } 100% { top: 84%; opacity: 0; } }
+    @keyframes wipe { to { clip-path: inset(0 0 0 0); } }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes appear { to { opacity: 1; } }
+    @keyframes land { from { opacity: 0; translate: -8px 0; } to { opacity: 1; translate: 0 0; } }
+    @media (min-width: 960px) { .chip { animation-name: land-d; } @keyframes land-d { from { opacity: 0; transform: translateY(var(--dy)) translateX(-8px); } to { opacity: 1; transform: translateY(var(--dy)); } } }
+  }
+</style>
