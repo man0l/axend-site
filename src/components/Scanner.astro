@@ -3,7 +3,6 @@ import Icon from './Icon.astro';
 import ScoreRing from './ScoreRing.astro';
 import TraitRow from './TraitRow.astro';
 import LockedRows from './LockedRows.astro';
-import SampleResult from './SampleResult.astro';
 import { SAMPLES } from '../data/samples';
 import { appStoreLink } from '../lib/site';
 interface Props { ct: string; focus: 'overall' | 'symmetry' | 'face' | 'men' | 'rating' }
@@ -14,14 +13,18 @@ const bad = [['tilt', 'Tilted'], ['filter', 'Filtered'], ['group', 'Group shot']
 ---
 <section class="scanner panel" id="scan" data-focus={focus} data-cta={appStoreLink(ct)} aria-label="Face scan">
   <div class="gate">
+    <div class="tool-head">
+      <p class="tool-t">Free face scan</p>
+      <ol class="tool-steps"><li><b>1</b> Upload a photo</li><li><b>2</b> Scan on your device</li><li><b>3</b> Get your score</li></ol>
+    </div>
     <div class="stage">
       <div class="dz-wrap">
         <div class="dz" id="dz">
           <span class="dz-ic"><Icon name="scan" size={26} /></span>
-          <p class="dz-t">Drop a front-facing photo</p>
-          <p class="dz-s">JPG, PNG or HEIC. Stays in this tab.</p>
+          <p class="dz-t">Upload a front-facing photo</p>
+          <p class="dz-s">Tap the button or drop a file here. JPG, PNG or HEIC.</p>
           <div class="actions">
-            <label class="btn" id="pick-label" aria-disabled="true"><Icon name="upload" size={18} /> Scan a photo
+            <label class="btn" id="pick-label" aria-disabled="true"><Icon name="upload" size={18} /> Upload a photo
               <input type="file" id="file" accept="image/*" hidden disabled />
             </label>
             <label class="btn ghost" id="cam-label" aria-disabled="true"><Icon name="camera" size={18} /> Use camera
@@ -31,12 +34,8 @@ const bad = [['tilt', 'Tilted'], ['filter', 'Filtered'], ['group', 'Group shot']
         </div>
         <label class="age">
           <input type="checkbox" id="age-ok" />
-          <span>I am 18 or older. <em>The scan runs in this browser tab: no upload, no account.</em></span>
+          <span><strong>Tick to confirm you are 18 or older.</strong> <em>The scan runs in this browser tab: no upload, no account.</em></span>
         </label>
-      </div>
-      <div class="ex" aria-hidden="true">
-        <span class="ex-l">Example result</span>
-        <div class="ex-in"><SampleResult focus={focus} ct={ct} /></div>
       </div>
     </div>
     <div class="guide" aria-label="Photo guidance">
@@ -67,32 +66,29 @@ const bad = [['tilt', 'Tilted'], ['filter', 'Filtered'], ['group', 'Group shot']
 </section>
 
 <style>
-  .scanner { padding: 14px; position: relative; overflow: hidden; }
+  .scanner { padding: 14px; position: relative; overflow: hidden; background: linear-gradient(180deg, #3a2b1d 0%, #2a1f15 100%); border-color: rgba(232, 190, 140, .55); box-shadow: 0 0 0 1px rgba(232, 190, 140, .12), 0 24px 60px -20px rgba(0, 0, 0, .8), 0 0 60px -10px rgba(232, 150, 80, .25); }
+  .tool-head { position: relative; padding: 4px 6px 10px; }
+  .tool-t { margin: 0 0 8px; color: #fff; font-weight: 700; font-size: 1.05rem; letter-spacing: -.01em; }
+  .tool-steps { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: .85rem; color: var(--lead); font-weight: 600; }
+  .tool-steps b { display: inline-flex; width: 20px; height: 20px; align-items: center; justify-content: center; border-radius: 50%; background: var(--pill); color: #1b140e; font-size: .75rem; margin-right: 4px; }
   .scanner::before { content: ''; position: absolute; inset: -40% -20% auto; height: 80%; background: radial-gradient(closest-side, rgba(58, 34, 20, .9), transparent); pointer-events: none; }
   .gate, .view { position: relative; }
   .stage { display: grid; }
   .dz-wrap { grid-area: 1 / 1; position: relative; z-index: 2; padding: 6px; }
-  .dz { text-align: center; padding: 14px 12px 12px; border: 1.5px dashed rgba(194, 154, 110, .55); border-radius: 16px; background: rgba(20, 14, 9, .72); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: border-color .15s, background .15s; }
+  .dz { text-align: center; padding: 14px 12px 12px; border: 2px dashed rgba(232, 190, 140, .8); border-radius: 16px; background: #16100a; transition: border-color .15s, background .15s; }
   .dz.over { border-color: var(--pill); background: rgba(40, 28, 18, .85); }
-  .dz-ic { display: none; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(243, 234, 219, .08); color: var(--pill); margin-bottom: 8px; }
+  .dz-ic { display: inline-flex; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(243, 234, 219, .08); color: var(--pill); margin-bottom: 8px; }
   .dz-t { color: #fff; font-weight: 700; font-size: 1.05rem; margin: 0; letter-spacing: -0.01em; }
-  .dz-s { margin: 0 0 10px; font-size: .9rem; color: var(--muted); }
+  .dz-s { margin: 4px 0 12px; font-size: .9rem; color: var(--lead); }
   .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .actions { flex-wrap: nowrap; } .actions .btn { flex: 1 1 0; max-width: 220px; padding: 12px 8px; font-size: .92rem; white-space: nowrap; gap: 6px; }
+  .actions { flex-wrap: wrap; } .actions .btn { flex: 1 1 0; max-width: none; min-width: 140px; padding: 12px 8px; font-size: .92rem; white-space: nowrap; gap: 6px; }
   @media (max-width: 420px) { .actions .btn :global(svg) { display: none; } }
-  .age { display: flex; gap: 10px; align-items: flex-start; margin: 8px 4px 0; line-height: 1.35; cursor: pointer; font-size: .9rem; color: var(--text); background: rgba(15, 12, 8, .6); border-radius: 12px; padding: 8px 12px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  .age { display: flex; gap: 10px; align-items: flex-start; margin: 8px 4px 0; line-height: 1.35; cursor: pointer; font-size: .9rem; color: var(--text); background: #16100a; border: 1px solid rgba(232, 190, 140, .3); border-radius: 12px; padding: 10px 12px; }
   .age input { width: 20px; height: 20px; margin-top: 1px; accent-color: var(--pill); flex: none; }
-  .age em { display: block; font-style: normal; color: var(--body); margin-top: 1px; font-size: .82rem; }
-  .ex { grid-area: 1 / 1; position: relative; align-self: end; margin-top: 20px; }
-  /* example result: full contrast, ring + one trait row only, so nothing is clipped or faded */
-  .ex-in { pointer-events: none; user-select: none; padding: 30px 16px 16px; border: 1px solid var(--hair-soft); border-radius: 16px; background: rgba(15, 12, 8, .55); }
-  .ex-in :global(.sample) { grid-template-columns: 1fr; }
-  .ex-in :global(.mesh), .ex-in :global(.locked), .ex-in :global(.traits .row:nth-child(n+2)) { display: none; }
-  .ex-l { position: absolute; z-index: 3; right: 8px; top: -4px; font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--eyebrow); background: rgba(15, 12, 8, .85); border: 1px solid var(--hair); border-radius: 999px; padding: 2px 10px; }
+  .age em { display: block; font-style: normal; color: var(--lead); margin-top: 1px; font-size: .82rem; }
   /* mobile: dropzone on top, example result peeks beneath it */
   .stage { grid-template-rows: auto 1fr; }
-  .dz-wrap { grid-row: 1; } .ex { grid-row: 2; margin-top: 8px; align-self: start; }
-  .ex-l { top: 0; }
+  .dz-wrap { grid-row: 1; }
   .guide { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .g { list-style: none; margin: 0; padding: 8px 10px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: .8rem; font-weight: 600; border: 1px solid var(--hair-soft); }
   .g li { display: inline-flex; align-items: center; gap: 5px; }
