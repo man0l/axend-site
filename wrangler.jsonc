@@ -14,5 +14,7 @@
     "binding": "ASSETS",
     "run_worker_first": true,
     "not_found_handling": "404-page"
-  }
+  },
+  // Workers Builds runs `wrangler preview` for non-main branches; it refuses to run without this block.
+  "previews": {}
 }
