@@ -90,7 +90,7 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec alt">
     <div class="wrap">
       <div class="sec-head"><p class="eyebrow">What the score means</p><h2>Five plain bands, out of 10.</h2><p>Scores come from version-one geometry measurements, not from a population sample. Until the app's norms are in, we show bands and make no percentile claims.</p></div>
       <BandStrip />
@@ -104,7 +104,7 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
     </div>
   </section>
 
-  <section class="sec">
+  <section class="sec alt">
     <div class="wrap">
       <div class="sec-head"><p class="eyebrow">Method</p><h2>What this test measures, and what it does not.</h2></div>
       <div class="notes">{tool.body.map((b) => <div><h3>{b.h}</h3><p>{b.p}</p></div>)}</div>
@@ -170,7 +170,7 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
   .tail .lead { margin: 0 0 20px; }
   .ctas { display: flex; flex-wrap: wrap; gap: 10px; }
   .ctas .btn { flex: 1 1 auto; }
-  .trust { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .trust { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
   .trust li { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border: 1px solid var(--hair); border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--pill); background: rgba(36, 27, 18, .6); }
   @media (min-width: 960px) {
     .hero { padding: 40px 0 0; }
@@ -189,8 +189,8 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
   .try-grid { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
   .try-copy h2 { margin-bottom: .4em; }
   .try-copy p { color: var(--lead); font-size: 1.0625rem; margin: 0; max-width: 32em; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0 0; padding: 18px 0 0; border-top: 1px solid var(--hair); }
-  .stats dt { color: #fff; font-size: 2.2rem; line-height: 1; } .stats dd { margin: 6px 0 0; font-size: .85rem; line-height: 1.35; color: var(--body); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0 0; padding: 20px 0 0; border-top: 1px solid var(--hair); }
+  .stats dt { color: #fff; font-size: 2.2rem; line-height: 1; } .stats dd { margin: 8px 0 0; font-size: .9rem; line-height: 1.4; color: var(--body); }
   .scan-col { min-width: 0; }
   @media (min-width: 960px) {
     .try { padding-top: 64px; }
@@ -198,32 +198,36 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
     .stats { margin-top: 32px; }
   }
   .how { padding-bottom: 0; scroll-margin-top: 60px; }
-  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 20px; grid-template-columns: 1fr; }
   .what .big { padding: 20px; }
-  .callouts { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
-  .callouts li { display: grid; align-content: start; gap: 2px; border-top: 1px solid var(--hair); padding-top: 12px; font-size: .92rem; }
+  .callouts { list-style: none; padding: 0; margin: 32px 0 0; display: grid; gap: 24px 28px; grid-template-columns: 1fr 1fr; }
+  .callouts li { display: grid; align-content: start; gap: 2px; border-top: 1px solid var(--hair); padding-top: 16px; font-size: .95rem; }
   .callouts .k { color: var(--eyebrow); font-size: 1.1rem; } .callouts strong { color: #fff; }
-  .three { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .three { display: grid; gap: 20px; grid-template-columns: 1fr; }
   .three .card p { margin: 0; font-size: 1rem; }
-  .ic { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 12px; background: rgba(243, 234, 219, .08); color: var(--pill); margin-bottom: 14px; }
-  .notes { display: grid; gap: 24px; grid-template-columns: 1fr; }
-  .notes > div { border-top: 1px solid var(--hair); padding-top: 14px; } .notes p { margin: 0; }
-  .attr { margin: 28px 0 0; padding: 14px 18px; border-left: 2px solid var(--accent); color: var(--lead); font-size: .97rem; max-width: 46em; }
+  .ic { display: inline-flex; width: 40px; height: 40px; align-items: center; justify-content: center; border-radius: 12px; background: rgba(243, 234, 219, .08); color: var(--pill); margin-bottom: 20px; }
+  .notes { display: grid; gap: 32px 40px; grid-template-columns: 1fr; }
+  .notes > div { border-top: 1px solid var(--hair); padding-top: 20px; } .notes p { margin: 0; }
+  .attr { margin: 48px 0 0; padding: 4px 0 4px 20px; border-left: 1px solid var(--accent); color: var(--lead); font-size: .97rem; max-width: 46em; }
   .bridge { background: linear-gradient(180deg, transparent, rgba(58, 34, 20, .35) 40%, transparent); overflow: hidden; }
-  .phones { display: flex; gap: 10px; justify-content: center; align-items: flex-start; margin: 8px 0 24px; }
+  .phones { display: flex; gap: 10px; justify-content: center; align-items: flex-start; margin: 16px 0 40px; }
   .phones > :global(figure:nth-child(1)), .phones > :global(figure:nth-child(3)) { display: none; }
-  .mods { list-style: none; padding: 0; margin: 0 0 14px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; position: relative; }
+  .mods { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; position: relative; }
   .mods li { display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px; border: 1px solid var(--hair); border-radius: 999px; color: var(--pill); font-weight: 600; font-size: .9rem; background: var(--surface); }
-  .price { text-align: center; color: var(--lead); margin: 0 0 16px; } .price strong { color: #fff; }
+  .price { text-align: center; color: var(--lead); margin: 0 0 24px; } .price strong { color: #fff; }
   .bridge :global(.badge) { display: flex; width: max-content; margin: 0 auto; position: relative; }
   .narrow { max-width: 780px; }
-  .gcs { display: grid; gap: 4px 28px; grid-template-columns: 1fr; }
-  .tiles { display: grid; gap: 10px; grid-template-columns: 1fr; }
-  .tile { display: grid; gap: 2px; padding: 16px 18px; border: 1px solid var(--hair); border-radius: 14px; text-decoration: none; position: relative; background: rgba(27, 20, 14, .6); transition: border-color .2s, background .2s; }
+  .gcs { display: grid; gap: 8px 40px; grid-template-columns: 1fr; }
+  .tiles { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .tile { display: grid; gap: 4px; padding: 20px 22px; border: 1px solid var(--hair); border-radius: 14px; text-decoration: none; position: relative; background: rgba(27, 20, 14, .6); transition: border-color .2s, background .2s; }
   .tile:hover { border-color: var(--eyebrow); background: var(--card); }
-  .tile strong { color: #fff; } .tile span { font-size: .9rem; color: var(--body); padding-right: 24px; } .tile i { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-style: normal; color: var(--eyebrow); }
-  .cta { text-align: center; padding: 44px 20px; background: radial-gradient(60% 120% at 50% 0%, #3a2214, #1b140e); }
-  .cta p { color: var(--lead); } .cta h2 { max-width: 14em; margin: 0 auto .4em; }
+  .tile strong { color: #fff; } .tile span { font-size: .9rem; color: var(--body); padding-right: 24px; } .tile i { position: absolute; right: 22px; top: 50%; transform: translateY(-50%); font-style: normal; color: var(--eyebrow); }
+  /* the one light surface on the page: the closing ask should not blend into the dark run above it */
+  .cta { text-align: center; padding: 64px 24px; background: var(--pill); border-color: transparent; box-shadow: 0 32px 64px -32px rgba(0, 0, 0, .8); }
+  .cta h2 { color: var(--ink); max-width: 14em; margin: 0 auto .5em; }
+  .cta p { color: var(--ink-soft); font-size: 1.0625rem; margin-bottom: 28px; }
+  .cta :global(.btn) { box-shadow: 0 10px 24px -10px rgba(61, 111, 230, .7); }
+  .cta :global(:focus-visible) { outline-color: var(--ink); }
   @media (min-width: 640px) {
     .steps, .three, .notes { grid-template-columns: repeat(3, 1fr); }
     .callouts { grid-template-columns: repeat(4, 1fr); }
@@ -231,7 +235,8 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
     .tiles { grid-template-columns: repeat(3, 1fr); }
     .phones > :global(figure:nth-child(1)), .phones > :global(figure:nth-child(3)) { display: block; }
     .phones { gap: 24px; } .phones > :global(figure:nth-child(2)) { margin-top: -28px; }
-    .what .big { padding: 28px; }
+    .what .big { padding: 36px; }
+    .cta { padding: 96px 40px; }
   }
   @media (min-width: 640px) and (max-width: 959px) { .phones { gap: 14px; } }
 </style>

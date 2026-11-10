@@ -8,8 +8,9 @@ const { n, title, text, icon } = Astro.props;
   <h3>{title}</h3><p>{text}</p>
 </li>
 <style>
-  .step { padding: 22px; list-style: none; }
-  .head { display: flex; justify-content: space-between; align-items: center; color: var(--eyebrow); margin-bottom: 18px; }
+  .step { padding: 26px; list-style: none; }
+  @media (min-width: 768px) { .step { padding: 32px; } }
+  .head { display: flex; justify-content: space-between; align-items: center; color: var(--eyebrow); margin-bottom: 28px; }
   .n { font-size: 2rem; color: var(--eyebrow); line-height: 1; }
   p { margin: 0; font-size: 1rem; }
 </style>

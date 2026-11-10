@@ -5,3 +5,4 @@ dist
 public/mediapipe
 .env
 .dev.vars
+core.*
