@@ -10,14 +10,14 @@ export interface Author {
   sameAs: string[];
 }
 
-// Name, bio and LinkedIn are pending founder confirmation on SLA-1476. Do not add credentials that are not confirmed.
+// Name, bio and LinkedIn confirmed by the founder on SLA-1476. Do not add credentials that are not confirmed.
 export const FOUNDER: Author = {
-  name: 'Manol Trendafilov',
+  name: 'Manol T.',
   role: 'Founder',
   org: 'Axend',
-  bio: 'Manol Trendafilov is the founder of Axend, the grooming and self-care app behind this site. Manol builds the on-device face scan and writes and reviews the guides to the editorial standards on this page. Axend is cosmetic and self-care only, and nothing here is medical advice.',
+  bio: 'Manol T. is the founder of Axend, the grooming and self-care app behind this site. Manol builds the on-device face scan and writes and reviews the guides to the editorial standards on this page. Axend is cosmetic and self-care only, and nothing here is medical advice.',
   photo: '/founder.jpg',
-  sameAs: ['https://x.com/manol_ai'],
+  sameAs: ['https://x.com/manol_ai', 'https://bg.linkedin.com/in/man0l'],
 };
 
 export const FOUNDER_URL = `${SITE.url}/about#founder`;
