@@ -8,6 +8,7 @@ targetKeyword: "are ai attractiveness tests accurate"
 tool: "/"
 publishDate: 2026-11-09
 updatedDate: 2026-11-10
+experiment: "accuracy"
 sources:
   - title: "Maxims or myths of beauty? A meta-analytic and theoretical review (Langlois et al., 2000)"
     url: "https://doi.org/10.1037/0033-2909.126.3.390"
@@ -96,7 +97,7 @@ Use soft daylight facing a window, with the camera at eye level at arm's length 
 5. Pull hair off the forehead and remove glasses.
 6. Use the same setup each time so changes reflect you, not the photo.
 
-Take several photos, run them, and look at the range rather than a single reading. If scores vary a lot across near-identical photos, that tells you how much noise there is.
+Take several photos, run them, and look at the range rather than a single reading. If scores vary a lot across near-identical photos, that tells you how much noise there is. We measured that noise on a synthetic test face: see the accuracy study below.
 
 ## How should I use a score?
 

@@ -7,6 +7,12 @@ const sg = (v: number) => (v > 0 ? '+' : v < 0 ? '−' : '±') + Math.abs(v).toF
 const date = new Date(TESTED_ON + 'T00:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
 const label = (m: MetricKey) => METRICS[m].label + (METRICS[m].unit === '°' ? ' (°)' : '');
 const rescanZero = ACC_METRICS.every((m) => RESCANS[m].range === 0);
+const findings = GROUPS.map((g) => {
+  const big = g.rows.reduce((a, r) => (Math.abs(r.delta.overall) > Math.abs(a.delta.overall) ? r : a));
+  const anyOut = g.rows.filter((r) => r.outside.length).length;
+  const overallOut = g.rows.filter((r) => r.outside.includes('overall')).length;
+  return { g, big, anyOut, overallOut };
+});
 const beyondCount = ALL_SETUPS.filter((s) => s.outside.includes('overall')).length;
 
 // Chart: overall score on one axis. Row 1 = the 20 unchanged re-renders, then one row per single-variable setup.
@@ -36,6 +42,13 @@ const ticks: number[] = []; for (let t = lo; t <= hi + 1e-9; t += 0.5) ticks.pus
     </ul>
     <p class="lim">Limits: one synthetic face, one render per setup. The image model may not follow an edit exactly (for example, how far a head is turned), so each row shows what was scanned rather than a guarantee of the setup. This shows how the scanner reacts to this face, not how a real person will score, and not how attractive anyone is.</p>
   </div>
+
+  <h3>What we found</h3>
+  <ul class="found">
+    <li><strong>Re-shooting an unchanged face barely moves the score:</strong> overall {f(REPEATS.overall.min, 'overall')} to {f(REPEATS.overall.max, 'overall')} across {REPEAT_N} re-renders (SD {REPEATS.overall.sd.toFixed(2)}).</li>
+    {findings.map(({ g, big, anyOut, overallOut }) => <li><strong>{g.title}:</strong> {overallOut} of {g.rows.length} setups moved the overall score outside that range, and {anyOut} of {g.rows.length} moved at least one measure outside it. Largest overall shift: {big.label.toLowerCase()}, {sg(big.delta.overall)} ({big.values.overall.toFixed(1)}).</li>)}
+  </ul>
+  <p class="note">Read these as what happened to one synthetic face, not as a rule for every face.</p>
 
   <h3>Same face, same setup, {REPEAT_N} scans</h3>
   <div class="tw"><table>
@@ -90,6 +103,7 @@ const ticks: number[] = []; for (let t = lo; t <= hi + 1e-9; t += 0.5) ticks.pus
   .how ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: .95rem; line-height: 1.5; }
   .how .mv { font-weight: 600; word-break: break-word; }
   .lim { margin: 10px 0 0; font-size: .88rem; opacity: .75; }
+  .found { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: .95rem; line-height: 1.5; }
   .tw { overflow-x: auto; margin: 0 0 16px; }
   table { border-collapse: collapse; width: 100%; font-size: .9rem; line-height: 1.4; }
   caption { text-align: left; font-size: .85rem; opacity: .75; padding-bottom: 6px; }

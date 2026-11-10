@@ -302,5 +302,45 @@
   "prompt": "Change only the lighting: a single room ceiling light directly above, with shadows under the brows, nose and chin, and no other light. Keep everything else identical: same person, same face, same hair, same clothing, same expression, same framing and background.",
   "generatedAt": "2026-11-10T13:57:37.572Z",
   "costUsd": 0.052007
+ },
+ "acc-light-side": {
+  "model": "openai/gpt-image-2.6-sunburst",
+  "mode": "edit",
+  "reference": "base",
+  "prompt": "Change only the lighting: daylight from a window on one side of the face, so one half of the face is lit and the other half is in soft shadow. Keep everything else identical: same person, same face, same hair, same clothing, same expression, same framing and background.",
+  "generatedAt": "2026-11-10T14:12:47.365Z",
+  "costUsd": 0.033282
+ },
+ "acc-light-shade": {
+  "model": "openai/gpt-image-2.6-sunburst",
+  "mode": "edit",
+  "reference": "base",
+  "prompt": "Change only the lighting: outdoor open shade, cool soft diffuse daylight with no direct sun. Keep everything else identical: same person, same face, same hair, same clothing, same expression, same framing and background.",
+  "generatedAt": "2026-11-10T14:13:08.408Z",
+  "costUsd": 0.033207
+ },
+ "acc-lens-close": {
+  "model": "openai/gpt-image-2.6-sunburst",
+  "mode": "edit",
+  "reference": "base",
+  "prompt": "Change only the lens and distance: photographed from about 25 cm with a phone front camera, strong wide-angle perspective, nose slightly enlarged, face filling the frame. Keep everything else identical: same person, same face, same hair, same clothing, same expression, same framing and background.",
+  "generatedAt": "2026-11-10T14:13:33.809Z",
+  "costUsd": 0.033282
+ },
+ "acc-lens-arm": {
+  "model": "openai/gpt-image-2.6-sunburst",
+  "mode": "edit",
+  "reference": "base",
+  "prompt": "Change only the lens and distance: photographed at arm's length (about 50 cm) with a phone front camera, slight wide-angle perspective. Keep everything else identical: same person, same face, same hair, same clothing, same expression, same framing and background.",
+  "generatedAt": "2026-11-10T14:13:52.251Z",
+  "costUsd": 0.033262
+ },
+ "acc-lens-far": {
+  "model": "openai/gpt-image-2.6-sunburst",
+  "mode": "edit",
+  "reference": "base",
+  "prompt": "Change only the lens and distance: photographed from about 2 metres away with a longer lens, then cropped to the same framing; flat natural perspective. Keep everything else identical: same person, same face, same hair, same clothing, same expression, same framing and background.",
+  "generatedAt": "2026-11-10T14:14:11.398Z",
+  "costUsd": 0.033267
  }
 }

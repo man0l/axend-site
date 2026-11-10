@@ -2,7 +2,7 @@
  "scannerVersion": "metrics.ts@7877accb",
  "mediapipe": "0.10.35",
  "model": "face_landmarker.task",
- "scannedAt": "2026-11-10T14:05:26.788Z",
+ "scannedAt": "2026-11-10T14:16:03.137Z",
  "results": [
   {
    "file": "control-1.png",
@@ -315,6 +315,66 @@
    "jawline": 4,
    "jawAngle": 140,
    "yaw": 0.48
+  },
+  {
+   "file": "acc-light-side.png",
+   "faces": 1,
+   "width": 1024,
+   "height": 1024,
+   "overall": 7.8,
+   "symmetry": 9.6,
+   "proportions": 9.4,
+   "jawline": 4,
+   "jawAngle": 137.7,
+   "yaw": 0.008
+  },
+  {
+   "file": "acc-light-shade.png",
+   "faces": 1,
+   "width": 1024,
+   "height": 1024,
+   "overall": 7.7,
+   "symmetry": 9.6,
+   "proportions": 8.9,
+   "jawline": 4,
+   "jawAngle": 137.7,
+   "yaw": 0.003
+  },
+  {
+   "file": "acc-lens-close.png",
+   "faces": 1,
+   "width": 1024,
+   "height": 1024,
+   "overall": 7.3,
+   "symmetry": 8.8,
+   "proportions": 9.2,
+   "jawline": 3.4,
+   "jawAngle": 144.9,
+   "yaw": 0.053
+  },
+  {
+   "file": "acc-lens-arm.png",
+   "faces": 1,
+   "width": 1024,
+   "height": 1024,
+   "overall": 7.6,
+   "symmetry": 9.5,
+   "proportions": 8.9,
+   "jawline": 3.9,
+   "jawAngle": 139.1,
+   "yaw": 0.012
+  },
+  {
+   "file": "acc-lens-far.png",
+   "faces": 1,
+   "width": 1024,
+   "height": 1024,
+   "overall": 7.6,
+   "symmetry": 9.6,
+   "proportions": 8.7,
+   "jawline": 3.9,
+   "jawAngle": 138.3,
+   "yaw": 0.008
   }
  ]
 }
