@@ -6,8 +6,18 @@ cluster: "trust"
 module: "general"
 targetKeyword: "are ai attractiveness tests accurate"
 tool: "/"
-publishDate: 2026-11-26
-updatedDate: 2026-11-26
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
+sources:
+  - title: "Maxims or myths of beauty? A meta-analytic and theoretical review (Langlois et al., 2000)"
+    url: "https://doi.org/10.1037/0033-2909.126.3.390"
+    publisher: "Psychological Bulletin"
+  - title: "The Evolutionary Psychology of Facial Beauty (Rhodes, 2006)"
+    url: "https://doi.org/10.1146/annurev.psych.57.102904.190208"
+    publisher: "Annual Review of Psychology"
+  - title: "Face Landmarker guide"
+    url: "https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker"
+    publisher: "Google AI Edge, MediaPipe"
 faq:
   - q: "Are AI attractiveness tests accurate?"
     a: "They can measure facial geometry fairly consistently under the same conditions, but attractiveness itself has no objective ground truth, so a score is approximate and subjective."

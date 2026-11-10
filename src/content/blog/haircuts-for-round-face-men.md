@@ -6,8 +6,8 @@ cluster: "improve"
 module: "hair"
 targetKeyword: "haircut for round face shape men"
 tool: "/face-attractiveness-test"
-publishDate: 2026-11-23
-updatedDate: 2026-11-23
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
 faq:
   - q: "What haircut is best for a round face?"
     a: "Styles with height on top and shorter sides, such as a textured quiff, pompadour or high fade with volume, add length and make the face look more angular."

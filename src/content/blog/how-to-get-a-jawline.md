@@ -6,8 +6,21 @@ cluster: "improve"
 module: "jawline"
 targetKeyword: "how to get a jawline"
 tool: "/face-attractiveness-test"
-publishDate: 2026-11-20
-updatedDate: 2026-11-20
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
+sources:
+  - title: "Managing your weight"
+    url: "https://www.nhs.uk/live-well/healthy-weight/managing-your-weight/"
+    publisher: "NHS"
+  - title: "Eating a balanced diet"
+    url: "https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/eating-a-balanced-diet/"
+    publisher: "NHS"
+  - title: "Temporomandibular disorder (TMD)"
+    url: "https://www.nhs.uk/conditions/temporomandibular-disorder-tmd/"
+    publisher: "NHS"
+  - title: "Neck pain"
+    url: "https://www.nhs.uk/symptoms/neck-pain-and-stiff-neck/"
+    publisher: "NHS"
 faq:
   - q: "Do jawline exercises work?"
     a: "There is little solid evidence that chewing or jaw exercises meaningfully change jaw shape. They may build chewing muscle, but overdoing them can cause jaw soreness. Body fat and posture have a larger visible effect."

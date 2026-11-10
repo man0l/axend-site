@@ -6,8 +6,21 @@ cluster: "trust"
 module: "general"
 targetKeyword: "how ai attractiveness tests work"
 tool: "/"
-publishDate: 2026-11-26
-updatedDate: 2026-11-26
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
+sources:
+  - title: "Face Landmarker guide"
+    url: "https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker"
+    publisher: "Google AI Edge, MediaPipe"
+  - title: "Maxims or myths of beauty? A meta-analytic and theoretical review (Langlois et al., 2000)"
+    url: "https://doi.org/10.1037/0033-2909.126.3.390"
+    publisher: "Psychological Bulletin"
+  - title: "The Evolutionary Psychology of Facial Beauty (Rhodes, 2006)"
+    url: "https://doi.org/10.1146/annurev.psych.57.102904.190208"
+    publisher: "Annual Review of Psychology"
+  - title: "Facial attractiveness (Thornhill and Gangestad, 1999)"
+    url: "https://doi.org/10.1016/s1364-6613(99)01403-5"
+    publisher: "Trends in Cognitive Sciences"
 faq:
   - q: "How does an AI face rating work?"
     a: "A vision model finds hundreds of landmark points on your face. The tool then computes ratios such as symmetry, facial thirds and jaw angle from those points and maps them to a score."

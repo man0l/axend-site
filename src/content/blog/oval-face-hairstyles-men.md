@@ -6,8 +6,8 @@ cluster: "improve"
 module: "hair"
 targetKeyword: "oval face shape men hairstyles"
 tool: "/male-attractiveness-test"
-publishDate: 2026-11-20
-updatedDate: 2026-11-20
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
 faq:
   - q: "What is an oval face shape?"
     a: "An oval face is longer than it is wide, with a forehead slightly wider than the chin and a softly rounded jaw. Proportions look balanced rather than dominated by one area."

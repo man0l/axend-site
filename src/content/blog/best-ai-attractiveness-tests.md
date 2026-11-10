@@ -6,8 +6,8 @@ cluster: "compare"
 module: "general"
 targetKeyword: "best ai attractiveness test"
 tool: "/"
-publishDate: 2026-11-26
-updatedDate: 2026-11-26
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
 faq:
   - q: "What is the best AI attractiveness test?"
     a: "There is no single best one. Choose by criteria: where your photo is processed, how clearly the method is explained, how honest it is about limits, cost, and whether it gives useful, changeable advice."

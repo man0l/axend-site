@@ -6,8 +6,18 @@ cluster: "improve"
 module: "posture"
 targetKeyword: "better posture exercises"
 tool: "/how-attractive-am-i"
-publishDate: 2026-11-23
-updatedDate: 2026-11-23
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
+sources:
+  - title: "Back pain"
+    url: "https://www.nhs.uk/conditions/back-pain/"
+    publisher: "NHS"
+  - title: "Neck pain"
+    url: "https://www.nhs.uk/symptoms/neck-pain-and-stiff-neck/"
+    publisher: "NHS"
+  - title: "Physical activity guidelines for adults aged 19 to 64"
+    url: "https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-for-adults-aged-19-to-64/"
+    publisher: "NHS"
 faq:
   - q: "How long does it take to improve posture?"
     a: "Most people notice they hold themselves better within a few weeks, but lasting change usually takes a few months of regular practice and habit changes."

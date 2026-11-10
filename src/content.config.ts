@@ -20,12 +20,17 @@ const blog = defineCollection({
       publishDate: z.coerce.date(),
       updatedDate: z.coerce.date(),
       heroImage: z.string().optional(),
+      sources: z.array(z.object({ title: z.string().min(3), url: z.string().url(), publisher: z.string().min(2) })).optional(),
       faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
       draft: z.boolean().default(false),
     })
     .superRefine((v, ctx) => {
       const hit = SLUG_BLOCKLIST.find((b) => v.slug.includes(b));
       if (hit) ctx.addIssue({ code: 'custom', path: ['slug'], message: `slug contains blocklisted trademark term "${hit}"` });
+      const now = new Date();
+      if (v.publishDate > now) ctx.addIssue({ code: 'custom', path: ['publishDate'], message: 'publishDate is in the future' });
+      if (v.updatedDate > now) ctx.addIssue({ code: 'custom', path: ['updatedDate'], message: 'updatedDate is in the future' });
+      if (v.updatedDate < v.publishDate) ctx.addIssue({ code: 'custom', path: ['updatedDate'], message: 'updatedDate is before publishDate' });
     }),
 });
 

@@ -6,8 +6,18 @@ cluster: "trust"
 module: "general"
 targetKeyword: "does facial symmetry matter"
 tool: "/facial-symmetry-test"
-publishDate: 2026-11-26
-updatedDate: 2026-11-26
+publishDate: 2026-11-09
+updatedDate: 2026-11-09
+sources:
+  - title: "The Evolutionary Psychology of Facial Beauty (Rhodes, 2006)"
+    url: "https://doi.org/10.1146/annurev.psych.57.102904.190208"
+    publisher: "Annual Review of Psychology"
+  - title: "Maxims or myths of beauty? A meta-analytic and theoretical review (Langlois et al., 2000)"
+    url: "https://doi.org/10.1037/0033-2909.126.3.390"
+    publisher: "Psychological Bulletin"
+  - title: "Facial attractiveness (Thornhill and Gangestad, 1999)"
+    url: "https://doi.org/10.1016/s1364-6613(99)01403-5"
+    publisher: "Trends in Cognitive Sciences"
 faq:
   - q: "Is a perfectly symmetrical face normal?"
     a: "No. Virtually everyone has some asymmetry in the eyes, brows, nose, mouth and jaw. Small differences between the left and right side are normal."
