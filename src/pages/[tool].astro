@@ -4,6 +4,9 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import { TOOLS } from '../data/tools';
 import type { FaceId } from '../data/faces';
+import FounderSection from '../components/FounderSection.astro';
+import { personLd } from '../data/authors';
+import { SITE } from '../lib/site';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -14,10 +17,11 @@ export async function getStaticPaths() {
 const { tool, page } = Astro.props as any;
 const rendered = page ? await render(page) : null;
 const HERO: Record<string, { portrait: FaceId; portraitMode: 'guides' | 'plain' }> = { about: { portrait: 'm2', portraitMode: 'plain' }, 'how-we-score': { portrait: 'f1', portraitMode: 'guides' } };
+const aboutLd = page?.id === 'about' ? [{ '@context': 'https://schema.org', '@graph': [personLd(), { '@type': 'Organization', '@id': `${SITE.url}/#organization`, name: SITE.name, url: SITE.url, email: SITE.contactEmail, sameAs: [SITE.appStoreUrl], founder: { '@id': `${SITE.url}/about#founder` } }] }] : [];
 ---
 {tool ? <ToolPage tool={tool} /> : (
-  <Base title={`${page.data.title} | Axend`} description={page.data.description} path={`/${page.id}`}>
+  <Base title={`${page.data.title} | Axend`} description={page.data.description} path={`/${page.id}`} jsonLd={aboutLd}>
     <PageHero {...HERO[page.id]} eyebrow="Axend" title={page.data.title} meta={`Last updated ${page.data.updated.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })}`} />
-    <div class="wrap"><div class="prose sec">{rendered && <rendered.Content />}</div></div>
+    <div class="wrap"><div class="prose sec">{rendered && <rendered.Content />}{page.id === 'about' && <FounderSection />}</div></div>
   </Base>
 )}
