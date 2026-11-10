@@ -29,6 +29,8 @@ A round face has width and length that are close to equal, with soft cheeks and 
 
 A round face has a width at the cheekbones that is close to its length from hairline to chin. The cheeks are soft and the jaw curves instead of angling. Pull your hair back and take a straight-on photo to check.
 
+![Chart of five outline face shapes labelled oval, round, square, oblong and heart](/guides-img/faceshape-chart.png "The five face shapes: oval, round, square, oblong and heart")
+
 A defined jaw suggests a square face, and a broader overview is in [face shape and hairstyles for men](/guides/face-shape-hairstyles-men). If your face is clearly longer than it is wide, our [oval face guide](/guides/oval-face-hairstyles-men) fits better.
 
 ## What is the goal of a haircut for a round face?
@@ -55,21 +57,31 @@ A textured quiff, a pompadour, a side part with a fade, a faux hawk or a longer 
 
 Short sides with two to three inches of textured length on top, pushed up and slightly back. It adds height without looking stiff.
 
+![Illustration of a young man with a textured quiff, tousled top swept up and back with short tapered sides](/guides-img/cut-textured-quiff.png "Textured quiff")
+
 ### Pompadour or modern pomp
 
 A more dramatic lift. Works well with a fade on the sides. Needs more styling time and product, so be honest about whether you will do it daily.
+
+![Illustration of a young man with a modern pompadour with a voluminous swept-back top and faded sides](/guides-img/cut-pompadour.png "Pompadour")
 
 ### Side part with a high or mid fade
 
 The part adds an asymmetrical line, which breaks up the roundness. A fade keeps the sides narrow.
 
+![Illustration of a young man with a side part on top and a mid skin fade on the sides](/guides-img/cut-side-part-fade.png "Side part with a mid fade")
+
 ### Faux hawk or textured spikes
 
 Height down the centre and short sides give a strong vertical line. Keep it understated, not extreme.
 
+![Illustration of a young man with a faux hawk, textured top lifted at the centre with faded sides](/guides-img/cut-faux-hawk.png "Faux hawk")
+
 ### Longer top, swept back
 
 If your hair is thick enough, brushing it up and back creates length. Use a light-hold product so it does not look plastered.
+
+![Illustration of a young man with a longer top swept back from the forehead with short sides](/guides-img/cut-swept-back.png "Longer top, swept back")
 
 ## What fade is best for a round face?
 
