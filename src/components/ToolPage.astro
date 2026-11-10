@@ -9,6 +9,8 @@ import PhoneFrame from './PhoneFrame.astro';
 import Accordion from './Accordion.astro';
 import GuideCard from './GuideCard.astro';
 import AppBadge from './AppBadge.astro';
+import HeroFace from './HeroFace.astro';
+import type { FaceId } from '../data/faces';
 import { TOOLS, type Tool } from '../data/tools';
 import { SAMPLES } from '../data/samples';
 import { getPosts } from '../lib/posts';
@@ -21,6 +23,8 @@ const posts = all.filter((p) => p.data.tool === tool.path).slice(0, 3);
 const related = posts.length >= 3 ? posts : [...posts, ...all.filter((p) => !posts.includes(p))].slice(0, 3);
 const url = new URL(tool.path, SITE.url).href;
 const sample = SAMPLES[tool.focus];
+// Hero portrait per page. Kept distinct from SampleResult's face so the same page shows two different examples.
+const HERO_FACE: Record<Tool['focus'], FaceId> = { overall: 'f3', symmetry: 'm2', face: 'm3', men: 'm1', rating: 'f1' };
 const faq = [...tool.faq,
   { q: 'Is it biased?', a: 'Any scoring of faces carries the assumptions of whoever built it. Ours only measures geometry (symmetry, proportions, jaw angle) and does not use skin tone, age, gender or ethnicity as inputs. It still reflects a narrow idea of balance, which is why we call it a baseline and not a verdict. See How we score for the limits.' },
   { q: 'Why does my score change between photos?', a: 'Head angle, lens distance, lighting and expression all move the measured landmarks. Use the same kind of straight-on, neutral photo each time if you want to compare scores.' },
@@ -47,20 +51,31 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
   <section class="hero">
     <div class="glow" aria-hidden="true"></div>
     <div class="wrap hero-grid">
-      <div class="head">
-        <p class="eyebrow">{tool.eyebrow}</p>
-        <h1>{tool.h1[0]} <span>{tool.h1[1]}</span></h1>
-      </div>
-      <div class="scan-col"><Scanner ct={tool.ct} focus={tool.focus} /></div>
+      <h1>{tool.h1[0]} <span>{tool.h1[1]}</span></h1>
+      <div class="face"><HeroFace face={HERO_FACE[tool.focus]} score={sample.score} ringLabel={sample.ringLabel} traits={sample.traits} /></div>
       <div class="tail">
         <p class="lead">{tool.intro}</p>
-        <dl class="stats"><div><dt class="num">478</dt><dd>landmarks found in your browser</dd></div><div><dt class="num">10</dt><dd>point scale, in plain bands</dd></div><div><dt class="num">3</dt><dd>traits behind the score</dd></div></dl>
+        <div class="ctas">
+          <a class="btn" href="#scan"><Icon name="scan" size={18} /> Scan a photo</a>
+          <a class="btn ghost" href="#how">How it works</a>
+        </div>
         <ul class="trust">{trust.map(([i, t]) => <li><Icon name={i} size={18} />{t}</li>)}</ul>
       </div>
     </div>
   </section>
 
-  <section class="sec how">
+  <section class="sec try" id="try">
+    <div class="wrap try-grid">
+      <div class="try-copy">
+        <h2>Your turn. One photo, scanned in this tab.</h2>
+        <p>Choose a front-facing photo and the model maps 478 landmarks right here in your browser. Nothing is uploaded, and you get the same three traits as the example above.</p>
+        <dl class="stats"><div><dt class="num">478</dt><dd>landmarks found in your browser</dd></div><div><dt class="num">10</dt><dd>point scale, in plain bands</dd></div><div><dt class="num">3</dt><dd>traits behind the score</dd></div></dl>
+      </div>
+      <div class="scan-col"><Scanner ct={tool.ct} focus={tool.focus} /></div>
+    </div>
+  </section>
+
+  <section class="sec how" id="how">
     <div class="wrap">
       <div class="sec-head"><p class="eyebrow">How it works</p><h2>Three steps. Nothing leaves your device.</h2></div>
       <ol class="steps">{steps.map(([n, t, d, i]) => <StepCard n={n} title={t} text={d} icon={i} />)}</ol>
@@ -144,26 +159,45 @@ const modules = [['skin', 'Skin'], ['hair', 'Hair'], ['jaw', 'Jawline'], ['postu
 </Base>
 
 <style>
-  .hero { position: relative; padding: 20px 0 8px; }
-  .glow { position: absolute; inset: -120px 0 auto; height: 760px; background: radial-gradient(40% 55% at 70% 38%, #3a2214 0%, transparent 100%); pointer-events: none; z-index: 0; }
-  .hero-grid { position: relative; z-index: 1; display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'head' 'scan' 'tail'; }
-  .head { grid-area: head; } .scan-col { grid-area: scan; min-width: 0; } .tail { grid-area: tail; }
-  h1 { margin-bottom: 6px; font-size: clamp(2.4rem, 8.4vw, 4rem); }
+  /* hero: face-led. h1 above the portrait on small screens, copy beside it on large ones */
+  .hero { position: relative; padding: 24px 0 8px; overflow: hidden; }
+  .glow { position: absolute; inset: -160px 0 auto; height: 900px; background: radial-gradient(42% 55% at 72% 40%, #3a2214 0%, transparent 100%); pointer-events: none; z-index: 0; }
+  .hero-grid { position: relative; z-index: 1; display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); grid-template-areas: 'head' 'face' 'tail'; }
+  h1 { grid-area: head; margin: 0; font-size: clamp(2.5rem, 9vw, 4.25rem); letter-spacing: -0.035em; }
   h1 span { display: block; color: var(--pill); }
-  .head .eyebrow { margin-bottom: 8px; }
-  .tail .lead { margin-top: 12px; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0 18px; padding: 18px 0 0; border-top: 1px solid var(--hair); }
-  .stats dt { color: #fff; font-size: 2.2rem; line-height: 1; } .stats dd { margin: 6px 0 0; font-size: .85rem; line-height: 1.35; color: var(--body); }
-  .trust { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+  .face { grid-area: face; min-width: 0; max-width: 520px; width: 100%; margin: 0 auto; }
+  .tail { grid-area: tail; }
+  .tail .lead { margin: 0 0 20px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ctas .btn { flex: 1 1 auto; }
+  .trust { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .trust li { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border: 1px solid var(--hair); border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--pill); background: rgba(36, 27, 18, .6); }
   @media (min-width: 960px) {
-    .hero { padding: 56px 0 32px; }
-    .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 520px); grid-template-areas: 'head scan' 'tail scan'; grid-template-rows: 1fr 1fr; column-gap: 56px; row-gap: 0; align-items: start; }
-    h1 { font-size: 4rem; margin-bottom: .35em; } .head .eyebrow { margin-bottom: 14px; } .head { align-self: end; }
-    .tail { align-self: start; } .tail .lead { margin-top: 0; }
-    .trust { margin-top: 24px; }
+    .hero { padding: 40px 0 0; }
+    /* the readout chips hang ~50px to the left of the face column, so the gap leaves room for them */
+    .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(400px, 44%); grid-template-areas: 'head face' 'tail face'; grid-template-rows: auto 1fr; column-gap: 64px; row-gap: 0; align-items: start; min-height: min(calc(100svh - 60px), 780px); }
+    h1 { font-size: clamp(3.5rem, 4.6vw, 4.4rem); align-self: end; padding-top: 48px; }
+    .face { max-width: none; margin: 0; align-self: center; }
+    .tail { padding-top: 24px; max-width: 34em; }
+    .ctas .btn { flex: 0 0 auto; }
+    .trust { margin-top: 26px; }
   }
-  .how { padding-bottom: 0; }
+
+  /* scan: the working tool, directly under the hero */
+  .try { padding-top: 24px; }
+  .try :global(#scan) { scroll-margin-top: 76px; }
+  .try-grid { display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+  .try-copy h2 { margin-bottom: .4em; }
+  .try-copy p { color: var(--lead); font-size: 1.0625rem; margin: 0; max-width: 32em; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0 0; padding: 18px 0 0; border-top: 1px solid var(--hair); }
+  .stats dt { color: #fff; font-size: 2.2rem; line-height: 1; } .stats dd { margin: 6px 0 0; font-size: .85rem; line-height: 1.35; color: var(--body); }
+  .scan-col { min-width: 0; }
+  @media (min-width: 960px) {
+    .try { padding-top: 64px; }
+    .try-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 560px); column-gap: 56px; align-items: center; }
+    .stats { margin-top: 32px; }
+  }
+  .how { padding-bottom: 0; scroll-margin-top: 60px; }
   .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; grid-template-columns: 1fr; }
   .what .big { padding: 20px; }
   .callouts { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
