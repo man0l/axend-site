@@ -10,6 +10,7 @@ import { faceFor } from '../../data/faces';
 import Icon from '../../components/Icon.astro';
 import Byline from '../../components/Byline.astro';
 import Experiment from '../../components/Experiment.astro';
+import AccuracyStudy from '../../components/AccuracyStudy.astro';
 import KeyTakeaways from '../../components/KeyTakeaways.astro';
 import { personLd } from '../../data/authors';
 import { extractImages } from '../../lib/guide-images.mjs';
@@ -70,7 +71,7 @@ const fmt = (x: Date) => x.toLocaleDateString('en-US', { year: 'numeric', month:
         <p class="trust">About this guide: written by the Axend founder to our <a href="/about">editorial standards</a>. Scores in the tool follow our published <a href="/how-we-score">method</a>.</p>
         <KeyTakeaways items={d.takeaways} />
         <div class="prose"><Content /></div>
-        {d.experiment ? <Experiment id={d.experiment} /> : null}
+        {d.experiment === 'accuracy' ? <AccuracyStudy /> : d.experiment ? <Experiment id={d.experiment} /> : null}
         {d.sources?.length ? <section class="sources"><h2>Sources</h2><ul>{d.sources.map((s: any) => <li><a href={s.url} rel="noopener nofollow" target="_blank">{s.title}</a> <span>{s.publisher}</span></li>)}</ul></section> : null}
         <aside class="mini panel">
           <div class="mf"><Portrait face={faceFor(d.slug, 1)} mode="guides" /></div>

@@ -19,7 +19,7 @@ const blog = defineCollection({
       tool: z.enum(TOOL_PATHS),
       publishDate: z.coerce.date(),
       updatedDate: z.coerce.date(),
-      experiment: z.enum(['jawline', 'photos', 'symmetry', 'pipeline']).optional(),
+      experiment: z.enum(['jawline', 'photos', 'symmetry', 'pipeline', 'accuracy']).optional(),
       heroImage: z.string().optional(),
       sources: z.array(z.object({ title: z.string().min(3), url: z.string().url(), publisher: z.string().min(2) })).optional(),
       itemList: z.array(z.object({ name: z.string().min(2), url: z.string().url() })).optional(),
