@@ -57,7 +57,13 @@ Soft, natural light. Face a window, or stand in open shade or on an overcast day
 
 ### Use soft, natural light
 
-Stand facing a window, or be outdoors in open shade or on an overcast day. Soft light evens out skin and avoids harsh shadows. The window should be in front of you or slightly to the side.
+Stand facing a window, or be outdoors in open shade or on an overcast day. Soft light evens out skin and avoids harsh shadows. The window should be in front of you or slightly to the side. Golden hour, the hour after sunrise and before sunset, gives warm light from the side. A ring light gives even light, but it can look flat and leave round reflections in your eyes.
+
+![Top-down diagram of a person facing a window, with soft light reaching the face](/guides-img/light-window.png "Window light: face the window, soft light on both sides of the face")
+
+![Diagram of a person outdoors with a low warm sun to one side of the face at golden hour](/guides-img/light-golden-hour.png "Golden hour: low warm sun to the side of the face")
+
+![Diagram of a person facing a phone mounted in a ring light, with even light on the face](/guides-img/light-ring-light.png "Ring light: even light on the face")
 
 ### Avoid these
 
@@ -65,6 +71,8 @@ Stand facing a window, or be outdoors in open shade or on an overcast day. Soft 
 - **Direct midday sun:** Causes squinting and harsh contrast.
 - **Light only from below or behind:** Looks unflattering unless you intend it.
 - **Mixed colour lighting:** Gives odd skin tones.
+
+![Diagram of a person under a ceiling lamp with harsh shadows under the eyes, nose and chin](/guides-img/light-overhead.png "Overhead light: harsh shadows under the eyes and chin")
 
 If you must use indoor lighting, use warm, diffuse lamps at face height and avoid a single bare overhead bulb.
 
@@ -79,6 +87,8 @@ A low camera angle adds a double chin and widens the nose. A camera slightly abo
 ### Step back, then zoom or crop
 
 Phone cameras held very close exaggerate the nose and the centre of the face because of lens perspective. Hold the camera at arm's length or further, or use a tripod and the 2x lens if your phone has one. Crop afterwards.
+
+![Two-panel diagram comparing a phone at arm's length, which exaggerates the nose, with a phone on a tripod two metres away, which keeps natural proportions](/guides-img/distance-arms-vs-2m.png "Distance: a phone at arm's length versus two metres away")
 
 ## How should I stand and angle my face?
 

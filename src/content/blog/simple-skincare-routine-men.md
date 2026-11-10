@@ -60,6 +60,8 @@ Skincare marketing makes it sound like you need ten products. You do not. A shor
 
 Three steps: a gentle cleanser, a moisturiser suited to your skin type and a daily broad-spectrum sunscreen of SPF 30 or higher. Everything else is optional. A short routine done every day beats a shelf of products used randomly. The table shows what to do in the morning and the evening.
 
+![Two-column routine graphic: morning is cleanse, moisturise, sunscreen; evening is cleanse and moisturise](/guides-img/routine-am-pm.png "AM and PM routine: three steps in the morning, two at night")
+
 | Step | Morning | Evening |
 | --- | --- | --- |
 | Cleanse | Rinse with water, or a gentle cleanser | Gentle cleanser |

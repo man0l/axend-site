@@ -29,6 +29,8 @@ An oval face is often described as the easiest to style, because its proportions
 
 An oval face is about one and a half times as long as it is wide. The forehead is slightly wider than the chin, the cheekbones are the widest point and the jaw curves gently instead of forming sharp corners. Many men sit between two shapes, and that is fine.
 
+![Chart of five outline face shapes labelled oval, round, square, oblong and heart](/guides-img/faceshape-chart.png "The five face shapes: oval, round, square, oblong and heart")
+
 If your face is closer to equal in width and length, it may be round, and [haircuts for a round face](/guides/haircuts-for-round-face-men) will suit it better. If it has a defined square jaw, it may be square. Many men are somewhere in between, and that is fine. For a wider overview, see [face shape and hairstyles for men](/guides/face-shape-hairstyles-men).
 
 ## What should an oval face avoid?
@@ -51,21 +53,31 @@ Most do. A textured quiff, side part, textured crop, slick back or medium-length
 
 Moderate height with texture works. Keep the top lifted but not towering. Tighter sides keep it neat.
 
+![Illustration of a young man with a textured quiff, tousled top swept up and back with short tapered sides](/guides-img/cut-textured-quiff.png "Textured quiff")
+
 ### Side part
 
 A classic, versatile cut. It shows the forehead and suits both business and casual settings.
+
+![Illustration of a young man with a classic side part with a clear parting and short tapered sides](/guides-img/cut-side-part.png "Side part")
 
 ### Crop or textured crop
 
 Short, easy to style, and shows off a balanced face. A light fringe forward adds some character without hiding the forehead.
 
+![Illustration of a young man with a short textured crop with a choppy fringe](/guides-img/cut-textured-crop.png "Textured crop")
+
 ### Slick back
 
 Works well if hair is thick enough. It shows the whole face, so it suits men comfortable with proportions being visible.
 
+![Illustration of a young man with hair slicked straight back with neat tapered sides](/guides-img/cut-slick-back.png "Slick back")
+
 ### Medium length with movement
 
 A few inches of wavy or straight hair, swept back or to the side, looks relaxed. Keep it clean at the neckline.
+
+![Illustration of a young man with medium-length hair with natural movement, reaching the ears](/guides-img/cut-medium-flow.png "Medium length with movement")
 
 ## Which fade is best for an oval face?
 

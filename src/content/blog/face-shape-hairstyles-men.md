@@ -45,6 +45,8 @@ Haircut advice organised by face shape is popular because it works as a starting
 
 Pull your hair back, stand square to a mirror and take a straight-on photo at eye level. Compare the widths of your forehead, cheekbones and jaw, then compare your length with your width. The widest point and the jaw shape point to oval, round, square, oblong or heart.
 
+![Illustrated front view of a face with four numbered measurement lines: forehead width, cheekbone width, jaw width and face length](/guides-img/faceshape-measure.png "How to measure face shape: forehead, cheekbones, jaw and length")
+
 1. Pull hair away from your face and stand square to a mirror.
 2. Take a straight-on photo at eye level.
 3. Compare the **forehead width** at the temples.
@@ -59,6 +61,8 @@ Then match what you see to the closest of these shapes:
 - **Square:** Strong, angular jaw, forehead and jaw similar in width.
 - **Oblong:** Noticeably long face, straight sides.
 - **Heart or triangle:** Wider forehead tapering to a narrower chin.
+
+![Chart of five outline face shapes labelled oval, round, square, oblong and heart](/guides-img/faceshape-chart.png "The five face shapes: oval, round, square, oblong and heart")
 
 Many faces sit between two categories. That is normal.
 

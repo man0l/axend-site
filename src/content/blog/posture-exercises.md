@@ -81,29 +81,43 @@ Do seven short moves most days: chin tucks, wall angels, rows, band pull-aparts,
 
 Sit or stand tall. Draw your chin straight back, as if making a double chin, without tilting the head. Hold for three seconds, release. This works the deep neck muscles that counter forward head position.
 
+![Side view of a man doing a chin tuck, with a dotted line showing the ear moving back over the shoulder](/guides-img/posture-chin-tuck.png "Chin tuck: ear lines up over the shoulder")
+
 ### 2. Wall angels (8 to 10 reps)
 
 Stand with your back against a wall, arms bent at 90 degrees like a goalpost. Slide arms up and down without letting the lower back arch or the elbows leave the wall. If it is hard, that is the point. Reduce the range of motion rather than forcing it.
+
+![Front view of a man with his back against a wall and arms in a goalpost shape, with arrows showing arms sliding up and down](/guides-img/posture-wall-angels.png "Wall angel: back flat on the wall, arms sliding up and down")
 
 ### 3. Rows (3 sets of 10 to 12)
 
 Use a resistance band, cable or dumbbell. Pull the shoulder blades back and down, and squeeze briefly. Rows strengthen the muscles that hold the upper back upright.
 
+![Side view of a man doing a one-arm dumbbell row with a flat back and a dotted alignment line from head to hips](/guides-img/posture-row.png "Dumbbell row: flat back, pull the elbow toward the hip")
+
 ### 4. Band pull-aparts (2 sets of 15)
 
 Hold a light band at chest height and pull it apart. Good for the rear shoulders.
+
+![Front view of a man pulling a resistance band apart at chest height with straight arms](/guides-img/posture-band-pull-apart.png "Band pull-apart: arms straight, pull the band to chest width")
 
 ### 5. Glute bridges (2 sets of 12)
 
 Lie on your back, knees bent, lift hips by squeezing the glutes. Weak glutes and tight hip flexors often go together.
 
+![Side view of a man lying on a mat with hips lifted, a dotted line running from shoulder to knee](/guides-img/posture-glute-bridge.png "Glute bridge: shoulders, hips and knees in one line")
+
 ### 6. Hip flexor stretch (30 seconds each side)
 
 Kneel on one knee, tuck the pelvis slightly, and shift forward gently until you feel a stretch at the front of the hip.
 
+![Side view of a man in a kneeling lunge with an upright torso and an arrow at the hip pushing gently forward](/guides-img/posture-hip-flexor-stretch.png "Kneeling hip flexor stretch: tall torso, hip pushed gently forward")
+
 ### 7. Thoracic extension (8 reps)
 
 Sit on a chair, hands behind your head, and gently arch the upper back over the chair back. Keep the lower back quiet.
+
+![Side view of a man lying over a foam roller under his upper back with hands behind his head, arching gently over the roller](/guides-img/posture-thoracic-extension.png "Thoracic extension over a foam roller")
 
 ## Which daily habits matter more than the exercises?
 
