@@ -1,0 +1,108 @@
+---
+// Accuracy study box, table and chart (SLA-1488). Every figure is computed in src/lib/accuracy.ts from the raw scan data.
+import { REPEATS, REPEAT_N, RESCANS, RESCAN_N, GROUPS, ALL_SETUPS, REPEAT_IDS, ACC_METRICS, METRICS, MODEL, TESTED_ON, SCANNER, type MetricKey } from '../lib/accuracy';
+import scans from '../data/experiments/accuracy-scans.json';
+const f = (v: number, m: MetricKey) => v.toFixed(METRICS[m].digits);
+const sg = (v: number) => (v > 0 ? '+' : v < 0 ? '−' : '±') + Math.abs(v).toFixed(1);
+const date = new Date(TESTED_ON + 'T00:00:00Z').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
+const label = (m: MetricKey) => METRICS[m].label + (METRICS[m].unit === '°' ? ' (°)' : '');
+const rescanZero = ACC_METRICS.every((m) => RESCANS[m].range === 0);
+const beyondCount = ALL_SETUPS.filter((s) => s.outside.includes('overall')).length;
+
+// Chart: overall score on one axis. Row 1 = the 20 unchanged re-renders, then one row per single-variable setup.
+const rep = REPEAT_IDS.map((id) => ((scans.results as any[]).find((r) => r.file === id + '.png')).overall as number);
+const all = [...rep, ...ALL_SETUPS.map((s) => s.values.overall)];
+const lo = Math.floor(Math.min(...all) - 0.3), hi = Math.ceil(Math.max(...all) + 0.3);
+const W = 720, L = 168, R = 24, T = 14, ROW = 30, repH = 74;
+const x = (v: number) => L + ((v - lo) / (hi - lo)) * (W - L - R);
+const rowsY = (i: number) => T + repH + 10 + i * ROW + ROW / 2;
+const H = T + repH + 10 + ALL_SETUPS.length * ROW + 34;
+const seen = new Map<number, number>();
+const dots = rep.map((v) => { const k = Math.round(v * 10); const n = seen.get(k) ?? 0; seen.set(k, n + 1); return { v, y: T + repH - 14 - n * 11 }; });
+const ticks: number[] = []; for (let t = lo; t <= hi + 1e-9; t += 0.5) ticks.push(Math.round(t * 10) / 10);
+---
+<section class="acc" id="experiment-accuracy" aria-labelledby="acc-h">
+  <h2 id="acc-h">The accuracy study: how much does the score move?</h2>
+
+  <div class="how">
+    <h3>How we tested</h3>
+    <ul>
+      <li><strong>Test subject: synthetic.</strong> One AI-generated, photoreal face that is not a real person. Nothing here is a real person's score, and no real face is published. A real-phone arm (selfies on a real phone) has not been run yet.</li>
+      <li><strong>Image model:</strong> <span class="mv">{MODEL}</span>. Every image is an edit of the same base render.</li>
+      <li><strong>Scanner:</strong> our own scanner, the same code that runs on axendai.com (build <span class="mv">{SCANNER.version}</span>, MediaPipe Face Landmarker {SCANNER.mediapipe}).</li>
+      <li><strong>Repeatability baseline:</strong> we re-rendered the unchanged face {REPEAT_N} times (same setup, no change requested) and scanned each one. Because an image model never returns exactly the same picture twice, this baseline is the noise from <em>re-shooting</em> the same face.</li>
+      <li><strong>Single-variable tests:</strong> {ALL_SETUPS.length} edits that each change one thing (angle, light, or lens and distance) and keep the rest identical. A setup counts as a real shift only when it lands outside the min–max of the {REPEAT_N} repeats.</li>
+      <li><strong>Last tested:</strong> <time datetime={TESTED_ON}>{date}</time>. Raw scores: <a href="/guides-data/accuracy-scans.csv">CSV</a>.</li>
+    </ul>
+    <p class="lim">Limits: one synthetic face, one render per setup. The image model may not follow an edit exactly (for example, how far a head is turned), so each row shows what was scanned rather than a guarantee of the setup. This shows how the scanner reacts to this face, not how a real person will score, and not how attractive anyone is.</p>
+  </div>
+
+  <h3>Same face, same setup, {REPEAT_N} scans</h3>
+  <div class="tw"><table>
+    <caption>Repeatability: {REPEAT_N} unchanged re-renders of the same face, scored by the same scanner</caption>
+    <thead><tr><th scope="col">Measure</th><th scope="col">Mean</th><th scope="col">SD</th><th scope="col">Min to max</th></tr></thead>
+    <tbody>{ACC_METRICS.map((m) => <tr><th scope="row">{label(m)}</th><td>{REPEATS[m].mean.toFixed(2)}</td><td>{REPEATS[m].sd.toFixed(2)}</td><td>{f(REPEATS[m].min, m)} to {f(REPEATS[m].max, m)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="note">{rescanZero ? `The scanner itself is deterministic: scanning the very same file ${RESCAN_N} times gave identical results every time (SD 0 on every measure). All the spread above comes from the picture changing, not from the scoring code.` : `Scanning the very same file ${RESCAN_N} times gave an overall-score spread of ${RESCANS.overall.range.toFixed(2)}.`}</p>
+
+  <h3>Change one thing at a time</h3>
+  <figure class="chart">
+    <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="acc-chart-t acc-chart-d" width="100%">
+      <title id="acc-chart-t">Overall score for {REPEAT_N} unchanged re-renders and {ALL_SETUPS.length} single-change setups</title>
+      <desc id="acc-chart-d">The {REPEAT_N} unchanged re-renders scored between {f(REPEATS.overall.min, 'overall')} and {f(REPEATS.overall.max, 'overall')}. {beyondCount} of {ALL_SETUPS.length} single-change setups landed outside that range. The table below lists every value.</desc>
+      <rect x={x(REPEATS.overall.min)} y={T} width={Math.max(x(REPEATS.overall.max) - x(REPEATS.overall.min), 2)} height={H - T - 34} class="band" />
+      {ticks.map((t) => <g><line x1={x(t)} x2={x(t)} y1={T} y2={H - 34} class="grid" /><text x={x(t)} y={H - 16} text-anchor="middle" class="axis">{t.toFixed(1)}</text></g>)}
+      <text x={(L + W - R) / 2} y={H - 2} text-anchor="middle" class="axis">Overall score (out of 10)</text>
+      <text x={L - 10} y={T + repH - 18} text-anchor="end" class="lab">{REPEAT_N} unchanged</text>
+      <text x={L - 10} y={T + repH - 4} text-anchor="end" class="axis">re-renders</text>
+      {dots.map((d) => <circle cx={x(d.v)} cy={d.y} r="4" class="rep"><title>Unchanged re-render: {d.v.toFixed(1)}</title></circle>)}
+      {ALL_SETUPS.map((s, i) => (
+        <g>
+          <text x={L - 10} y={rowsY(i) + 4} text-anchor="end" class="lab">{s.label}</text>
+          <line x1={x(REPEATS.overall.mean)} x2={x(s.values.overall)} y1={rowsY(i)} y2={rowsY(i)} class="stem" />
+          <circle cx={x(s.values.overall)} cy={rowsY(i)} r="5.5" class={s.outside.includes('overall') ? 'set out' : 'set'}><title>{s.label}: {s.values.overall.toFixed(1)} ({sg(s.delta.overall)} vs repeat mean)</title></circle>
+        </g>
+      ))}
+    </svg>
+    <figcaption>Overall score. Grey dots: the {REPEAT_N} unchanged re-renders, and the shaded band is their min–max. Orange dots: single-change setups, filled when outside that band. Setups are listed in the table below.</figcaption>
+  </figure>
+
+  {GROUPS.map((g) => (
+    <div class="tw"><table>
+      <caption>{g.title}: {g.blurb}. Change vs the repeat mean in brackets.</caption>
+      <thead><tr><th scope="col">Setup</th>{ACC_METRICS.map((m) => <th scope="col">{label(m)}</th>)}<th scope="col">Beyond repeat range</th></tr></thead>
+      <tbody>{g.rows.map((r) => (
+        <tr class={r.outside.length ? 'beyond' : ''}>
+          <th scope="row">{r.label}</th>
+          {ACC_METRICS.map((m) => <td>{f(r.values[m], m)}<span class="d"> ({sg(r.delta[m])})</span></td>)}
+          <td>{r.outside.length ? r.outside.map((m) => METRICS[m].label.toLowerCase()).join(', ') : 'None'}</td>
+        </tr>
+      ))}</tbody>
+    </table></div>
+  ))}
+  <p class="note">Repeat mean for the brackets: overall {REPEATS.overall.mean.toFixed(2)}, jaw angle {REPEATS.jawAngle.mean.toFixed(1)}°. Repeat SD: overall {REPEATS.overall.sd.toFixed(2)}, symmetry {REPEATS.symmetry.sd.toFixed(2)}, proportions {REPEATS.proportions.sd.toFixed(2)}, jawline {REPEATS.jawline.sd.toFixed(2)}, jaw angle {REPEATS.jawAngle.sd.toFixed(2)}°.</p>
+</section>
+<style>
+  .acc { margin: 40px 0; }
+  .acc h2 { margin: 0 0 14px; } .acc h3 { margin: 24px 0 10px; font-size: 1.05rem; }
+  .how { padding: 16px 20px; border: 1px solid var(--hair-soft); border-left: 3px solid var(--accent); border-radius: 12px; margin: 0 0 22px; }
+  .how h3 { margin: 0 0 8px; font-size: 1rem; letter-spacing: .02em; }
+  .how ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; font-size: .95rem; line-height: 1.5; }
+  .how .mv { font-weight: 600; word-break: break-word; }
+  .lim { margin: 10px 0 0; font-size: .88rem; opacity: .75; }
+  .tw { overflow-x: auto; margin: 0 0 16px; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; line-height: 1.4; }
+  caption { text-align: left; font-size: .85rem; opacity: .75; padding-bottom: 6px; }
+  th, td { padding: 8px 10px; border: 1px solid var(--hair-soft); text-align: left; vertical-align: top; }
+  tr.beyond td:last-child { font-weight: 600; }
+  .d { opacity: .65; white-space: nowrap; }
+  .note { font-size: .85rem; opacity: .75; margin: 6px 0 0; }
+  .chart { margin: 0 0 20px; } .chart svg { display: block; height: auto; max-width: 100%; }
+  .chart figcaption { margin-top: 6px; font-size: .8rem; line-height: 1.35; opacity: .72; }
+  .band { fill: rgba(255, 240, 220, 0.08); }
+  .grid { stroke: var(--hair-soft); stroke-width: 1; }
+  .axis { fill: var(--muted); font-size: 11px; } .lab { fill: var(--body); font-size: 12px; }
+  .rep { fill: var(--muted); stroke: var(--bg); stroke-width: 2; }
+  .stem { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; opacity: .6; }
+  .set { fill: var(--bg); stroke: var(--accent); stroke-width: 2.5; } .set.out { fill: var(--accent); stroke: var(--bg); stroke-width: 2; }
+</style>

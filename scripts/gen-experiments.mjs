@@ -11,7 +11,7 @@ const KEEP = 'Keep everything else identical: same person, same face, same hair,
 const BASE_PROMPT = 'Photorealistic head-and-shoulders portrait of a fictional adult man, about 30, shot straight on, looking directly into the camera, neutral relaxed expression with mouth closed, short dark brown hair, clean-shaven, grey crew-neck t-shirt, plain light-grey background, soft even neutral studio light, head level and centred. An AI-generated synthetic person, not a real individual.';
 
 const EDITS = {};
-for (let i = 1; i <= 5; i++) EDITS[`control-${i}`] = `Re-render this exact image with no change at all. ${KEEP}`;
+for (let i = 1; i <= 20; i++) EDITS[`control-${i}`] = `Re-render this exact image with no change at all. ${KEEP}`;
 EDITS['jaw-chin-down'] = `Change only the head pitch: the chin is tucked down slightly toward the chest, still looking at the camera. ${KEEP}`;
 EDITS['jaw-chin-forward'] = `Change only the head pitch: the chin is pushed slightly forward and up, still looking at the camera. ${KEEP}`;
 EDITS['jaw-stubble'] = `Change only the facial hair: add short, even, dark stubble (about 3 days of growth) on the cheeks, jaw and chin. ${KEEP}`;
@@ -26,6 +26,22 @@ const DIST = {
   far: 'photographed from about 2 metres away with a longer lens and then cropped: the face is smaller in the frame, with flat natural perspective and no wide-angle distortion',
 };
 for (const [l, ld] of Object.entries(LIGHTS)) for (const [d, dd] of Object.entries(DIST)) EDITS[`photo-${l}-${d}`] = `Change only the lighting and camera distance: lit by ${ld}; ${dd}. ${KEEP.replace(' same framing and background', ' same plain background')}`;
+
+// Accuracy study (SLA-1488): one variable at a time, each an edit of the same base image.
+const ACC = {
+  'acc-yaw-15': 'Change only the head direction: the head is turned about 15 degrees to the left, the eyes still looking at the camera.',
+  'acc-yaw-30': 'Change only the head direction: the head is turned about 30 degrees to the left, the eyes still looking at the camera.',
+  'acc-pitch-down': 'Change only the head pitch: the head is tilted down about 15 degrees, as if the camera is slightly above the face, still looking at the camera.',
+  'acc-pitch-up': 'Change only the head pitch: the head is tilted up about 15 degrees, as if the camera is slightly below the chin, still looking at the camera.',
+  'acc-light-window': 'Change only the lighting: soft daylight from a large window directly in front of the subject, even and gentle.',
+  'acc-light-overhead': 'Change only the lighting: a single room ceiling light directly above, with shadows under the brows, nose and chin, and no other light.',
+  'acc-light-side': 'Change only the lighting: daylight from a window on one side of the face, so one half of the face is lit and the other half is in soft shadow.',
+  'acc-light-shade': 'Change only the lighting: outdoor open shade, cool soft diffuse daylight with no direct sun.',
+  'acc-lens-close': 'Change only the lens and distance: photographed from about 25 cm with a phone front camera, strong wide-angle perspective, nose slightly enlarged, face filling the frame.',
+  'acc-lens-arm': "Change only the lens and distance: photographed at arm's length (about 50 cm) with a phone front camera, slight wide-angle perspective.",
+  'acc-lens-far': 'Change only the lens and distance: photographed from about 2 metres away with a longer lens, then cropped to the same framing; flat natural perspective.',
+};
+for (const [id, p] of Object.entries(ACC)) EDITS[id] = `${p} ${KEEP}`;
 
 const dataUrl = (f) => `data:image/png;base64,${fs.readFileSync(f).toString('base64')}`;
 const args = process.argv.slice(2);
