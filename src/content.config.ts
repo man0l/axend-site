@@ -21,6 +21,7 @@ const blog = defineCollection({
       updatedDate: z.coerce.date(),
       heroImage: z.string().optional(),
       sources: z.array(z.object({ title: z.string().min(3), url: z.string().url(), publisher: z.string().min(2) })).optional(),
+      itemList: z.array(z.object({ name: z.string().min(2), url: z.string().url() })).optional(),
       faq: z.array(z.object({ q: z.string(), a: z.string() })).optional(),
       draft: z.boolean().default(false),
     })
