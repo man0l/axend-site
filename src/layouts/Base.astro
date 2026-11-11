@@ -15,6 +15,13 @@ const robots = noindex || SITE.noindex ? 'noindex, nofollow' : 'index, follow';
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    </script>
+    <script is:inline async src="https://www.googletagmanager.com/gtm.js?id=GTM-KD378PBJ"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preload" href={figtreeUrl} as="font" type="font/woff2" crossorigin />
     <title>{title}</title>
@@ -33,6 +40,7 @@ const robots = noindex || SITE.noindex ? 'noindex, nofollow' : 'index, follow';
     {jsonLd.map((o) => <script type="application/ld+json" set:html={JSON.stringify(o)} />)}
   </head>
   <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KD378PBJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a class="skip" href="#main">Skip to content</a>
     <Header />
     <main id="main"><slot /></main>
